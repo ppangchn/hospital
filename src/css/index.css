@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit|Roboto');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Kanit', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,38 @@
+.queue-container {
+    height: 7rem;
+    background-color: rgb(116,116,116);
+}
+
+.queue-box {
+    width: 11rem;
+    height: 4rem;
+}
+
+.queue-number {
+    color: rgb(71,153,181);
+    line-height: 2.4rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.queue-title {
+    color: white;
+}
+
+.managed-queue {
+    background-color: rgb(226, 239, 241)
+}
+
+.boiled-queue {
+    background-color: rgb(215, 233, 213)
+}
+
+.paid-queue {
+    background-color: rgb(218, 200, 249)
+}
+
+.card-box {
+    width: 5.2rem;
+    height: 2.5rem;
+    background-color: white;
+}
