@@ -1,8 +1,11 @@
-.queue-container {
-    height: 7rem;
-    background-color: rgb(116,116,116);
+.header-container {
+    height: 1.7em;
+    background-color: white;
+    box-shadow: 1px 3px 6px 2px rgb(180, 180, 180);
+    color: rgb(71,153,182);
+    font-size: 1.5em;
 }
-
+/* 
 .queue-box {
     width: 11rem;
     height: 4rem;
@@ -35,4 +38,4 @@
     width: 5.2rem;
     height: 2.5rem;
     background-color: white;
-}
+} */

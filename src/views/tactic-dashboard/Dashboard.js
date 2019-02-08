@@ -9,6 +9,10 @@ const Container = styled.div`
 `;
 
 class Dashboard extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 	render() {
 		return (
 			<Container className="d-flex">

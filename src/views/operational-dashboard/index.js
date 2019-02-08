@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Queue from './Queue';
+import Header from './Header';
 import Dashboard from './Dashboard';
 class OperationalDashboard extends Component {
 	render() {
 		return (
 			<div>
-				<Queue />
+				<Header />
 				<Dashboard />
 			</div>
 		);

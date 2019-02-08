@@ -1,0 +1,51 @@
+.sidebar-title {
+    background-color: rgb(154, 150, 150);
+    color: white;
+    font-weight: 700;
+    width: 10rem;
+    box-shadow: 1px 2px 4px 2px rgb(196, 196, 196);
+    cursor: pointer;
+}
+
+.sidebar-title:hover {
+    transition: 300ms;
+    background-color: rgb(118, 118, 118);
+}
+
+.sidebar-title-nohover {
+    background-color: rgb(154, 150, 150);
+    color: white;
+    font-weight: 700;
+    width: 10rem;
+    box-shadow: 1px 2px 4px 2px rgb(196, 196, 196);
+}
+.sidebar-title-active {
+    background-color: rgb(100, 100, 100);
+    color: white;
+    font-weight: 700;
+    width: 10rem;
+    box-shadow: 1px 2px 4px 2px rgb(196, 196, 196);
+    cursor: pointer;
+}
+.sidebar-subtitle {
+    font-weight: 600;
+    width: 10rem;
+    border-bottom: solid rgb(152, 152, 152) 1.5px;
+    border-right: solid rgb(152, 152, 152) 1.5px;
+    box-shadow: 1px 0px 3px 1px rgb(196, 196, 196);
+    cursor: pointer;
+}
+
+.sidebar-subtitle:hover {
+    transition: 300ms;
+    background-color: rgb(200, 200, 200);
+}
+.sidebar-subtitle-active {
+    font-weight: 600;
+    width: 10rem;
+    border-bottom: solid rgb(152, 152, 152) 1.5px;
+    border-right: solid rgb(152, 152, 152) 1.5px;
+    box-shadow: 1px 0px 3px 1px rgb(196, 196, 196);
+    cursor: pointer;
+    background-color: rgb(180, 180, 180);
+}
