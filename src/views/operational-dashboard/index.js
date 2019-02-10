@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Queue from './Queue';
 import Dashboard from './Dashboard';
 class OperationalDashboard extends Component {
 	render() {
 		return (
 			<div>
-				<Queue />
+				<div className="row">
+					<div className="col d-flex align-content-center justify-content-center header">
+						Operational Dashboard
+					</div>
+				</div>
 				<Dashboard />
 			</div>
 		);
