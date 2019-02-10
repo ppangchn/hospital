@@ -13,7 +13,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Container className="d-flex">
-				<div className="p-1 header flex-grow-1 mr-2 txt-center">Historical Data - Analyze 3 Months - Picking</div>
+				<div className="p-1 header flex-grow-1 mr-2 text-center">Historical Data</div>
 				<div className="p-1 header" >Select data of:</div>
 			</Container>
 		);
