@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-import {
-  BarChart as Chart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Bar,
-  CartesianGrid
-} from "recharts";
-import React from "react";
-
-export function BarChart() {
-  return (
-    <Chart
-      width={600}
-      height={300}
-      data={data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="pv" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
-    </Chart>
-  );
-=======
 import { BarChart as Chart, XAxis, YAxis, Tooltip, Legend, Bar, CartesianGrid, ResponsiveContainer } from 'recharts';
 import React from 'react';
 
@@ -45,7 +15,6 @@ export function BarChart() {
 			</Chart>
 		</ResponsiveContainer>
 	);
->>>>>>> e4c3ace96f600fb6b31f7047a428fa3a70bbd038
 }
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
