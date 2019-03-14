@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import '../../css/tactic-dashboard/TacticDashboard.css';
+import '../../../css/tactic-dashboard/TacticDashboard.css';
 const Container = styled.div`
     height: 2rem;
     color: white;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import OperationalDashboard from '../views/operational-dashboard';
-import TacticDashboard from '../views/tactic-dashboard';
+import TacticDashboard from '../views/tactic-dashboard/historical';
 
 class MainRoute extends Component {
 	render() {
