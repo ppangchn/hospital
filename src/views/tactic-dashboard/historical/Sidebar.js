@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../css/tactic-dashboard/TacticDashboard.css';
-import '../../css/tactic-dashboard/Sidebar.css';
-import '../../css/Layout.css';
+import '../../../css/tactic-dashboard/TacticDashboard.css';
+import '../../../css/tactic-dashboard/Sidebar.css';
+import '../../../css/Layout.css';
 
 class Sidebar extends Component {
 	constructor() {

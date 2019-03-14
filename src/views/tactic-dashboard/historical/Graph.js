@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { BarChart } from '../../components/BarChart';
+import { BarChart } from '../../../components/BarChart';
 import { withRouter } from 'react-router-dom';
-import '../../css/tactic-dashboard/Graph.css';
-import '../../css/Layout.css';
+import '../../../css/tactic-dashboard/Graph.css';
+import '../../../css/Layout.css';
 class Graph extends Component {
 	constructor() {
 		super();
