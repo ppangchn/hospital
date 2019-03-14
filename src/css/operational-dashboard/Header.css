@@ -4,6 +4,30 @@
     box-shadow: 1px 3px 6px 2px rgb(180, 180, 180);
     color: rgb(71,153,182);
     font-size: 1.5em;
+    text-align: center;
+
+
+}
+
+.pre-title-cell {
+    background-color: rgb(23,126,131);
+    color: white;
+}
+.boil-title-cell {
+    background-color: rgb(61,131,61);
+    color: white;
+}
+.pay-title-cell {
+    background-color: rgb(88,63,121);
+    color: white;
+}
+.table-row {
+    height: 30vh;
+}
+
+.cell {
+    height: 30vh;  
+    width: 100%;
 }
 /* 
 .queue-box {

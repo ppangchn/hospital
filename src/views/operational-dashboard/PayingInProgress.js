@@ -16,7 +16,7 @@ const ChartFrame = styled.div`
 
 `
 const InQueue = styled.div`
-  background-color: rgb(202,188,221);
+  background-color: rgb(189,150,241);
   color: black;
 `
 
@@ -26,7 +26,7 @@ const Queue = styled.div`
   background-color: white;
   box-shadow: 1px 3px 6px 2px rgb(180, 180, 180);
 `
-class PayingQueueing extends Component {
+class PayingInProgress extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -37,14 +37,12 @@ class PayingQueueing extends Component {
         <div className="row">
           <div className="col-3 cell">
             <div className="d-flex justify-content-center align-items-center cell flex-column">
-              <h5>รอจ่าย[ใบ]</h5>
+              <h5>พร้อมจ่าย[ใบ]</h5>
               <Queue className="d-flex justify-content-center align-items-center">5</Queue>
             </div>
           </div>
           <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center">
-            <MyChart className="d-flex justify-content-center align-items-center cell">
-              <BarChart />
-            </MyChart>
+
           </ChartFrame>
         </div>
       </InQueue>
@@ -52,4 +50,4 @@ class PayingQueueing extends Component {
   }
 }
 
-export default PayingQueueing;
+export default PayingInProgress;
