@@ -1,0 +1,29 @@
+.table-bg {
+    background-color: rgb(207,207,207);
+}
+.table-border {
+    border: 1px solid white;
+}
+.border-right {
+    border-color: white !important;
+}
+.cell-header-bg {
+    background-color: rgb(219,218,197)
+}
+
+.cell-bg {
+    background-color: rgb(236,234,226)
+}
+.button {
+    background-color: rgb(227,227,227);
+    box-shadow: 3px 3px 10px 1px rgb(173,175,173);
+}
+.col-1-margin {
+    margin-right: 2rem;
+}
+.col-2-margin {
+    margin-right: 3rem;
+}
+.col-3-margin {
+   margin-right: .8rem; 
+}

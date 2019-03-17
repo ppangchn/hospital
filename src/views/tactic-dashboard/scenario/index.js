@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Dashboard from './Dashboard';
-class Historical extends Component {
+class Scenario extends Component {
 	render() {
 		return (
 			<div className="d-flex flex-column">
-				<Header header="Historical data" />
+				<Header header="Scenario Test of Medicine Picking Staff" />
 				<Dashboard />
 			</div>
 		);
 	}
 }
 
-export default Historical;
+export default Scenario;

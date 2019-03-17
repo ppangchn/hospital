@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../../css/tactic-dashboard/TacticDashboard.css';
-import '../../../css/tactic-dashboard/Sidebar.css';
+import '../../../css/tactic-dashboard/historical/Sidebar.css';
 import '../../../css/Layout.css';
 
 class Sidebar extends Component {
@@ -23,7 +22,7 @@ class Sidebar extends Component {
 	changeLocation(query) {
 		this.clear();
 		this.props.history.push({
-			pathname: '/history',
+			pathname: '/tactic/history',
 			search: `?${query}`,
 			state: { title: query },
 		});
@@ -54,7 +53,7 @@ class Sidebar extends Component {
 						this.setState({ isActivePickingDay: true });
 					}}
 				>
-					Analyze by Day
+					Daily
 				</div>
 				<div
 					className={`p-1 pl-2 ${isActivePickingMonth ? 'sidebar-subtitle-active' : 'sidebar-subtitle'}`}
@@ -63,7 +62,7 @@ class Sidebar extends Component {
 						this.setState({ isActivePickingMonth: true });
 					}}
 				>
-					Analyze by Month
+					Monthly
 				</div>
 				<div
 					className={`p-1 pl-2 ${
@@ -74,7 +73,7 @@ class Sidebar extends Component {
 						this.setState({ isActivePickingThreeMonths: true });
 					}}
 				>
-					Analyze 3 Months
+					3 Months
 				</div>
 			</div>
 		);
@@ -91,7 +90,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDecoctingDay: true });
 					}}
 				>
-					Analyze by Day
+					Daily
 				</div>
 				<div
 					className={`p-1 pl-2 ${isActiveDecoctingMonth ? 'sidebar-subtitle-active' : 'sidebar-subtitle'}`}
@@ -100,7 +99,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDecoctingMonth: true });
 					}}
 				>
-					Analyze by Month
+					Monthly
 				</div>
 				<div
 					className={`p-1 pl-2 ${
@@ -111,7 +110,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDecoctingThreeMonths: true });
 					}}
 				>
-					Analyze 3 Months
+					3 Months
 				</div>
 			</div>
 		);
@@ -128,7 +127,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDispensingDay: true });
 					}}
 				>
-					Analyze by Day
+					Daily
 				</div>
 				<div
 					className={`p-1 pl-2 ${isActiveDispensingMonth ? 'sidebar-subtitle-active' : 'sidebar-subtitle'}`}
@@ -137,7 +136,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDispensingMonth: true });
 					}}
 				>
-					Analyze by Month
+					Monthly
 				</div>
 				<div
 					className={`p-1 pl-2 ${
@@ -148,7 +147,7 @@ class Sidebar extends Component {
 						this.setState({ isActiveDispensingThreeMonths: true });
 					}}
 				>
-					Analyze 3 Months
+					3 Months
 				</div>
 			</div>
 		);
@@ -169,10 +168,7 @@ class Sidebar extends Component {
 				{this.picking()}
 				{this.decocting()}
 				{this.dispensing()}
-				<button type="button" className="btn btn-secondary btn-sm w-10 ml-1 mb-1">
-					Historical Data
-				</button>
-				<button type="button" className="btn btn-secondary btn-sm w-10 ml-1 mb-4">
+				<button type="button" className="btn btn-secondary btn-sm w-10 ml-1 mb-4" onClick={() => this.props.history.push('/tactic/scenario')}>
 					Scenario Test
 				</button>
 			</div>

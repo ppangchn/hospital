@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { BarChart } from '../../../components/BarChart';
 import { withRouter } from 'react-router-dom';
-import '../../../css/tactic-dashboard/Graph.css';
+import '../../../css/tactic-dashboard/historical/Graph.css';
 import '../../../css/Layout.css';
 class Graph extends Component {
 	constructor() {
@@ -11,22 +11,22 @@ class Graph extends Component {
 			query: '',
 			title: {
 				analyzeByDay: [
-					'Number of prescription on each working period',
-					'Number of prescription exceeded limit time on each working period',
-					'Number of staff on each working period',
-					'Average waiting time on each working period',
+					'Number of prescriptions',
+					'Number of prescriptions exceeded limit time',
+					'Number of staffs',
+					'Average waiting time',
 				],
 				analyzeByMonth: [
-					'Number of prescription on each day',
-					'Number of prescription exceeded limit time on each day',
-					'Number of staff on each day',
-					'Average waiting time on each day',
+					'Number of prescriptions',
+					'Number of prescriptions exceeded limit time',
+					'Number of staffs',
+					'Average waiting time',
 				],
 				analyzeByThreeMonths: [
-					'Average number of prescription of each day on each month',
-					'Average number of prescription exceeded limit time on each month',
-					'Average number of staff of each day on each month',
-					'Average waiting time of each day on each month',
+					'Average number of prescriptions',
+					'Average number of prescriptions exceeded limit time',
+					'Average number of staffs',
+					'Average waiting time',
 				],
 			},
 			yAxis: {
@@ -56,7 +56,7 @@ class Graph extends Component {
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
 				<div className="mt-5 mb-2 font-weight-bold">
-					Average waiting time in one month of each process on each working period
+					Average waiting time of processes (1 month)
 				</div>
 				<div className="d-flex justify-content-center align-items-center graph-background w-80 h-100 mb-5 ml-5 mr-5">
 					<BarChart />

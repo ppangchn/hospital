@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import '../../../css/tactic-dashboard/TacticDashboard.css';
 const Container = styled.div`
     height: 2rem;
     color: white;
@@ -11,9 +10,10 @@ const Container = styled.div`
 
 class Header extends Component {
 	render() {
+		const {header} = this.props
 		return (
 			<Container className="d-flex">
-				<div className="p-1 header flex-grow-1 mr-2 text-center">Historical Data</div>
+				<div className="p-1 header flex-grow-1 mr-2 text-center">{header}</div>
 				<div className="p-1 header" >Select data of:</div>
 			</Container>
 		);

@@ -1,3 +1,10 @@
+.header {
+    background-color: rgb(86, 86, 86);
+}
+.btn-secondary {
+    border-radius: 0.8rem;
+    background-color: rgb(68, 68, 68);
+}
 .sidebar-title {
     background-color: rgb(154, 150, 150);
     color: white;
