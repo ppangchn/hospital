@@ -6,7 +6,7 @@ class Graph extends Component {
 	render() {
 		return (
 			<div className="container-fluid scenario-bg">
-				<div className="row d-flex justify-content-center font-weight-bold mb-3">Average waiting time of each day</div>
+				<div className="row d-flex justify-content-center font-weight-bold mb-3">Average Waiting Time (Actual v.s. Trial)</div>
 				<div className="row d-flex justify-content-center align-items-center bg-white">
 					<BarChart />
 				</div>
