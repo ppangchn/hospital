@@ -6,20 +6,12 @@ import '../../../css/tactic-dashboard/scenario/Scenario.css';
 import { withRouter } from 'react-router-dom';
 
 const Container = styled.div`
-	height: 100vh;
-	background-color: rgb(224, 222, 223);
+	background-color: rgb(226, 226, 226);
 `;
 class Dashboard extends Component {
 	render() {
 		return (
 			<Container>
-				<button
-					type="button"
-					className="btn btn-sm btn-history pl-3 pr-3"
-					onClick={() => this.props.history.push('/tactic/history')}
-				>
-					Historical Data
-				</button>
 				<Graph />
 				<Table />
 			</Container>
