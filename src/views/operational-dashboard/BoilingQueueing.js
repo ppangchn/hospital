@@ -32,20 +32,29 @@ class BoilingQueueing extends Component {
     super(props);
     this.state = {};
   }
+  getChartData(){
+    const data = this.props.decoct_q.map(pre => {
+      return {
+        name: pre.pre_id,
+        value: pre.time
+      }
+    })
+    return data
+  }
 
-  render() {
+  render(props) {
     return (
       <InQueue className="col header-container cell ml-1">
         <div className="row">
           <div className="col-3 cell">
             <div className="d-flex justify-content-center align-items-center cell flex-column">
               <h5>รอต้ม[ใบ]</h5>
-              <Queue className="d-flex justify-content-center align-items-center">5</Queue>
+              <Queue className="d-flex justify-content-center align-items-center">{this.props.decoct_q.length}</Queue>
             </div>
           </div>
           <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center">
             <MyChart className="d-flex justify-content-center align-items-center cell">
-              <BarChart />
+              <BarChart data={this.getChartData()}/>
             </MyChart>
           </ChartFrame>
         </div>

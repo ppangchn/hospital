@@ -38,7 +38,7 @@ class PrepareInProgress extends Component {
           <div className="col-3 cell" >
             <div className="d-flex justify-content-center align-items-center cell flex-column">
               <h5>กำลังจัด[ใบ]</h5>
-              <Queue className="d-flex justify-content-center align-items-center">5</Queue>
+              <Queue className="d-flex justify-content-center align-items-center">{this.props.pick.length}</Queue>
             </div>
           </div>
           <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center">
