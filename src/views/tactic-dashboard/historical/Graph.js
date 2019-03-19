@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { BarChart } from '../../../components/BarChart';
 import { withRouter } from 'react-router-dom';
+import { config } from '../../../config';
+import axios from 'axios';
 import '../../../css/tactic-dashboard/historical/Graph.css';
 import '../../../css/Layout.css';
 class Graph extends Component {
@@ -44,9 +46,31 @@ class Graph extends Component {
 					{ dataKey: 'Dispensing', fill: 'rgb(116,146,61)' },
 				],
 			},
-			analyzeData: {
-				data: [],
-				color: [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }],
+			analyzeData: [{ data: [], color: [] }],
+			analyzeByDayColor: [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }],
+
+			analyzeByMonthColor: [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }],
+
+			analyzeByThreeMonthsColor: [
+				{ dataKey: 'Mon', fill: 'rgb(251,165,2)' },
+				{ dataKey: 'Tue', fill: 'rgb(254,152,252)' },
+				{ dataKey: 'Wed', fill: 'rgb(145,209,79)' },
+				{ dataKey: 'Thu', fill: 'rgb(253,153,52)' },
+				{ dataKey: 'Fri', fill: 'rgb(159,195,232)' },
+				{ dataKey: 'Sat', fill: 'rgb(152,1,212)' },
+				{ dataKey: 'Sun', fill: 'rgb(194,0,3)' },
+			],
+			url: {
+				overall: '/overallProcess',
+				pickingDay: `/dailyPicking`,
+				decoctingDay: `/dailyDecocting`,
+				dispensingDay: `/dailyDispense`,
+				pickingMonth: `/MonthlyPicking`,
+				decoctingMonth: `/MonthlyDecocting`,
+				dispensingMonth: `/MonthlyDispense`,
+				pickingThreeMonths: `/dailyPicking`,
+				decoctingThreeMonths: `/dailyPicking`,
+				dispensingThreeMonths: `/dailyPicking`,
 			},
 		};
 	}
@@ -56,13 +80,13 @@ class Graph extends Component {
 		const query = _.get(props.location.state, 'title', '');
 		if (query.includes('Day')) {
 			analyze = title.analyzeByDay;
-			this.setAnalyzeDataByDay();
+			this.setAnalyzeDataByDay(query);
 		} else if (query.includes('ThreeMonths')) {
 			analyze = title.analyzeByThreeMonths;
-			this.setAnalyzeDataByThreeMonths();
+			this.setAnalyzeDataByThreeMonths(query);
 		} else if (query.includes('Month')) {
 			analyze = title.analyzeByMonth;
-			this.setAnalyzeDataByMonth();
+			this.setAnalyzeDataByMonth(query);
 		}
 		this.setState({ query, analyze });
 	}
@@ -76,52 +100,65 @@ class Graph extends Component {
 		];
 		this.setState({ overallData: { data, color } });
 	}
-	setAnalyzeDataByDay() {
-		const color = [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }];
-		const data = [
-			{ name: '7:00-8:00', Prescription: 12 },
-			{ name: '8:00-9:00', Prescription: 40 },
-			{ name: '9:00-10:00', Prescription: 21 },
-			{ name: '10:00-11:00', Prescription: 4 },
-			{ name: '11:00-12:00', Prescription: 4 },
-			{ name: '12:00-13:00', Prescription: 4 },
-			{ name: '13:00-14:00', Prescription: 4 },
-			{ name: '14:00-15:00', Prescription: 4 },
-			{ name: '15:00-16:00', Prescription: 4 },
-		];
-		this.setState({ analyzeData: { data, color } });
+	formatToGraphData(data1, data2, data3) {
+		const formatData1 = [];
+		const formatData2 = [];
+		const formatData3 = [];
+		for (let k in data1) {
+			formatData1.push({ name: k, Prescription: data1[k] });
+		}
+		for (let k in data2) {
+			formatData2.push({ name: k, Prescription: data2[k] });
+		}
+		for (let k in data3) {
+			formatData3.push({ name: k, Time: data3[k].totalTime / data3[k].num });
+		}
+		return [data1, data2, data3];
 	}
-	setAnalyzeDataByMonth() {
-		const color = [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }];
-		const data = [
-			{ name: '7:00-8:00', Prescription: 12 },
-			{ name: '8:00-9:00', Prescription: 40 },
-			{ name: '9:00-10:00', Prescription: 21 },
-			{ name: '10:00-11:00', Prescription: 4 },
-			{ name: '11:00-12:00', Prescription: 4 },
-			{ name: '12:00-13:00', Prescription: 4 },
-			{ name: '13:00-14:00', Prescription: 4 },
-			{ name: '14:00-15:00', Prescription: 4 },
-			{ name: '15:00-16:00', Prescription: 4 },
+	async setAnalyzeDataByDay(query) {
+		const { url } = this.state;
+		const { analyzeByDayColor } = this.state;
+		const queryUrl = url[query];
+		const res = await axios.get(config.url + queryUrl);
+		const { timeDict, breakLimit, avgTime } = res.data;
+		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
+		const analyzeData = [
+			{ data: timeDictData, color: analyzeByDayColor },
+			{ data: breakLimitData, color: analyzeByDayColor },
+			{ data: [], color: analyzeByDayColor },
+			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
-		this.setState({ analyzeData: { data, color } });
+		this.setState({ analyzeData });
 	}
-	setAnalyzeDataByThreeMonths() {
-		const color = [
-			{ dataKey: 'Mon', fill: 'rgb(251,165,2)' },
-			{ dataKey: 'Tue', fill: 'rgb(254,152,252)' },
-			{ dataKey: 'Wed', fill: 'rgb(145,209,79)' },
-			{ dataKey: 'Thu', fill: 'rgb(253,153,52)' },
-			{ dataKey: 'Fri', fill: 'rgb(159,195,232)' },
-			{ dataKey: 'Sat', fill: 'rgb(152,1,212)' },
-			{ dataKey: 'Sun', fill: 'rgb(194,0,3)' }
+	async setAnalyzeDataByMonth(query) {
+		const { url } = this.state;
+		const { analyzeByMonthColor } = this.state;
+		const queryUrl = url[query];
+		const res = await axios.get(config.url + queryUrl);
+		const { dateDict, breakLimit, avgTime } = res.data;
+		const [dateDictData, breakLimitData, avgTimeData] = this.formatToGraphData(dateDict, breakLimit, avgTime);
+		const analyzeData = [
+			{ data: dateDictData, color: analyzeByMonthColor },
+			{ data: breakLimitData, color: analyzeByMonthColor },
+			{ data: [], color: analyzeByMonthColor },
+			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
-		const data = [
-			{ name: '7:00-8:00', Mon: 12 ,Tue:1,Wed:2,Thu:4,Fri:10,Sat:12,Sun:10},
-			{ name: '8:00-9:00', Mon: 12 ,Tue:1,Wed:2,Thu:4,Fri:10,Sat:12,Sun:10 },
-			{ name: '9:00-10:00', Mon: 12 ,Tue:1,Wed:2,Thu:4,Fri:10,Sat:12,Sun:10 },
+		this.setState({ analyzeData });
+	}
+	async setAnalyzeDataByThreeMonths(query) {
+		const { url } = this.state;
+		const { analyzeByThreeMonthsColor } = this.state;
+		const queryUrl = url[query];
+		const res = await axios.get(config.url + queryUrl);
+		const { timeDict, breakLimit, avgTime } = res.data;
+		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
+		const analyzeData = [
+			{ data: timeDictData, color: analyzeByThreeMonthsColor },
+			{ data: breakLimitData, color: analyzeByThreeMonthsColor },
+			{ data: [], color: analyzeByThreeMonthsColor },
+			{ data: avgTimeData, color: analyzeByThreeMonthsColor },
 		];
-		this.setState({ analyzeData: { data, color } });
+		this.setState({ analyzeData });
 	}
 	componentWillReceiveProps(props) {
 		this.setQueryData(props);
@@ -144,8 +181,7 @@ class Graph extends Component {
 		);
 	}
 	analyze() {
-		const { analyze, icon } = this.state;
-		const { data, color } = this.state.analyzeData;
+		const { analyze, icon, analyzeData } = this.state;
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
 				<div className="container">
@@ -157,7 +193,11 @@ class Graph extends Component {
 										{icon[index]}&nbsp;{element}
 									</div>
 									<div className="d-flex justify-content-center align-items-center graph-background w-100 analyze-height">
-										<BarChart data={data} color={color} yAxis={'Prescription'} />
+										<BarChart
+											data={_.get(analyzeData[index], 'data', [])}
+											color={_.get(analyzeData[index], 'color', [])}
+											yAxis={'Prescription'}
+										/>
 									</div>
 								</div>
 							);

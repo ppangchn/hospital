@@ -11,13 +11,20 @@ const Container = styled.div`
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { isLoading: true };
 	}
 	render() {
+		const { isLoading } = this.state;
 		return (
 			<Container className="d-flex">
 				<Sidebar />
-				<Graph />
+				{/* {isLoading ? (
+					<div class="w-100 d-flex justify-content-center align-items-center">
+						<div class="spinner-border text-primary" role="status" />
+					</div>
+				) : ( */}
+					<Graph />
+				{/* )} */}
 			</Container>
 		);
 	}

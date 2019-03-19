@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 import '../../../css/tactic-dashboard/historical/Sidebar.css';
 import '../../../css/Layout.css';
 
@@ -26,6 +27,34 @@ class Sidebar extends Component {
 			search: `?${query}`,
 			state: { title: query },
 		});
+	}
+	setActiveSidebar() {
+		const query = _.get(this.props.location.state, 'title', '');
+		console.log('query', query);
+		if (query === '') {
+			this.setState({ isActiveOverall: true });
+		} else if (query === 'pickingDay') {
+			this.setState({ isActivePickingDay: true });
+		} else if (query === 'pickingMonth') {
+			this.setState({ isActivePickingMonth: true });
+		} else if (query === 'pickingThreeMonths') {
+			this.setState({ isActivePickingThreeMonths: true });
+		} else if (query === 'decoctingDay') {
+			this.setState({ isActiveDecoctingDay: true });
+		} else if (query === 'decoctingMonth') {
+			this.setState({ isActiveDecoctingMonth: true });
+		} else if (query === 'decoctingThreeMonths') {
+			this.setState({ isActiveDecoctingThreeMonths: true });
+		} else if (query === 'dispensingDay') {
+			this.setState({ isActiveDispensingDay: true });
+		} else if (query === 'dispensingMonth') {
+			this.setState({ isActiveDispensingMonth: true });
+		} else if (query === 'dispensingThreeMonths') {
+			this.setState({ isActiveDispensingThreeMonths: true });
+		}
+	}
+	componentDidMount() {
+		this.setActiveSidebar();
 	}
 	clear() {
 		this.setState({
@@ -168,7 +197,11 @@ class Sidebar extends Component {
 				{this.picking()}
 				{this.decocting()}
 				{this.dispensing()}
-				<button type="button" className="btn btn-secondary btn-sm w-10 ml-1 mb-4" onClick={() => this.props.history.push('/tactic/scenario')}>
+				<button
+					type="button"
+					className="btn btn-secondary btn-sm w-10 ml-1 mb-4"
+					onClick={() => this.props.history.push('/tactic/scenario')}
+				>
 					Scenario Test
 				</button>
 			</div>
