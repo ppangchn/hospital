@@ -40,6 +40,10 @@ class Dashboard extends Component {
   }
   async componentDidMount() {
     try {
+        const res = await Axios.get("http://localhost:5000/realtime");
+        const {data} = res;
+        const {pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish} = data
+        this.setState({pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish})
       this.intervalID = setInterval(async () => {
         const res = await Axios.get("http://localhost:5000/realtime");
         const {data} = res;
