@@ -31,6 +31,15 @@ class PrepareQueueing extends Component {
     super(props);
     this.state = {};
   }
+  getChartData(){
+    const data = this.props.pick_q.map(pre => {
+      return {
+        name: pre.pre_id,
+        value: pre.time
+      }
+    })
+    return data
+  }
   render() {
     return (
       <InQueue className="col header-container cell ml-1">
@@ -38,12 +47,12 @@ class PrepareQueueing extends Component {
           <div className="col-3 cell" >
             <div className="d-flex justify-content-center align-items-center cell flex-column">
               <h5>รอจัด[ใบ]</h5>
-              <Queue className="d-flex justify-content-center align-items-center">5</Queue>
+              <Queue className="d-flex justify-content-center align-items-center">{this.props.pick_q.length}</Queue>
             </div>
           </div>
           <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center">
             <MyChart className="d-flex justify-content-center align-items-center">
-              <BarChart />
+              <BarChart data={this.getChartData()} />
             </MyChart>
           </ChartFrame>
         </div>
