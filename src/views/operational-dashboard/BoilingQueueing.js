@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "../../css/operational-dashboard/OperationalDashboard.css";
-import { BarChart } from "../../components/BarChart";
+import { BarChart } from "../../components/EarthChart";
 
 
 const Queue = styled.div`
@@ -36,10 +36,17 @@ class BoilingQueueing extends Component {
     const data = this.props.decoct_q.map(pre => {
       return {
         name: pre.pre_id,
-        value: pre.time/60
+        value: (pre.time/60).toFixed(2),
+        limit: 50
       }
     })
     return data
+  }
+  getColor(){
+    return [{
+      dataKey:"value",
+      fill:"#8884d8"
+    }]
   }
 
   render(props) {
@@ -52,9 +59,9 @@ class BoilingQueueing extends Component {
               <Queue className="d-flex justify-content-center align-items-center">{this.props.decoct_q.length}</Queue>
             </div>
           </div>
-          <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center">
+          <ChartFrame className="col-9 cell d-flex justify-content-center align-items-center mini-font">
             <MyChart className="d-flex justify-content-center align-items-center cell">
-              <BarChart data={this.getChartData()}/>
+              <BarChart data={this.getChartData()} color={this.getColor()}/>
             </MyChart>
           </ChartFrame>
         </div>
