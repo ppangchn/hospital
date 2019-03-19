@@ -35,7 +35,7 @@ class PayingQueueing extends Component {
     const data = this.props.dispense_q.map(pre => {
       return {
         name: pre.pre_id,
-        value: pre.time
+        value: pre.time/60
       }
     })
     return data

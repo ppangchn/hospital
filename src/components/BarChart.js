@@ -8,7 +8,8 @@ export function BarChart(props) {
 			<Chart data={props.data}>
 				<CartesianGrid strokeDasharray="1 1" />
 				<XAxis dataKey="name" />
-				<YAxis dataKey="value" />
+				<Tooltip/>
+				<YAxis dataKey="value" domain={[0,100]}/>
 				<Bar dataKey="value" fill="#8884d8" />
 			</Chart>
 		</ResponsiveContainer>
