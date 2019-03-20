@@ -9,7 +9,7 @@ class MainRoute extends Component {
 		return (
 				<Switch>
 					<Route exact path="/" component={OperationalDashboard} />
-					<Route path="/tactic/history" component={Historical} />
+					<Route path="/tactic/history" render={(props) => <Historical {...props}/>} />
 					<Route path="/tactic/scenario" component={Scenario} />
 				</Switch>
 		);

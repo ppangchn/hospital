@@ -2,32 +2,68 @@ import React, { Component } from 'react';
 import Sidebar from './Sidebar';
 import Graph from './Graph';
 import styled from 'styled-components';
-
+import { withRouter } from 'react-router-dom';
 const Container = styled.div`
 	background-color: rgb(223, 221, 221);
 	min-height: 100vh;
 `;
-
+const Spinner = styled.div`
+	position: absolute;
+	top: 40%;
+	left: 55%;
+`;
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { isLoading: true };
+	}
+	finishFetchingData() {
+		const spinner1 = document.getElementById('spinner1');
+		const spinner2 = document.getElementById('spinner2');
+		const spinner3 = document.getElementById('spinner3');
+		const loading = document.getElementById('loading');
+		const graph = document.getElementById('graph');
+		spinner1.hidden = true;
+		spinner2.hidden = true;
+		spinner3.hidden = true;
+		loading.hidden = true;
+		graph.hidden = false;
+	}
+	unFinishFetchingData() {
+		const spinner1 = document.getElementById('spinner1');
+		const spinner2 = document.getElementById('spinner2');
+		const spinner3 = document.getElementById('spinner3');
+		const loading = document.getElementById('loading');
+		const graph = document.getElementById('graph');
+		spinner1.hidden = false;
+		spinner2.hidden = false;
+		spinner3.hidden = false;
+		loading.hidden = false;
+		graph.hidden = true;
+	}
+	componentWillReceiveProps() {
+		this.unFinishFetchingData();
+	}
+	componentDidMount() {
+		this.unFinishFetchingData();
 	}
 	render() {
-		const { isLoading } = this.state;
 		return (
 			<Container className="d-flex">
 				<Sidebar />
-				{/* {isLoading ? (
-					<div class="w-100 d-flex justify-content-center align-items-center">
-						<div class="spinner-border text-primary" role="status" />
+				<Spinner class="d-flex justify-content-center align-items-center">
+					<div id="spinner1" className="spinner-grow text-dark" role="status" />
+					<div id="spinner2" className="spinner-grow text-dark" role="status" />
+					<div id="spinner3" className="spinner-grow text-dark" role="status" />
+					<div id="loading" className="text-center">
+						Loading...
 					</div>
-				) : ( */}
-					<Graph />
-				{/* )} */}
+				</Spinner>
+				<div id="graph" className="w-100">
+					<Graph finishFetchingData={() => this.finishFetchingData()} />
+				</div>
 			</Container>
 		);
 	}
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
