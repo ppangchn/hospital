@@ -47,6 +47,8 @@ class Graph extends Component {
 				],
 			},
 			analyzeData: [{ data: [], color: [] }],
+			XAxisLabel: [],
+			YAxisLabel: [],
 			analyzeByDayColor: [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }],
 
 			analyzeByMonthColor: [{ dataKey: 'Prescription', fill: 'rgb(67,113,202)' }],
@@ -65,12 +67,12 @@ class Graph extends Component {
 				pickingDay: `/dailyPicking`,
 				decoctingDay: `/dailyDecocting`,
 				dispensingDay: `/dailyDispense`,
-				pickingMonth: `/MonthlyPicking`,
-				decoctingMonth: `/MonthlyDecocting`,
-				dispensingMonth: `/MonthlyDispense`,
-				pickingThreeMonths: `/dailyPicking`,
-				decoctingThreeMonths: `/dailyPicking`,
-				dispensingThreeMonths: `/dailyPicking`,
+				pickingMonth: `/monthlyPicking`,
+				decoctingMonth: `/monthlyDecocting`,
+				dispensingMonth: `/monthlyDispense`,
+				pickingThreeMonths: `/threeMonthlyPicking`,
+				decoctingThreeMonths: `/threeMonthlyDecocting`,
+				dispensingThreeMonths: `/threeMonthlyDispense`,
 			},
 		};
 	}
@@ -113,13 +115,15 @@ class Graph extends Component {
 		for (let k in data3) {
 			formatData3.push({ name: k, Time: data3[k].totalTime / data3[k].num });
 		}
-		return [data1, data2, data3];
+		return [formatData1, formatData2, formatData3];
 	}
 	async setAnalyzeDataByDay(query) {
 		const { url } = this.state;
 		const { analyzeByDayColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.get(config.url + queryUrl);
+		console.log(res.data);
+		this.props.finishFetchingData();
 		const { timeDict, breakLimit, avgTime } = res.data;
 		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
 		const analyzeData = [
@@ -128,60 +132,113 @@ class Graph extends Component {
 			{ data: [], color: analyzeByDayColor },
 			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
-		this.setState({ analyzeData });
+		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
+		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
 	}
 	async setAnalyzeDataByMonth(query) {
 		const { url } = this.state;
 		const { analyzeByMonthColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.get(config.url + queryUrl);
-		const { dateDict, breakLimit, avgTime } = res.data;
-		const [dateDictData, breakLimitData, avgTimeData] = this.formatToGraphData(dateDict, breakLimit, avgTime);
+		this.props.finishFetchingData();
+		const { dateDict, breakLimit, avgDate } = res.data;
+		const [dateDictData, breakLimitData, avgDateData] = this.formatToGraphData(dateDict, breakLimit, avgDate);
 		const analyzeData = [
 			{ data: dateDictData, color: analyzeByMonthColor },
 			{ data: breakLimitData, color: analyzeByMonthColor },
 			{ data: [], color: analyzeByMonthColor },
-			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
+			{ data: avgDateData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
-		this.setState({ analyzeData });
+		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
+		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
 	}
 	async setAnalyzeDataByThreeMonths(query) {
 		const { url } = this.state;
 		const { analyzeByThreeMonthsColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.get(config.url + queryUrl);
-		const { timeDict, breakLimit, avgTime } = res.data;
-		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
+		this.props.finishFetchingData();
+		const { weekDict, breakLimit, avgThreeMonth } = res.data;
+		const weekDictData = [];
+		const breakLimitData = [];
+		const avgThreeMonthData = [];
+		for (let k in weekDict) {
+			weekDictData.push({
+				name: k,
+				Mon: weekDict[k][1],
+				Tue: weekDict[k][2],
+				Wed: weekDict[k][3],
+				Thu: weekDict[k][4],
+				Fri: weekDict[k][5],
+				Sat: weekDict[k][6],
+				Sun: weekDict[k][0],
+			});
+		}
+		for (let k in breakLimit) {
+			breakLimitData.push({
+				name: k,
+				Mon: breakLimit[k][1],
+				Tue: breakLimit[k][2],
+				Wed: breakLimit[k][3],
+				Thu: breakLimit[k][4],
+				Fri: breakLimit[k][5],
+				Sat: breakLimit[k][6],
+				Sun: breakLimit[k][0],
+			});
+		}
+		for (let k in avgThreeMonth) {
+			avgThreeMonthData.push({
+				name: k,
+				Mon: avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num,
+				Tue: avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num,
+				Wed: avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num,
+				Thu: avgThreeMonth[k][4].totalTime / avgThreeMonth[k][4].num,
+				Fri: avgThreeMonth[k][5].totalTime / avgThreeMonth[k][5].num,
+				Sat: avgThreeMonth[k][6].totalTime / avgThreeMonth[k][6].num,
+				Sun: avgThreeMonth[k][0].totalTime / avgThreeMonth[k][0].num,
+			});
+		}
 		const analyzeData = [
-			{ data: timeDictData, color: analyzeByThreeMonthsColor },
+			{ data: weekDictData, color: analyzeByThreeMonthsColor },
 			{ data: breakLimitData, color: analyzeByThreeMonthsColor },
 			{ data: [], color: analyzeByThreeMonthsColor },
-			{ data: avgTimeData, color: analyzeByThreeMonthsColor },
+			{ data: avgThreeMonthData, color: analyzeByThreeMonthsColor },
 		];
-		this.setState({ analyzeData });
+		const YAxisLabel = [
+			'Average # Prescription',
+			'Average # Prescription',
+			'Average # Staff',
+			'Average Waiting Time (minute)',
+		];
+		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
 	}
 	componentWillReceiveProps(props) {
 		this.setQueryData(props);
 	}
 	componentDidMount() {
+		console.log(this.props);
 		this.setQueryData(this.props);
 		this.setOverallData();
 	}
 
 	overallData() {
-		const { data, color } = this.state.overallData;
+		const { data, color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		console.log('data', data, 'color', color);
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
 				<div className="mt-5 mb-2 font-weight-bold">Average waiting time of processes (1 month)</div>
 				<div className="d-flex justify-content-center align-items-center graph-background w-80 h-100 mb-5 ml-5 mr-5">
-					<BarChart data={data} color={color} yAxis={'Picking'} />
+					<BarChart data={data} color={color} XAxisLabel={XAxisLabel} YAxisLabel={YAxisLabel} />
 				</div>
 			</div>
 		);
 	}
 	analyze() {
-		const { analyze, icon, analyzeData } = this.state;
+		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel } = this.state;
+		console.log('analyzedata', analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
 				<div className="container">
@@ -196,7 +253,8 @@ class Graph extends Component {
 										<BarChart
 											data={_.get(analyzeData[index], 'data', [])}
 											color={_.get(analyzeData[index], 'color', [])}
-											yAxis={'Prescription'}
+											XAxisLabel={XAxisLabel[index]}
+											YAxisLabel={YAxisLabel[index]}
 										/>
 									</div>
 								</div>
