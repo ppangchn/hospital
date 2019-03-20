@@ -9,23 +9,35 @@ import {
 	ResponsiveContainer,
 	Label,
 } from 'recharts';
-import React from 'react';
-
+import React, { PureComponent } from 'react';
+class CustomizedAxisTick extends PureComponent {
+	render() {
+		const { x, y, stroke, payload } = this.props;
+		return (
+			<g transform={`translate(${x},${y})`}>
+				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform={`rotate(${this.props.isItalic ? "-60" : "0"})`}>
+					{payload.value}
+				</text>
+			</g>
+		);
+	}
+}
 export function BarChart(props) {
 	//props = {data,color}
-	const { data, color, XAxisLabel, YAxisLabel } = props;
+	const { data, color, XAxisLabel, YAxisLabel , isItalic} = props;
+	console.log(data, color,isItalic);
 	return (
 		<ResponsiveContainer width="90%" height="90%">
-			<Chart data={data}>
+			<Chart data={data} style={{ fontSize: '12px' }}>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis interval={0}>
-					<Label value={XAxisLabel} position="insideBottom" offset={-6} style={{ textAnchor: 'middle' }} />
+				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick isItalic={isItalic}/>}>
+					<Label value={XAxisLabel} position="insideBottom" offset={-4} style={{ textAnchor: 'middle' }} />
 				</XAxis>
 				<YAxis>
 					<Label angle={-90} value={YAxisLabel} position="insideLeft" style={{ textAnchor: 'middle' }} />
 				</YAxis>
 				<Tooltip />
-				<Legend verticalAlign="top"/>
+				<Legend verticalAlign="top" />
 				{color.map(e => {
 					return <Bar dataKey={e.dataKey} fill={e.fill} />;
 				})}

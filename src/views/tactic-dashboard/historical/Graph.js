@@ -74,6 +74,8 @@ class Graph extends Component {
 				decoctingThreeMonths: `/threeMonthlyDecocting`,
 				dispensingThreeMonths: `/threeMonthlyDispense`,
 			},
+			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			isItalic: false,
 		};
 	}
 	setQueryData(props) {
@@ -134,7 +136,7 @@ class Graph extends Component {
 		];
 		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
 		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
-		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByMonth(query) {
 		const { url } = this.state;
@@ -152,10 +154,10 @@ class Graph extends Component {
 		];
 		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
 		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
-		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByThreeMonths(query) {
-		const { url } = this.state;
+		const { url, months } = this.state;
 		const { analyzeByThreeMonthsColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.get(config.url + queryUrl);
@@ -166,7 +168,7 @@ class Graph extends Component {
 		const avgThreeMonthData = [];
 		for (let k in weekDict) {
 			weekDictData.push({
-				name: k,
+				name: `${months[k[0]]}-18`,
 				Mon: weekDict[k][1],
 				Tue: weekDict[k][2],
 				Wed: weekDict[k][3],
@@ -178,7 +180,7 @@ class Graph extends Component {
 		}
 		for (let k in breakLimit) {
 			breakLimitData.push({
-				name: k,
+				name: `${months[k[0]]}-18`,
 				Mon: breakLimit[k][1],
 				Tue: breakLimit[k][2],
 				Wed: breakLimit[k][3],
@@ -190,14 +192,14 @@ class Graph extends Component {
 		}
 		for (let k in avgThreeMonth) {
 			avgThreeMonthData.push({
-				name: k,
-				Mon: avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num,
-				Tue: avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num,
-				Wed: avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num,
-				Thu: avgThreeMonth[k][4].totalTime / avgThreeMonth[k][4].num,
-				Fri: avgThreeMonth[k][5].totalTime / avgThreeMonth[k][5].num,
-				Sat: avgThreeMonth[k][6].totalTime / avgThreeMonth[k][6].num,
-				Sun: avgThreeMonth[k][0].totalTime / avgThreeMonth[k][0].num,
+				name: `${months[k[0]]}-18`,
+				Mon: (avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num).toFixed(2),
+				Tue: (avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num).toFixed(2),
+				Wed: (avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num).toFixed(2),
+				Thu: (avgThreeMonth[k][4].totalTime / avgThreeMonth[k][4].num).toFixed(2),
+				Fri: (avgThreeMonth[k][5].totalTime / avgThreeMonth[k][5].num).toFixed(2),
+				Sat: (avgThreeMonth[k][6].totalTime / avgThreeMonth[k][6].num).toFixed(2),
+				Sun: (avgThreeMonth[k][0].totalTime / avgThreeMonth[k][0].num).toFixed(2),
 			});
 		}
 		const analyzeData = [
@@ -213,7 +215,7 @@ class Graph extends Component {
 			'Average Waiting Time (minute)',
 		];
 		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
-		this.setState({ analyzeData, XAxisLabel, YAxisLabel });
+		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: false });
 	}
 	componentWillReceiveProps(props) {
 		this.setQueryData(props);
@@ -225,19 +227,19 @@ class Graph extends Component {
 	}
 
 	overallData() {
-		const { data, color, XAxisLabel, YAxisLabel } = this.state.overallData;
+		const { data, color, XAxisLabel, YAxisLabel,isItalic } = this.state.overallData;
 		console.log('data', data, 'color', color);
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
 				<div className="mt-5 mb-2 font-weight-bold">Average waiting time of processes (1 month)</div>
 				<div className="d-flex justify-content-center align-items-center graph-background w-80 h-100 mb-5 ml-5 mr-5">
-					<BarChart data={data} color={color} XAxisLabel={XAxisLabel} YAxisLabel={YAxisLabel} />
+					<BarChart data={data} color={color} XAxisLabel={XAxisLabel} YAxisLabel={YAxisLabel} isItalic={isItalic}/>
 				</div>
 			</div>
 		);
 	}
 	analyze() {
-		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel } = this.state;
+		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel,isItalic } = this.state;
 		console.log('analyzedata', analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
@@ -255,6 +257,7 @@ class Graph extends Component {
 											color={_.get(analyzeData[index], 'color', [])}
 											XAxisLabel={XAxisLabel[index]}
 											YAxisLabel={YAxisLabel[index]}
+											isItalic={isItalic}
 										/>
 									</div>
 								</div>
