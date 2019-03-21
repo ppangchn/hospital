@@ -45,7 +45,7 @@ class Header extends Component {
 			<Container className="d-flex">
 				<div className="p-1 header flex-grow-1 mr-2 text-center">{header}</div>
 				<div className="d-flex flex-grow-0 p-1 header">
-					Select data of:
+					Select data of:&nbsp;
 					{mode === 'Day' ? <Datepicker setSelectedDate={this.props.setSelectedDate} /> : <Monthpicker setSelectedDate={this.props.setSelectedDate}/>}
 				</div>
 			</Container>

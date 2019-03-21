@@ -9,3 +9,19 @@
 .analyze-height {
     height: 18em;
 }
+
+.btn-dropdown {
+    cursor: pointer;
+    border-radius: 0.4rem;
+    background-color: rgb(68, 68, 68);
+    width: 6rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: white;
+}
+
+.btn-dropdown:hover {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+}

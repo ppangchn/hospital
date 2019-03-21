@@ -21,7 +21,7 @@ class Datepicker extends Component {
 				placeholder="Select Date..."
 				format="DD MMM YYYY"
 				size="small"
-				value={moment(date)}
+                value={moment(date)}
 			/>
 		);
 	}

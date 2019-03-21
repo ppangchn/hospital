@@ -76,8 +76,20 @@ class Graph extends Component {
 				decoctingThreeMonths: `/threeMonthlyDecocting`,
 				dispensingThreeMonths: `/threeMonthlyDispense`,
 			},
+			staffUrl: {
+				pickingDay: `/getStaffByMont`,
+				decoctingDay: `/getStaffByMont`,
+				dispensingDay: `/getStaffByMont`,
+				pickingMonth: `/getStaffByMonth`,
+				decoctingMonth: `/getStaffByMonth`,
+				dispensingMonth: `/getStaffByMonth`,
+				pickingThreeMonths: `/getStaffByThreeMonth`,
+				decoctingThreeMonths: `/getStaffByThreeMonth`,
+				dispensingThreeMonths: `/getStaffByThreeMonth`,
+			},
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			isItalic: false,
+			limitTime: 0,
 		};
 	}
 	setQueryData(props) {
@@ -94,27 +106,9 @@ class Graph extends Component {
 			analyze = title.analyzeByMonth;
 			this.setAnalyzeDataByMonth(query, props);
 		} else if (!query) {
-			this.setOverallData('overall',props);
+			this.setOverallData('overall', props);
 		}
 		this.setState({ query, analyze });
-	}
-	async setOverallData(query,props) {
-		const { url } = this.state;
-		const { color, XAxisLabel, YAxisLabel } = this.state.overallData;
-		const queryUrl = url[query];
-		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
-		const { dateDict } = res.data;
-		const dateDictData = [];
-		for (let k in dateDict) {
-			dateDictData.push({
-				name: k,
-				Picking: dateDict[k].pick.totalTime / dateDict[k].pick.num,
-				Decocting: dateDict[k].decoct.totalTime / dateDict[k].decoct.num,
-				Dispensing: dateDict[k].dispense.totalTime / dateDict[k].dispense.num,
-			});
-		}
-		this.props.finishFetchingData();
-		this.setState({ overallData: { data: dateDictData, color, XAxisLabel, YAxisLabel }, isItalic: false });
 	}
 	formatToGraphData(data1, data2, data3) {
 		const formatData1 = [];
@@ -127,23 +121,46 @@ class Graph extends Component {
 			formatData2.push({ name: k, Prescription: data2[k] });
 		}
 		for (let k in data3) {
-			formatData3.push({ name: k, Time: data3[k].totalTime / data3[k].num });
+			formatData3.push({ name: k, Time: (data3[k].totalTime / data3[k].num || 0).toFixed(2) });
 		}
 		return [formatData1, formatData2, formatData3];
 	}
-	async setAnalyzeDataByDay(query, props) {
-		const { url } = this.state;
-		const { analyzeByDayColor } = this.state;
+	async setOverallData(query, props) {
+		const { url, staffUrl } = this.state;
+		const { color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const queryUrl = url[query];
 		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
-		console.log('data e dok', res.data);
+		const { dateDict } = res.data;
+		const dateDictData = [];
+		for (let k in dateDict) {
+			dateDictData.push({
+				name: k,
+				Picking: (dateDict[k].pick.totalTime / dateDict[k].pick.num || 0).toFixed(2),
+				Decocting: (dateDict[k].decoct.totalTime / dateDict[k].decoct.num || 0).toFixed(2),
+				Dispensing: (dateDict[k].dispense.totalTime / dateDict[k].dispense.num || 0).toFixed(2),
+			});
+		}
 		this.props.finishFetchingData();
-		const { timeDict, breakLimit, avgTime } = res.data;
+		this.setState({ overallData: { data: dateDictData, color, XAxisLabel, YAxisLabel }, isItalic: false });
+	}
+
+	async setAnalyzeDataByDay(query, props) {
+		const { url, limitTime } = this.state;
+		const { analyzeByDayColor } = this.state;
+		const queryUrl = url[query];
+		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
+		this.props.finishFetchingData();
+		const { timeDict, breakLimit, staffDict, avgTime } = res.data;
 		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
+		const staffData = [];
+		for (let k in staffDict) {
+			staffData.push({ name: k, Staff: staffDict[k] });
+		}
+		console.log(res.data)
 		const analyzeData = [
 			{ data: timeDictData, color: analyzeByDayColor },
 			{ data: breakLimitData, color: analyzeByDayColor },
-			{ data: [], color: analyzeByDayColor },
+			{ data: staffData, color: [{ dataKey: 'Staff', fill: 'rgb(67,113,202)' }] },
 			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
 		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
@@ -151,17 +168,26 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByMonth(query, props) {
-		const { url } = this.state;
+		const { url, limitTime, staffUrl } = this.state;
 		const { analyzeByMonthColor } = this.state;
 		const queryUrl = url[query];
-		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
+		const staffQueryUrl = staffUrl[query];
+		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
+		const resStaff = await axios.post(config.staffUrl + staffQueryUrl, { date: props.selectedDate });
 		this.props.finishFetchingData();
 		const { dateDict, breakLimit, avgDate } = res.data;
+		const staff = resStaff.data;
+		const modeStaff = query.includes("pick") ? query.substring(0, 4) : query.includes("decoct") ? query.substring(0,6) : "dis";
+		const staffData = [];
 		const [dateDictData, breakLimitData, avgDateData] = this.formatToGraphData(dateDict, breakLimit, avgDate);
+		for (let k in staff) {
+			console.log(staff[k],modeStaff)
+			staffData.push({ name: k, Staff: staff[k][`full_${modeStaff}`] + staff[k][`part_${modeStaff}`] });
+		}
 		const analyzeData = [
 			{ data: dateDictData, color: analyzeByMonthColor },
 			{ data: breakLimitData, color: analyzeByMonthColor },
-			{ data: [], color: analyzeByMonthColor },
+			{ data: staffData, color: [{ dataKey: 'Staff', fill: 'rgb(67,113,202)' }] },
 			{ data: avgDateData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
 		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
@@ -169,15 +195,34 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByThreeMonths(query, props) {
-		const { url, months } = this.state;
+		const { url, months, limitTime, staffUrl } = this.state;
 		const { analyzeByThreeMonthsColor } = this.state;
 		const queryUrl = url[query];
-		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
+		const staffQueryUrl = staffUrl[query];
+		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
+		const resStaff = await axios.post(config.staffUrl + staffQueryUrl, { date: props.selectedDate });
+		console.log(resStaff)
 		this.props.finishFetchingData();
 		const { weekDict, breakLimit, avgThreeMonth } = res.data;
+		const staff = resStaff.data;
 		const weekDictData = [];
 		const breakLimitData = [];
 		const avgThreeMonthData = [];
+		const modeStaff = query.includes("pick") ? query.substring(0, 4) : query.includes("decoct") ? query.substring(0,6) : "dis";
+		const staffData = [];
+		for (let k in staff) {
+			staffData.push({
+				name: `${months[k[0]]}-18`,
+				Mon: (staff[k][1][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Tue: (staff[k][2][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Wed: (staff[k][3][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Thu: (staff[k][4][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Fri: (staff[k][5][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Sat: (staff[k][6][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Sun: (staff[k][0][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+			});
+		}
+		console.log(staffData)
 		for (let k in weekDict) {
 			weekDictData.push({
 				name: `${months[k[0]]}-18`,
@@ -205,19 +250,19 @@ class Graph extends Component {
 		for (let k in avgThreeMonth) {
 			avgThreeMonthData.push({
 				name: `${months[k[0]]}-18`,
-				Mon: (avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num).toFixed(2),
-				Tue: (avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num).toFixed(2),
-				Wed: (avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num).toFixed(2),
-				Thu: (avgThreeMonth[k][4].totalTime / avgThreeMonth[k][4].num).toFixed(2),
-				Fri: (avgThreeMonth[k][5].totalTime / avgThreeMonth[k][5].num).toFixed(2),
-				Sat: (avgThreeMonth[k][6].totalTime / avgThreeMonth[k][6].num).toFixed(2),
-				Sun: (avgThreeMonth[k][0].totalTime / avgThreeMonth[k][0].num).toFixed(2),
+				Mon: (avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num || 0).toFixed(2),
+				Tue: (avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num || 0).toFixed(2),
+				Wed: (avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num || 0).toFixed(2),
+				Thu: (avgThreeMonth[k][4].totalTime / avgThreeMonth[k][4].num || 0).toFixed(2),
+				Fri: (avgThreeMonth[k][5].totalTime / avgThreeMonth[k][5].num || 0).toFixed(2),
+				Sat: (avgThreeMonth[k][6].totalTime / avgThreeMonth[k][6].num || 0).toFixed(2),
+				Sun: (avgThreeMonth[k][0].totalTime / avgThreeMonth[k][0].num || 0).toFixed(2),
 			});
 		}
 		const analyzeData = [
 			{ data: weekDictData, color: analyzeByThreeMonthsColor },
 			{ data: breakLimitData, color: analyzeByThreeMonthsColor },
-			{ data: [], color: analyzeByThreeMonthsColor },
+			{ data: staffData, color: analyzeByThreeMonthsColor },
 			{ data: avgThreeMonthData, color: analyzeByThreeMonthsColor },
 		];
 		const YAxisLabel = [
@@ -257,16 +302,37 @@ class Graph extends Component {
 	}
 	analyze() {
 		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic } = this.state;
-		console.log('analyzedata', analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
 				<div className="container">
-					<div className="row mt-3">
+					<div className="row mt-3 mb-3">
 						{analyze.map((element, index) => {
 							return (
 								<div className="col-6 mb-2">
-									<div className="font-weight-bold">
+									<div className="font-weight-bold d-flex justify-content-center mb-1">
 										{icon[index]}&nbsp;{element}
+										{element.includes('exceeded limit time') ? (
+											<div class="ml-2 dropdown">
+												<button
+													class="btn btn-dropdown dropdown-toggle btn-sm"
+													type="button"
+													id="dropdownMenuButton"
+													data-toggle="dropdown"
+													aria-haspopup="true"
+													aria-expanded="false"
+												>
+													Select limit
+												</button>
+												<div
+													class="dropdown-menu text-center"
+													aria-labelledby="dropdownMenuButton"
+												>
+													<a class="dropdown-item">21 Min</a>
+													<a class="dropdown-item">25 Min</a>
+													<a class="dropdown-item">43 Min</a>
+												</div>
+											</div>
+										) : null}
 									</div>
 									<div className="d-flex justify-content-center align-items-center graph-background w-100 analyze-height">
 										<BarChart
