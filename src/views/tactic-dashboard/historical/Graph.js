@@ -93,16 +93,16 @@ class Graph extends Component {
 		} else if (query.includes('Month')) {
 			analyze = title.analyzeByMonth;
 			this.setAnalyzeDataByMonth(query, props);
-		} else {
-			this.setOverallData('overall');
+		} else if (!query) {
+			this.setOverallData('overall',props);
 		}
 		this.setState({ query, analyze });
 	}
-	async setOverallData(query) {
+	async setOverallData(query,props) {
 		const { url } = this.state;
 		const { color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const queryUrl = url[query];
-		const res = await axios.get(config.url + queryUrl);
+		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
 		const { dateDict } = res.data;
 		const dateDictData = [];
 		for (let k in dateDict) {
@@ -234,7 +234,6 @@ class Graph extends Component {
 	}
 	componentDidMount() {
 		this.setQueryData(this.props);
-		this.setOverallData();
 	}
 
 	overallData() {

@@ -40,7 +40,7 @@ class Graph extends Component {
 					Average Waiting Time (Actual v.s. Trial)
 				</div>
 				<div className="row d-flex justify-content-center align-items-center bg-white">
-					<BarChart data={data} color={color} yAxis="Actual"/>
+					<BarChart data={data} color={color} XAxisLabel="Day of Month" YAxisLabel="Waiting time (minute)"/>
 				</div>
 			</div>
 		);
