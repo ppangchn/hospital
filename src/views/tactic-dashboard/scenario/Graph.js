@@ -8,8 +8,8 @@ class Graph extends Component {
 		this.state = {
 			data: [],
 			color: [
-				{ dataKey: 'Actual', fill: 'rgb(230,108,6)' },
-				{ dataKey: 'InputPolicy', fill: 'rgb(86,140,215)' },
+				{ dataKey: 'InputPolicy', fill: 'rgb(230,108,6)' },
+				{ dataKey: 'Actual', fill: 'rgb(86,140,215)' },
 			],
 		};
 	}

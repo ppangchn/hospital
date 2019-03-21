@@ -7,15 +7,21 @@
 .border-right {
     border-color: white !important;
 }
-.cell-header-bg {
-    background-color: rgb(219,218,197)
+.cell-actual-header-bg {
+    background-color: rgb(175,185,205)
+}
+.cell-input-header-bg {
+    background-color: rgb(254,135,77)
 }
 .table-header-bg {
     background-color: rgb(86,96,96);
     color: white;
 }
-.cell-bg {
-    background-color: rgb(236,234,226)
+.cell-actual-bg {
+    background-color: rgb(219,227,246)
+}
+.cell-input-bg {
+    background-color: rgb(255,230,153)
 }
 .button {
     background-color: rgb(227,227,227);

@@ -17,6 +17,7 @@ class Dashboard extends Component {
 		super(props);
 	}
 	finishFetchingData() {
+		console.log('finish')
 		const spinner1 = document.getElementById('spinner1');
 		const spinner2 = document.getElementById('spinner2');
 		const spinner3 = document.getElementById('spinner3');
@@ -59,7 +60,7 @@ class Dashboard extends Component {
 					</div>
 				</Spinner>
 				<div id="graph" className="w-100">
-					<Graph finishFetchingData={() => this.finishFetchingData()} />
+					<Graph finishFetchingData={() => this.finishFetchingData()} selectedDate={this.props.selectedDate}/>
 				</div>
 			</Container>
 		);

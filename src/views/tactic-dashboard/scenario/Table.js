@@ -17,31 +17,31 @@ class Table extends Component {
 										Actual
 									</th>
 								</tr>
-								<tr className="table-border cell-header-bg">
+								<tr className="table-border cell-actual-header-bg">
 									<th className="border-right pl-4 pr-4">Day</th>
 									<th className="border-right pl-4 pr-4">Average prescription per day</th>
 									<th className="border-right pl-4 pr-4">Average number of staff</th>
 									<th className="border-right pl-4 pr-4">Average waiting time [minute]</th>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-actual-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-actual-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-actual-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-actual-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 									<td className="border-right">Berglunds snabbköp</td>
@@ -61,23 +61,23 @@ class Table extends Component {
 										User's Trial
 									</th>
 								</tr>
-								<tr className="table-border cell-header-bg">
+								<tr className="table-border cell-input-header-bg">
 									<th className="border-right pl-4 pr-4">Number of staff input</th>
 									<th className="border-right pl-4 pr-4">Estimated waiting time [minute]</th>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-input-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-input-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-input-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
-								<tr className="table-border cell-bg">
+								<tr className="table-border cell-input-bg">
 									<td className="border-right">Mon</td>
 									<td className="border-right">Berglunds snabbköp</td>
 								</tr>
