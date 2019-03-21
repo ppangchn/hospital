@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
+import { config } from '../../../config';
 import '../../../css/tactic-dashboard/scenario/Table.css';
 class Table extends Component {
 	constructor() {
 		super();
 		this.state = { day: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] };
+	}
+	async getData(props) {
+		console.log(props.selectedDate)
+		const res = await axios.post(config.url + '/scenario', { date: props.selectedDate });
+		console.log(res.data);
+	}
+	componentWillReceiveProps(props) {
+		this.getData(props);
+	}
+	componentDidMount() {
+		this.getData(this.props);
 	}
 	render() {
 		return (
@@ -96,7 +109,7 @@ class Table extends Component {
 							<div className="font-weight-bold">Overall average waiting time: 23.14</div>
 						</div>
 					</div>
-					<div className="col-2 text-center">
+					<div className="col-2 text-center d-flex">
 						<div className="row">
 							<div className="col-12 align-item-end">
 								<button className="button font-weight-bold">7 Days Uniform</button>
