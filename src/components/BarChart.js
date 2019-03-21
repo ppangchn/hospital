@@ -25,7 +25,6 @@ class CustomizedAxisTick extends PureComponent {
 export function BarChart(props) {
 	//props = {data,color}
 	const { data, color, XAxisLabel, YAxisLabel , isItalic} = props;
-	console.log('barchart',props);
 	return (
 		<ResponsiveContainer width="90%" height="90%">
 			<Chart data={data} style={{ fontSize: '12px' }}>

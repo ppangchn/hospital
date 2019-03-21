@@ -89,8 +89,16 @@ class Graph extends Component {
 			},
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			isItalic: false,
-			limitTime: 21,
+			limitTime: 0,
 		};
+	}
+	handleLimit(value) {
+		this.setState({
+			limitTime: value,
+		},() => this.setQueryData(this.props));
+		console.log('set', value);
+		this.props.unFinishFetchingData();
+		// this.setQueryData(this.props)
 	}
 	setQueryData(props) {
 		const { title } = this.state;
@@ -145,6 +153,7 @@ class Graph extends Component {
 	}
 
 	async setAnalyzeDataByDay(query, props) {
+		console.log(this.state.limitTime);
 		const { url, limitTime } = this.state;
 		const { analyzeByDayColor } = this.state;
 		const queryUrl = url[query];
@@ -156,7 +165,6 @@ class Graph extends Component {
 		for (let k in staffDict) {
 			staffData.push({ name: k, Staff: staffDict[k] });
 		}
-		console.log(res.data)
 		const analyzeData = [
 			{ data: timeDictData, color: analyzeByDayColor },
 			{ data: breakLimitData, color: analyzeByDayColor },
@@ -168,6 +176,7 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByMonth(query, props) {
+		console.log(this.state.limitTime);
 		const { url, limitTime, staffUrl } = this.state;
 		const { analyzeByMonthColor } = this.state;
 		const queryUrl = url[query];
@@ -177,11 +186,14 @@ class Graph extends Component {
 		this.props.finishFetchingData();
 		const { dateDict, breakLimit, avgDate } = res.data;
 		const staff = resStaff.data;
-		const modeStaff = query.includes("pick") ? query.substring(0, 4) : query.includes("decoct") ? query.substring(0,6) : "dis";
+		const modeStaff = query.includes('pick')
+			? query.substring(0, 4)
+			: query.includes('decoct')
+			? query.substring(0, 6)
+			: 'dis';
 		const staffData = [];
 		const [dateDictData, breakLimitData, avgDateData] = this.formatToGraphData(dateDict, breakLimit, avgDate);
 		for (let k in staff) {
-			console.log(staff[k],modeStaff)
 			staffData.push({ name: k, Staff: staff[k][`full_${modeStaff}`] + staff[k][`part_${modeStaff}`] });
 		}
 		const analyzeData = [
@@ -195,34 +207,37 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByThreeMonths(query, props) {
+		console.log(this.state.limitTime);
 		const { url, months, limitTime, staffUrl } = this.state;
 		const { analyzeByThreeMonthsColor } = this.state;
 		const queryUrl = url[query];
 		const staffQueryUrl = staffUrl[query];
 		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
 		const resStaff = await axios.post(config.staffUrl + staffQueryUrl, { date: props.selectedDate });
-		console.log(resStaff)
 		this.props.finishFetchingData();
 		const { weekDict, breakLimit, avgThreeMonth } = res.data;
 		const staff = resStaff.data;
 		const weekDictData = [];
 		const breakLimitData = [];
 		const avgThreeMonthData = [];
-		const modeStaff = query.includes("pick") ? query.substring(0, 4) : query.includes("decoct") ? query.substring(0,6) : "dis";
+		const modeStaff = query.includes('pick')
+			? query.substring(0, 4)
+			: query.includes('decoct')
+			? query.substring(0, 6)
+			: 'dis';
 		const staffData = [];
 		for (let k in staff) {
 			staffData.push({
 				name: `${months[k[0]]}-18`,
-				Mon: (staff[k][1][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Tue: (staff[k][2][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Wed: (staff[k][3][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Thu: (staff[k][4][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Fri: (staff[k][5][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Sat: (staff[k][6][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
-				Sun: (staff[k][0][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`]) || 0,
+				Mon: staff[k][1][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Tue: staff[k][2][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Wed: staff[k][3][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Thu: staff[k][4][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Fri: staff[k][5][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Sat: staff[k][6][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
+				Sun: staff[k][0][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
 			});
 		}
-		console.log(staffData)
 		for (let k in weekDict) {
 			weekDictData.push({
 				name: `${months[k[0]]}-18`,
@@ -300,14 +315,6 @@ class Graph extends Component {
 			</div>
 		);
 	}
-	handleLimit(value){
-		this.setState({
-			limitTime:value
-		})
-		console.log('set');
-		this.props.unFinishFetchingData()
-		this.setQueryData(this.props)
-	}
 	analyze() {
 		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic } = this.state;
 		return (
@@ -335,9 +342,30 @@ class Graph extends Component {
 													class="dropdown-menu text-center"
 													aria-labelledby="dropdownMenuButton"
 												>
-													<a class="dropdown-item" onClick={()=>{this.handleLimit(50)}}>50 Min</a>
-													<a class="dropdown-item" onClick={()=>{this.handleLimit(100)}}>100 Min</a>
-													<a class="dropdown-item" onClick={()=>{this.handleLimit(150)}}>150 Min</a>
+													<a
+														class="dropdown-item"
+														onClick={() => {
+															this.handleLimit(50);
+														}}
+													>
+														50 Min
+													</a>
+													<a
+														class="dropdown-item"
+														onClick={() => {
+															this.handleLimit(100);
+														}}
+													>
+														100 Min
+													</a>
+													<a
+														class="dropdown-item"
+														onClick={() => {
+															this.handleLimit(150);
+														}}
+													>
+														150 Min
+													</a>
 												</div>
 											</div>
 										) : null}
