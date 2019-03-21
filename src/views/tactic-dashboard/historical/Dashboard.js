@@ -60,7 +60,7 @@ class Dashboard extends Component {
 					</div>
 				</Spinner>
 				<div id="graph" className="w-100">
-					<Graph finishFetchingData={() => this.finishFetchingData()} selectedDate={this.props.selectedDate}/>
+					<Graph finishFetchingData={() => this.finishFetchingData()} unFinishFetchingData={()=>{this.unFinishFetchingData()}} selectedDate={this.props.selectedDate}/>
 				</div>
 			</Container>
 		);

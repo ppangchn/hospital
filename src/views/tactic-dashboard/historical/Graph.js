@@ -89,7 +89,7 @@ class Graph extends Component {
 			},
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			isItalic: false,
-			limitTime: 0,
+			limitTime: 21,
 		};
 	}
 	setQueryData(props) {
@@ -300,6 +300,14 @@ class Graph extends Component {
 			</div>
 		);
 	}
+	handleLimit(value){
+		this.setState({
+			limitTime:value
+		})
+		console.log('set');
+		this.props.unFinishFetchingData()
+		this.setQueryData(this.props)
+	}
 	analyze() {
 		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic } = this.state;
 		return (
@@ -327,9 +335,9 @@ class Graph extends Component {
 													class="dropdown-menu text-center"
 													aria-labelledby="dropdownMenuButton"
 												>
-													<a class="dropdown-item">21 Min</a>
-													<a class="dropdown-item">25 Min</a>
-													<a class="dropdown-item">43 Min</a>
+													<a class="dropdown-item" onClick={()=>{this.handleLimit(50)}}>50 Min</a>
+													<a class="dropdown-item" onClick={()=>{this.handleLimit(100)}}>100 Min</a>
+													<a class="dropdown-item" onClick={()=>{this.handleLimit(150)}}>150 Min</a>
 												</div>
 											</div>
 										) : null}
