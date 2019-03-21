@@ -9,7 +9,7 @@ class StaffDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theDate: null,
+      theDate: new Date(),
       full_pick: 0,
       full_decoct: 0,
       full_dis: 0,
@@ -32,8 +32,7 @@ class StaffDashboard extends Component {
       // this.getData()
       if (result.value)
         MySwal.fire("OK", "That thing is still around?", "question");
-      else
-        MySwal.fire("Cancel", "That thing is still around?", "question");
+      else MySwal.fire("Cancel", "That thing is still around?", "question");
     });
   }
   componentDidMount() {
@@ -65,57 +64,79 @@ class StaffDashboard extends Component {
   render() {
     const { theDate } = this.state;
     return (
-      <div>
-        staff sas
-        <div>theDate : {theDate}</div>
-        <div>
-          full_pick :{" "}
-          <input
-            type="number"
-            value={this.state.full_pick}
-            onChange={this.handleChangeFP.bind(this)}
-          />
+      <div className="container">
+        <div className="row mt-5">
+          <div className="col center"><h1>Number of Assigned Staffs</h1></div>
         </div>
-        <div>
-          full_decoct :{" "}
-          <input
-            type="number"
-            value={this.state.full_decoct}
-            onChange={this.handleChangeFD.bind(this)}
-          />
+        <div className="row mt-5">
+          <div className="col center">
+            {theDate ? new Date(theDate).toString() : ""}
+          </div>
         </div>
-        <div>
-          full_dis :{" "}
-          <input
-            type="number"
-            value={this.state.full_dis}
-            onChange={this.handleChangeFDI.bind(this)}
-          />
+
+        <div className="row mt-4">
+          <div className="col center" />
+          <div className="col d-flex justify-content-center align-items-center "><div className="staff-cell time d-flex justify-content-center align-items-center"> Full-Time </div></div>
+          <div className="col d-flex justify-content-center align-items-center "><div className="staff-cell time d-flex justify-content-center align-items-center"> Part-Time </div></div>
         </div>
-        <div>
-          part_pick :{" "}
-          <input
-            type="number"
-            value={this.state.part_pick}
-            onChange={this.handleChangePP.bind(this)}
-          />
+        <div className="row mt-4">
+          <div className="col  d-flex justify-content-center align-items-center"><div className="staff-cell pick d-flex justify-content-center align-items-center"> Picking </div></div>
+          <div className="col d-flex justify-content-center align-items-center">
+            <input
+              type="number"
+              value={this.state.full_pick}
+              onChange={this.handleChangeFP.bind(this)}
+            />
+          </div>
+          <div className="col center">
+            {" "}
+            <input
+              type="number"
+              value={this.state.part_pick}
+              onChange={this.handleChangePP.bind(this)}
+            />
+          </div>
         </div>
-        <div>
-          part_decoct :{" "}
-          <input
-            type="number"
-            value={this.state.part_decoct}
-            onChange={this.handleChangePD.bind(this)}
-          />
+        <div className="row mt-4">
+          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell decoct d-flex justify-content-center align-items-center"> Decocting </div></div>
+          <div className="col center">
+            <input
+              type="number"
+              value={this.state.full_decoct}
+              onChange={this.handleChangeFD.bind(this)}
+            />
+          </div>
+          <div className="col center">
+            <input
+              type="number"
+              value={this.state.part_decoct}
+              onChange={this.handleChangePD.bind(this)}
+            />
+          </div>
         </div>
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            this.staffSubmit();
-          }}
-        >
-          submit
-        </button>
+        <div className="row mt-4">
+          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell dis d-flex justify-content-center align-items-center"> Dispensing </div></div>
+          <div className="col center">
+            <input
+              type="number"
+              value={this.state.full_dis}
+              onChange={this.handleChangeFDI.bind(this)}
+            />
+          </div>
+          <div className="col center" />
+        </div>
+        <div className="row mt-4">
+          <div className="col center">
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                this.staffSubmit();
+              }}
+            >
+              submit
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

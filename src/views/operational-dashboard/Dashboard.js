@@ -40,16 +40,20 @@ class Dashboard extends Component {
   }
   async componentDidMount() {
     try {
+        this.props.setLoading(true)
         const res = await Axios.get("http://localhost:5000/realtime");
         const {data} = res;
         const {pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish} = data
         this.setState({pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish})
+        this.props.setLoading(false)
       this.intervalID = setInterval(async () => {
+        this.props.setLoading(true)
         const res = await Axios.get("http://localhost:5000/realtime");
         const {data} = res;
         const {pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish} = data
         this.setState({pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish})
         console.log(data);
+        this.props.setLoading(false)
       }, 3000);
     } catch (e) {
       console.log(e);
