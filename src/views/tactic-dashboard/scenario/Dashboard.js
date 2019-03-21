@@ -4,6 +4,7 @@ import Graph from './Graph';
 import styled from 'styled-components';
 import '../../../css/tactic-dashboard/scenario/Scenario.css';
 import { withRouter } from 'react-router-dom';
+import Axios from 'axios';
 
 const Container = styled.div`
 	background-color: rgb(226, 226, 226);
