@@ -36,7 +36,7 @@ class BoilingQueueing extends Component {
     let time = 0
     if(localStorage.getItem('limit')){
       const data = localStorage.getItem('limit').split(',')
-      time = (+data[1])*60+(+data[2])
+      time = (+data[2])*60+(+data[3])
     }
     console.log(time);
     const data = this.props.decoct_q.map(pre => {

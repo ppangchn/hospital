@@ -1,4 +1,4 @@
-import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart } from 'recharts';
+import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell } from 'recharts';
 import React, { PureComponent } from 'react';
 
 class CustomizedAxisTick extends PureComponent {
@@ -29,7 +29,14 @@ export function BarChart(props) {
         </YAxis>
         
 
-				<Bar dataKey="value" fill="#8884d8" barSize={10}/>
+        <Bar dataKey="value" fill="#8884d8" barSize={10}>
+          {
+            data.map((entry, index) => (
+
+              <Cell key={`cell-${index}`} fill={data[index].value > data[index].limit ? 'red' : '#1114d8'} />
+            ))
+          }
+        </Bar>
         <Line dataKey="limit" dot={false} stroke="red"/>
 			</ComposedChart>
 		</ResponsiveContainer>
