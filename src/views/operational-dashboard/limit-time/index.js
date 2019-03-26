@@ -6,7 +6,8 @@ import styled from 'styled-components';
 
 const MySwal = withReactContent(Swal);
 const Container = styled.div`
-	background-color: rgb(223, 221, 221);
+  background-color: rgb(223, 221, 221);
+  height: 100vh;
 `;
 
 class LimitDashboard extends Component {
@@ -24,7 +25,8 @@ class LimitDashboard extends Component {
 	}
 	async staffSubmit() {
 		MySwal.fire({
-			title: 'Submit your staff number',
+      title: 'Submit your staff number',
+      type: 'question',
 			showCancelButton: true,
 			confirmButtonText: 'submit',
 			showLoaderOnConfirm: true,
@@ -41,7 +43,7 @@ class LimitDashboard extends Component {
 		}).then(result => {
 			console.log(result);
 			// this.getData()
-			if (result.value) MySwal.fire('OK', 'That thing is still around?', 'question').then(() => this.props.history.push('/'));
+			if (result.value) MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
 			else MySwal.fire('Cancel', 'That thing is still around?', 'question');
 		});
 	}
@@ -220,13 +222,21 @@ class LimitDashboard extends Component {
 				</div>
 				<div className="row mt-5">
 					<div className="col d-flex justify-content-center align-items-center">
+          <button
+							className="btn btn-danger"
+							onClick={() => {
+								this.props.history.push('/')
+							}}
+						>
+							Back
+						</button>
 						<button
 							className="btn btn-danger"
 							onClick={() => {
 								this.staffSubmit();
 							}}
 						>
-							submit
+							Submit
 						</button>
 					</div>
 				</div>
