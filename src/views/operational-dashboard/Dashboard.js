@@ -96,7 +96,7 @@ class Dashboard extends Component {
     return (
       <Container>
         <Sound
-          url="https://raw.githubusercontent.com/scottschiller/SoundManager2/master/demo/_mp3/walking.mp3"
+          url="/alert.mp3"
           playStatus={this.state.sound_status}
           autoLoad={true}
 
