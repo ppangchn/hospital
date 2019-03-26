@@ -70,7 +70,7 @@ class StaffDashboard extends Component {
         </div>
         <div className="row mt-5">
           <div className="col center">
-            {theDate ? new Date(theDate).toString() : ""}
+            {theDate ? new Date(theDate).toDateString() : ""}
           </div>
         </div>
 

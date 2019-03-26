@@ -17,7 +17,7 @@ class Dashboard extends Component {
 		super(props);
 	}
 	finishFetchingData() {
-		console.log('finish')
+		// console.log('finish')
 		const spinner1 = document.getElementById('spinner1');
 		const spinner2 = document.getElementById('spinner2');
 		const spinner3 = document.getElementById('spinner3');

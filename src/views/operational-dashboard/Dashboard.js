@@ -8,6 +8,7 @@ import PrepareInProgress from "./PrepareInProgress";
 import BoilingInProgress from "./BoilingInProgress";
 import PayingInProgress from "./PayingInProgress";
 import Axios from "axios";
+import Sound from "react-sound";
 
 const Container = styled.div`
   background-color: rgb(223, 221, 221);
@@ -19,7 +20,7 @@ const HeaderCell = styled.div`
 `;
 class Dashboard extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       pick_q: [],
       pick: [],
@@ -27,7 +28,8 @@ class Dashboard extends Component {
       decoct: [],
       dispense_q: [],
       dispense: [],
-      finish: []
+      finish: [],
+      sound_status: Sound.status.STOPPED,
     };
   }
   async getData() {
@@ -40,57 +42,105 @@ class Dashboard extends Component {
   }
   async componentDidMount() {
     try {
-        this.props.setLoading(true)
-        const res = await Axios.get("http://localhost:5000/realtime");
-        const {data} = res;
-        const {pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish} = data
-        this.setState({pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish})
-        this.props.setLoading(false)
+      this.props.setLoading(true);
+      const res = await Axios.get("http://localhost:5000/realtime");
+      const { data } = res;
+      const {
+        pick_q,
+        pick,
+        decoct_q,
+        decoct,
+        dispense_q,
+        dispense,
+        finish
+      } = data;
+      this.setState({
+        pick_q,
+        pick,
+        decoct_q,
+        decoct,
+        dispense_q,
+        dispense,
+        finish
+      });
+      this.props.setLoading(false);
       this.intervalID = setInterval(async () => {
-        this.props.setLoading(true)
+        this.props.setLoading(true);
         const res = await Axios.get("http://localhost:5000/realtime");
-        const {data} = res;
-        const {pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish} = data
-        this.setState({pick_q,pick,decoct_q,decoct,dispense_q,dispense,finish})
+        const { data } = res;
+        const {
+          pick_q,
+          pick,
+          decoct_q,
+          decoct,
+          dispense_q,
+          dispense,
+          finish
+        } = data;
+        this.setState({
+          pick_q,
+          pick,
+          decoct_q,
+          decoct,
+          dispense_q,
+          dispense,
+          finish
+        });
         console.log(data);
-        this.props.setLoading(false)
+        this.props.setLoading(false);
       }, 3000);
     } catch (e) {
       console.log(e);
     }
   }
 
+  
+
   render() {
     return (
       <Container>
-        <Preparing pick_q={this.state.pick_q} pick={this.state.pick}/>
+        <Sound
+          url="https://raw.githubusercontent.com/scottschiller/SoundManager2/master/demo/_mp3/walking.mp3"
+          playStatus={this.state.sound_status}
+          autoLoad={true}
+
+        />
+        <button onClick={()=>{this.setState({sound_status:Sound.status.PLAYING}) }}></button>
+        <button onClick={()=>{this.setState({sound_status:Sound.status.STOPPED}) }}></button>
+        <Preparing pick_q={this.state.pick_q} pick={this.state.pick} />
         <Boiling decoct_q={this.state.decoct_q} decoct={this.state.decoct} />
-        <Paying  dispense_q={this.state.dispense_q} dispense={this.state.dispense}/>
+        <Paying
+          dispense_q={this.state.dispense_q}
+          dispense={this.state.dispense}
+        />
       </Container>
     );
   }
 }
 
-const Preparing = (props) => {
-  console.log(props);
+const Preparing = props => {
+  // console.log(props);
   return (
     <div className="d-flex bd-highlight table-row mb-2">
       <div className="p-2 bd-highlight cell " style={{ width: "100px" }}>
         <div className="flex-fill header-container cell d-flex align-items-center justify-content-center pre-title-cell flex-column">
           <h4>จัดยา</h4>
-          <i className="fas fa-file-prescription" style={{ fontSize: "50px" }} />
+          <i
+            className="fas fa-file-prescription"
+            style={{ fontSize: "50px" }}
+          />
         </div>
       </div>
 
       <div className="p-2 flex-grow-1 bd-highlight row">
-        <PrepareQueueing pick_q={props.pick_q}/>
-        <PrepareInProgress pick={props.pick}/>
+        <PrepareQueueing pick_q={props.pick_q} />
+        <PrepareInProgress pick={props.pick} />
       </div>
     </div>
   );
 };
 
-const Boiling = (props) => {
+const Boiling = props => {
   return (
     <div className="d-flex bd-highlight table-row mb-2">
       <div className="p-2 bd-highlight cell " style={{ width: "100px" }}>
@@ -101,14 +151,14 @@ const Boiling = (props) => {
       </div>
 
       <div className="p-2 flex-grow-1 bd-highlight row">
-        <BoilingQueueing decoct_q={props.decoct_q}/>
-        <BoilingInProgress decoct={props.decoct}/>
+        <BoilingQueueing decoct_q={props.decoct_q} />
+        <BoilingInProgress decoct={props.decoct} />
       </div>
     </div>
   );
 };
 
-const Paying = (props) => {
+const Paying = props => {
   return (
     <div className="d-flex bd-highlight table-row mb-2">
       <div className="p-2 bd-highlight cell " style={{ width: "100px" }}>
