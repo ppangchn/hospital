@@ -25,19 +25,19 @@ body {
 }
 
 .pick{
-  border-radius: 10px;
-  background-color: rgb(23,126,131);
+  background-color: black;
   height: 40px;
+  color: white;
 }
 
 .decoct{
-  border-radius: 10px;
-  background-color: rgb(61,131,61);
+  background-color: black;
   height: 40px;
+  color: white;
 }
 
 .dis{
-  border-radius: 10px;
-  background-color: rgb(88,63,121);
+  background-color: black;
   height: 40px;
+  color: white;
 }
