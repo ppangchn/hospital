@@ -6,6 +6,7 @@ import { config } from '../../../config';
 import axios from 'axios';
 import '../../../css/tactic-dashboard/historical/Graph.css';
 import '../../../css/Layout.css';
+import { MonthChart } from '../../../components/MonthChart';
 class Graph extends Component {
 	constructor() {
 		super();
@@ -88,9 +89,33 @@ class Graph extends Component {
 				dispensingThreeMonths: `/getStaffByThreeMonth`,
 			},
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			weekend: [],
 			isItalic: false,
 			limitTime: 0,
 		};
+	}
+	getWeekend(month, year) {
+		let getTot = this.daysInMonth(month, year); //Get total days in a month
+		let weekend = [];
+		for (let i = 1; i <= getTot; i++) {
+			//looping through days in month
+			let newDate = new Date(month, year, i);
+			if (newDate.getDay() == 0) {
+				//if Sunday
+				weekend.push('sun');
+			}
+			else if (newDate.getDay() == 6) {
+				//if Saturday
+				weekend.push('sat');
+			}
+			else {
+				weekend.push(0)
+			}
+		}
+		this.setState({ weekend });
+	}
+	daysInMonth(month, year) {
+		return new Date(year, month, 0).getDate();
 	}
 	handleLimit(value) {
 		this.setState(
@@ -115,6 +140,10 @@ class Graph extends Component {
 			this.setAnalyzeDataByThreeMonths(query, props);
 		} else if (query.includes('Month')) {
 			analyze = title.analyzeByMonth;
+			const month = props.selectedDate.getMonth() + 1;
+			const year = props.selectedDate.getUTCFullYear();
+			console.log(month, year);
+			this.getWeekend(month, year);
 			this.setAnalyzeDataByMonth(query, props);
 		} else if (!query) {
 			this.setOverallData('overall', props);
@@ -303,6 +332,7 @@ class Graph extends Component {
 	overallData() {
 		const { data, color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const { isItalic } = this.state;
+		console.log(_.get(this.props.location.state, 'title', ''));
 		console.log('data', data, 'color', color);
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
@@ -320,7 +350,7 @@ class Graph extends Component {
 		);
 	}
 	analyze() {
-		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic } = this.state;
+		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic, weekend } = this.state;
 		console.log(this.state.analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
@@ -376,13 +406,25 @@ class Graph extends Component {
 										) : null}
 									</div>
 									<div className="d-flex justify-content-center align-items-center graph-background w-100 analyze-height">
-										<BarChart
-											data={_.get(analyzeData[index], 'data', [])}
-											color={_.get(analyzeData[index], 'color', [])}
-											XAxisLabel={XAxisLabel[index]}
-											YAxisLabel={YAxisLabel[index]}
-											isItalic={isItalic}
-										/>
+										{_.get(this.props.location.state, 'title', '').includes('Month') &&
+										!_.get(this.props.location.state, 'title', '').includes('ThreeMonths') ? (
+											<MonthChart
+												data={_.get(analyzeData[index], 'data', [])}
+												color={_.get(analyzeData[index], 'color', [])}
+												XAxisLabel={XAxisLabel[index]}
+												YAxisLabel={YAxisLabel[index]}
+												isItalic={isItalic}
+												weekend={weekend}
+											/>
+										) : (
+											<BarChart
+												data={_.get(analyzeData[index], 'data', [])}
+												color={_.get(analyzeData[index], 'color', [])}
+												XAxisLabel={XAxisLabel[index]}
+												YAxisLabel={YAxisLabel[index]}
+												isItalic={isItalic}
+											/>
+										)}
 									</div>
 								</div>
 							);

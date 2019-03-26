@@ -6,10 +6,20 @@ import styled from 'styled-components';
 
 const MySwal = withReactContent(Swal);
 const Container = styled.div`
-  background-color: rgb(223, 221, 221);
-  height: 100vh;
+	background-color: rgb(223, 221, 221);
+	height: 100vh;
 `;
-
+const BackButton = styled.div`
+	background: black;
+	border: 1px solid #000000;
+	color: white;
+  display: inline;
+  &:hover {
+    background-color: #303030;
+    text-decoration: none;
+    color: white;
+  }
+`;
 class LimitDashboard extends Component {
 	constructor(props) {
 		super(props);
@@ -25,8 +35,8 @@ class LimitDashboard extends Component {
 	}
 	async staffSubmit() {
 		MySwal.fire({
-      title: 'Submit your staff number',
-      type: 'question',
+			title: 'Submit your staff number',
+			type: 'question',
 			showCancelButton: true,
 			confirmButtonText: 'submit',
 			showLoaderOnConfirm: true,
@@ -43,7 +53,8 @@ class LimitDashboard extends Component {
 		}).then(result => {
 			console.log(result);
 			// this.getData()
-			if (result.value) MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
+			if (result.value)
+				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
 			else MySwal.fire('Cancel', 'That thing is still around?', 'question');
 		});
 	}
@@ -90,8 +101,8 @@ class LimitDashboard extends Component {
 	render() {
 		const { theDate } = this.state;
 		return (
-			<Container>
-				<div className="row pt-5">
+			<Container className="pt-5">
+				<div className="row">
 					<div className="col center">
 						<h1>Limit Time Setting</h1>
 					</div>
@@ -118,26 +129,28 @@ class LimitDashboard extends Component {
 							Waiting time for Picking{' '}
 						</div>
 						<div className=" d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
-							{this.state.pick
-								? <div className="d-flex">
-                <div class="d-flex">
-                  <div class="font-weight-bold">min:&nbsp;</div>
-                  {this.state.pick.min.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">max:&nbsp;</div>
-                  {this.state.pick.max.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">avg:&nbsp;</div>
-                  {this.state.pick.avg.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">p80:&nbsp;</div>
-                  {this.state.pick.per80.toFixed(2)}&nbsp;
-                </div>
-              </div>
-								: `min: - max: - avg: - per80: -`}
+							{this.state.pick ? (
+								<div className="d-flex">
+									<div class="d-flex">
+										<div class="font-weight-bold">min:&nbsp;</div>
+										{this.state.pick.min.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">max:&nbsp;</div>
+										{this.state.pick.max.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">avg:&nbsp;</div>
+										{this.state.pick.avg.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">p80:&nbsp;</div>
+										{this.state.pick.per80.toFixed(2)}&nbsp;
+									</div>
+								</div>
+							) : (
+								`min: - max: - avg: - per80: -`
+							)}
 						</div>
 					</div>
 					<div className="col d-flex justify-content-center align-items-center">
@@ -160,15 +173,15 @@ class LimitDashboard extends Component {
 										<div class="font-weight-bold">min:&nbsp;</div>
 										{this.state.decoct.min.toFixed(2)}&nbsp;
 									</div>
-                  <div class="d-flex">
+									<div class="d-flex">
 										<div class="font-weight-bold">max:&nbsp;</div>
 										{this.state.decoct.max.toFixed(2)}&nbsp;
 									</div>
-                  <div class="d-flex">
+									<div class="d-flex">
 										<div class="font-weight-bold">avg:&nbsp;</div>
 										{this.state.decoct.avg.toFixed(2)}&nbsp;
 									</div>
-                  <div class="d-flex">
+									<div class="d-flex">
 										<div class="font-weight-bold">p80:&nbsp;</div>
 										{this.state.decoct.per80.toFixed(2)}&nbsp;
 									</div>
@@ -191,26 +204,28 @@ class LimitDashboard extends Component {
 							Waiting time for Dispensing{' '}
 						</div>
 						<div className="d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
-							{this.state.dispense
-								? <div className="d-flex">
-                <div class="d-flex">
-                  <div class="font-weight-bold">min:&nbsp;</div>
-                  {this.state.dispense.min.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">max:&nbsp;</div>
-                  {this.state.dispense.max.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">avg:&nbsp;</div>
-                  {this.state.dispense.avg.toFixed(2)}&nbsp;
-                </div>
-                <div class="d-flex">
-                  <div class="font-weight-bold">p80:&nbsp;</div>
-                  {this.state.dispense.per80.toFixed(2)}&nbsp;
-                </div>
-              </div>
-								: `min: - max: - avg: - per80: -`}
+							{this.state.dispense ? (
+								<div className="d-flex">
+									<div class="d-flex">
+										<div class="font-weight-bold">min:&nbsp;</div>
+										{this.state.dispense.min.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">max:&nbsp;</div>
+										{this.state.dispense.max.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">avg:&nbsp;</div>
+										{this.state.dispense.avg.toFixed(2)}&nbsp;
+									</div>
+									<div class="d-flex">
+										<div class="font-weight-bold">p80:&nbsp;</div>
+										{this.state.dispense.per80.toFixed(2)}&nbsp;
+									</div>
+								</div>
+							) : (
+								`min: - max: - avg: - per80: -`
+							)}
 						</div>
 					</div>
 					<div className="col d-flex justify-content-center align-items-center">
@@ -222,14 +237,14 @@ class LimitDashboard extends Component {
 				</div>
 				<div className="row mt-5">
 					<div className="col d-flex justify-content-center align-items-center">
-          <button
-							className="btn btn-danger"
+						<BackButton
+							className="btn mr-3"
 							onClick={() => {
-								this.props.history.push('/')
+								this.props.history.push('/');
 							}}
 						>
 							Back
-						</button>
+						</BackButton>
 						<button
 							className="btn btn-danger"
 							onClick={() => {
