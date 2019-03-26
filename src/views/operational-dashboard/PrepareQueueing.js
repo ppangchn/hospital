@@ -32,11 +32,16 @@ class PrepareQueueing extends Component {
     this.state = {};
   }
   getChartData(){
+    let time = 0
+    if(localStorage.getItem('limit')){
+      const data = localStorage.getItem('limit').split(',')
+      time = (+data[0])*60+(+data[1])
+    }
     const data = this.props.pick_q.map(pre => {
       return {
         name: pre.pre_id,
         value: (pre.time/60).toFixed(2),
-        limit: 50
+        limit: time
       }
     })
     return data
