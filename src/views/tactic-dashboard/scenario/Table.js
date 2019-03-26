@@ -39,7 +39,7 @@ class Table extends Component {
 	createInputTable() {
 		const { dataLength, inputValue } = this.state;
 		let inputTable = [];
-		console.log(dataLength)
+		console.log(dataLength);
 		for (let i = 0; i < dataLength; i++) {
 			inputTable.push(
 				<tr className="table-border cell-input-bg height-input-cell">
@@ -65,27 +65,34 @@ class Table extends Component {
 		for (let i = 7; i < dataLength; i++) {
 			inputValue[i] = inputValue[i % 7];
 		}
-		console.log(inputValue)
-		this.setState({ inputValue },() => this.createInputTable());
+		console.log(inputValue);
+		this.setState({ inputValue }, () => this.createInputTable());
 	}
 	async getData(props) {
 		const { dateDictData, staffData, avgDateData } = props.analyzeData;
-		console.log('earth auon', avgDateData);
 		this.setState(
 			{ dateDictData, staffData, avgDateData, dataLength: avgDateData ? avgDateData.length : 0 },
 			() => {
-				this.initialInputValue()
+				this.initialInputValue();
 				this.createInputTable();
 				this.createActualTable();
 			}
 		);
+	}
+	clearInput() {
+		const { inputValue, dataLength } = this.state;
+		for (let i = 0; i < dataLength; i++) {
+			inputValue[i] = 0;
+		}
+		console.log('input ->', inputValue);
+		this.setState({ inputValue }, () => this.createInputTable());
 	}
 	initialInputValue() {
 		const { inputValue, dataLength } = this.state;
 		for (let i = 0; i < dataLength; i++) {
 			if (!inputValue[i]) inputValue[i] = 0;
 		}
-		console.log('input ->',inputValue)
+		console.log('input ->', inputValue);
 		this.setState({ inputValue });
 	}
 	componentWillReceiveProps(props) {
@@ -131,8 +138,12 @@ class Table extends Component {
 									</th>
 								</tr>
 								<tr className="table-border cell-input-header-bg">
-									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">Number of staff input</th>
-									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">Estimated waiting time [minute]</th>
+									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">
+										Number of staff input
+									</th>
+									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">
+										Estimated waiting time [minute]
+									</th>
 								</tr>
 								{inputTable}
 							</table>
@@ -144,13 +155,17 @@ class Table extends Component {
 					<div className="col-2 text-center d-flex">
 						<div className="row">
 							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>7 Days Uniform</button>
+								<button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
+									7 Days Uniform
+								</button>
 							</div>
 							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold">Maintain input</button>
+								<button className="button font-weight-bold" onClick={() => this.clearInput()}>
+									Clear input
+								</button>
 							</div>
 							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold">Enter input Number</button>
+								<button className="button font-weight-bold">Calculate</button>
 							</div>
 						</div>
 					</div>
