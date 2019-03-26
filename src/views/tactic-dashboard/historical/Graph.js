@@ -32,10 +32,10 @@ class Graph extends Component {
 				],
 			},
 			icon: [
-				<i class="fas fa-file-medical" />,
-				<i class="fas fa-exclamation-circle" />,
-				<i class="fas fa-users" />,
-				<i class="fas fa-clock" />,
+				<i class="fas fa-file-medical d-flex align-items-center" />,
+				<i class="fas fa-exclamation-circle d-flex align-items-center" />,
+				<i class="fas fa-users d-flex align-items-center" />,
+				<i class="fas fa-clock d-flex align-items-center" />,
 			],
 			analyze: [],
 			overallData: {
@@ -93,9 +93,12 @@ class Graph extends Component {
 		};
 	}
 	handleLimit(value) {
-		this.setState({
-			limitTime: value,
-		},() => this.setQueryData(this.props));
+		this.setState(
+			{
+				limitTime: value,
+			},
+			() => this.setQueryData(this.props)
+		);
 		console.log('set', value);
 		this.props.unFinishFetchingData();
 		// this.setQueryData(this.props)
@@ -134,7 +137,7 @@ class Graph extends Component {
 		return [formatData1, formatData2, formatData3];
 	}
 	async setOverallData(query, props) {
-		const { url, staffUrl } = this.state;
+		const { url } = this.state;
 		const { color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const queryUrl = url[query];
 		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate });
@@ -158,6 +161,7 @@ class Graph extends Component {
 		const { analyzeByDayColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
+		console.log(res.data);
 		this.props.finishFetchingData();
 		const { timeDict, breakLimit, staffDict, avgTime } = res.data;
 		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
@@ -228,7 +232,7 @@ class Graph extends Component {
 		const staffData = [];
 		for (let k in staff) {
 			staffData.push({
-				name: `${months[k[0]]}-18`,
+				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
 				Mon: staff[k][1][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
 				Tue: staff[k][2][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
 				Wed: staff[k][3][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
@@ -240,7 +244,7 @@ class Graph extends Component {
 		}
 		for (let k in weekDict) {
 			weekDictData.push({
-				name: `${months[k[0]]}-18`,
+				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
 				Mon: weekDict[k][1],
 				Tue: weekDict[k][2],
 				Wed: weekDict[k][3],
@@ -252,7 +256,7 @@ class Graph extends Component {
 		}
 		for (let k in breakLimit) {
 			breakLimitData.push({
-				name: `${months[k[0]]}-18`,
+				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
 				Mon: breakLimit[k][1],
 				Tue: breakLimit[k][2],
 				Wed: breakLimit[k][3],
@@ -264,7 +268,7 @@ class Graph extends Component {
 		}
 		for (let k in avgThreeMonth) {
 			avgThreeMonthData.push({
-				name: `${months[k[0]]}-18`,
+				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
 				Mon: (avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num || 0).toFixed(2),
 				Tue: (avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num || 0).toFixed(2),
 				Wed: (avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num || 0).toFixed(2),
@@ -317,6 +321,7 @@ class Graph extends Component {
 	}
 	analyze() {
 		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic } = this.state;
+		console.log(this.state.analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
 				<div className="container">
@@ -342,30 +347,30 @@ class Graph extends Component {
 													class="dropdown-menu text-center"
 													aria-labelledby="dropdownMenuButton"
 												>
-													<a
-														class="dropdown-item"
+													<div
+														class="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(50);
 														}}
 													>
 														50 Min
-													</a>
-													<a
-														class="dropdown-item"
+													</div>
+													<div
+														class="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(100);
 														}}
 													>
 														100 Min
-													</a>
-													<a
-														class="dropdown-item"
+													</div>
+													<div
+														class="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(150);
 														}}
 													>
 														150 Min
-													</a>
+													</div>
 												</div>
 											</div>
 										) : null}

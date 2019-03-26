@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "../../css/operational-dashboard/OperationalDashboard.css";
-import { BarChart } from "../../components/BarChart";
 import Axios from "axios";
 
 const Queue = styled.div`

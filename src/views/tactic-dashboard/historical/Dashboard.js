@@ -13,9 +13,6 @@ const Spinner = styled.div`
 	left: 55%;
 `;
 class Dashboard extends Component {
-	constructor(props) {
-		super(props);
-	}
 	finishFetchingData() {
 		console.log('finish')
 		const spinner1 = document.getElementById('spinner1');

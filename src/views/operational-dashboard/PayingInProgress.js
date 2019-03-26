@@ -1,16 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "../../css/operational-dashboard/OperationalDashboard.css";
-import { BarChart } from "../../components/BarChart";
-
-const MyChart = styled.div`
-   background-color: white;
-   height: 90%;
-   width:90%;
-   border-radius: 5% ;
-   box-shadow: 1px 3px 6px 2px rgb(180, 180, 180);
-
-`
 const ChartFrame = styled.div`
   padding: 0px 0px 0px 0px;
 
