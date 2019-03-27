@@ -1,4 +1,4 @@
-import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell } from 'recharts';
+import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell ,Tooltip} from 'recharts';
 import React, { PureComponent } from 'react';
 
 class CustomizedAxisTick extends PureComponent {
@@ -27,7 +27,7 @@ export function BarChart(props) {
 				<YAxis domain={[0,100]} >
         <Label angle={-90} value='Minutes' position='insideLeft' style={{textAnchor: 'middle'}} />
         </YAxis>
-        
+        <Tooltip />
 
         <Bar dataKey="value" fill="#8884d8" barSize={10}>
           {

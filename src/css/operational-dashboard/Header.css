@@ -23,6 +23,7 @@
 }
 .table-row {
     height: 30vh;
+    margin-bottom: .5em;
 }
 
 .cell {

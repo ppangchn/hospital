@@ -37,7 +37,9 @@ class PrepareQueueing extends Component {
       const data = localStorage.getItem('limit').split(',')
       time = (+data[0])*60+(+data[1])
     }
+    console.log('ekceaf',this.props.pick_q);
     const data = this.props.pick_q.map(pre => {
+      console.log('time',pre.time/60);
       return {
         name: pre.pre_id,
         value: (pre.time/60).toFixed(2),
