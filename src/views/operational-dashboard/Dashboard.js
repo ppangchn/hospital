@@ -31,7 +31,7 @@ class Dashboard extends Component {
 	}
 	async getData() {
 		const res = await Axios.get('http://localhost:5000/realtime');
-		console.log(res);
+		// console.log(res);
 	}
 	intervalID = 0;
 	componentWillUnmount() {
@@ -68,11 +68,11 @@ class Dashboard extends Component {
 					dispense,
 					finish,
 				});
-				console.log(data);
+				// console.log(data);
 				this.props.setLoading(false);
 			}, 3000);
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 		}
   }
   checkReachLimit(data) {
@@ -83,9 +83,9 @@ class Dashboard extends Component {
       const pick_limit = (+limit[0])*60 + (+limit[1])
       const decoct_limit = (+limit[2])*60 + (+limit[3])
       const dispense_limit = (+limit[4])*60 + (+limit[5])
-      console.log('limit',pick_limit,decoct_limit,dispense_limit);
+      // console.log('limit',pick_limit,decoct_limit,dispense_limit);
       pick_q.forEach(pre => {
-		  console.log('earth',pre);
+		  // console.log('earth',pre);
         if(pre.time/60 > pick_limit) isOverTime = true
       })
       decoct_q.forEach(pre => {
@@ -96,11 +96,11 @@ class Dashboard extends Component {
       })
     }
     if(isOverTime){
-      console.log('play');
+      // console.log('play');
       this.setState({sound_status:Sound.status.PLAYING})
     }
     else {
-      console.log('stop');
+      // console.log('stop');
       this.setState({sound_status:Sound.status.STOPPED})
     }
   }
@@ -131,7 +131,7 @@ class Dashboard extends Component {
 }
 
 const Preparing = props => {
-	// console.log(props);
+	// // console.log(props);
 	return (
 		<div className="d-flex bd-highlight table-row">
 			<div className="pt-2 pb-2 pl-1 bd-highlight cell " style={{ width: '93px' }}>

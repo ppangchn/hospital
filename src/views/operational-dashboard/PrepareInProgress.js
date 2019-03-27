@@ -54,7 +54,7 @@ class PrepareInProgress extends Component {
     const {data} = res;
     const staff = data[0]
     this.setState({staff})
-    console.log('staff',this.state);
+    // console.log('staff',this.state);
   }
 
 

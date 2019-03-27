@@ -30,7 +30,7 @@ class Sidebar extends Component {
 	}
 	setActiveSidebar() {
 		const query = _.get(this.props.location.state, 'title', '');
-		console.log('query', query);
+		// console.log('query', query);
 		if (query === '') {
 			this.setState({ isActiveOverall: true });
 		} else if (query === 'pickingDay') {

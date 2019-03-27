@@ -11,7 +11,7 @@ class Header extends Component {
 		this.state = {};
 	}
 	render() {
-		console.log(this.props);
+		// console.log(this.props);
 		return (
 			<Container className="d-flex bd-highlight">
 				<div className="pl-1 pt-2 pb-2 pr-1 bd-highlight" style={{ width: '97px' }}>

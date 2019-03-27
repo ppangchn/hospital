@@ -51,7 +51,7 @@ class LimitDashboard extends Component {
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(result => {
-			console.log(result);
+			// console.log(result);
 			// this.getData()
 			if (result.value)
 				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
@@ -74,10 +74,10 @@ class LimitDashboard extends Component {
 	}
 	async getData() {
 		const res = await Axios.get('http://localhost:5000/limit');
-		console.log(res.data);
+		// console.log(res.data);
 		this.setState(res.data);
 		// const { data } = res;
-		// data.length === 1 ? this.setState(data[0]) : console.log("not recieve");
+		// data.length === 1 ? this.setState(data[0]) : // console.log("not recieve");
 	}
 	handleChangeHP(e) {
 		this.setState({ hour_pick: e.target.value });

@@ -124,7 +124,7 @@ class Graph extends Component {
 			},
 			() => this.setQueryData(this.props)
 		);
-		console.log('set', value);
+		// console.log('set', value);
 		this.props.unFinishFetchingData();
 		// this.setQueryData(this.props)
 	}
@@ -142,7 +142,7 @@ class Graph extends Component {
 			analyze = title.analyzeByMonth;
 			const month = props.selectedDate.getMonth() + 1;
 			const year = props.selectedDate.getUTCFullYear();
-			console.log(month, year);
+			// console.log(month, year);
 			this.getWeekend(month, year);
 			this.setAnalyzeDataByMonth(query, props);
 		} else if (!query) {
@@ -185,12 +185,12 @@ class Graph extends Component {
 	}
 
 	async setAnalyzeDataByDay(query, props) {
-		console.log(this.state.limitTime);
+		// console.log(this.state.limitTime);
 		const { url, limitTime } = this.state;
 		const { analyzeByDayColor } = this.state;
 		const queryUrl = url[query];
 		const res = await axios.post(config.url + queryUrl, { date: props.selectedDate, limit: limitTime });
-		console.log(res.data);
+		// console.log(res.data);
 		this.props.finishFetchingData();
 		const { timeDict, breakLimit, staffDict, avgTime } = res.data;
 		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
@@ -209,7 +209,7 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByMonth(query, props) {
-		console.log(this.state.limitTime);
+		// console.log(this.state.limitTime);
 		const { url, limitTime, staffUrl } = this.state;
 		const { analyzeByMonthColor } = this.state;
 		const queryUrl = url[query];
@@ -240,7 +240,7 @@ class Graph extends Component {
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByThreeMonths(query, props) {
-		console.log(this.state.limitTime);
+		// console.log(this.state.limitTime);
 		const { url, months, limitTime, staffUrl } = this.state;
 		const { analyzeByThreeMonthsColor } = this.state;
 		const queryUrl = url[query];
@@ -332,8 +332,8 @@ class Graph extends Component {
 	overallData() {
 		const { data, color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const { isItalic } = this.state;
-		console.log(_.get(this.props.location.state, 'title', ''));
-		console.log('data', data, 'color', color);
+		// console.log(_.get(this.props.location.state, 'title', ''));
+		// console.log('data', data, 'color', color);
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
 				<div className="mt-5 mb-2 font-weight-bold">Average waiting time of processes (1 month)</div>
@@ -351,7 +351,7 @@ class Graph extends Component {
 	}
 	analyze() {
 		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic, weekend } = this.state;
-		console.log(this.state.analyzeData);
+		// console.log(this.state.analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
 				<div className="container">

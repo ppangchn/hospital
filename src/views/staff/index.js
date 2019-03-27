@@ -42,7 +42,7 @@ class StaffDashboard extends Component {
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(result => {
-			console.log(result);
+			// console.log(result);
 			// this.getData()
 			if (result.value) MySwal.fire('OK', 'That thing is still around?', 'question');
 			else MySwal.fire('Cancel', 'That thing is still around?', 'question');
@@ -53,10 +53,10 @@ class StaffDashboard extends Component {
 	}
 	async getData() {
 		const res = await Axios.get('http://localhost:5001/getStaff');
-		// console.log(res.data);
+		// // console.log(res.data);
 		const { data } = res;
 
-		data.length === 1 ? this.setState(data[0]) : console.log('not recieve');
+		data.length === 1 ? this.setState(data[0]) : // console.log('not recieve');
 	}
 	handleChangeFP(e) {
 		this.setState({ full_pick: e.target.value });

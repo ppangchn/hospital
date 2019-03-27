@@ -21,7 +21,7 @@ class Header extends Component {
 	setQueryData(props) {
 		let mode = '';
 		const query = _.get(props.location.state, 'title', '');
-		console.log(query)
+		// console.log(query)
 		if (query.includes('Day')) {
 			mode = 'Day';
 		} else if (query.includes('ThreeMonths')) {

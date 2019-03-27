@@ -10,7 +10,7 @@ class Monthpicker extends Component {
 	}
 
 	handleDayChange(date, datestring) {
-		console.log(new Date(date), datestring);
+		// console.log(new Date(date), datestring);
 		this.setState({ date });
 		this.props.setSelectedDate(new Date(date));
 	}
