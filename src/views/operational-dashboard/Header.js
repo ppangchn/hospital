@@ -17,8 +17,8 @@ class Header extends Component {
 				<div className="pl-1 pt-2 pb-2 pr-1 bd-highlight" style={{ width: '97px' }}>
 					<div className="flex-fill header-container  d-flex align-items-center justify-content-center">
 						{this.props.isLoading ? (
-							<div class="spinner-border" role="status">
-								<span class="sr-only">Loading...</span>
+							<div className="spinner-border" role="status">
+								<span className="sr-only">Loading...</span>
 							</div>
 						) : (
 							''

@@ -38,6 +38,8 @@ class StaffDashboard extends Component {
 			showCancelButton: true,
 			confirmButtonText: 'submit',
 			showLoaderOnConfirm: true,
+			confirmButtonColor: '#DC3545',
+			cancelButtonColor: 'black',
 			reverseButtons: true,
 			preConfirm: async () => {
 				return await Axios.post('http://localhost:5001/setStaff', this.state);
@@ -47,7 +49,12 @@ class StaffDashboard extends Component {
 			// console.log(result);
 			// this.getData()
 			if (result.value)
-				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
+				MySwal.fire({
+					title: 'Successful',
+					type: 'success',
+					text: 'Your data has been set.',
+					confirmButtonColor: '#DC3545',
+				}).then(() => this.props.history.push('/'));
 		});
 	}
 	componentDidMount() {

@@ -19,7 +19,7 @@ class Table extends Component {
 		};
 	}
 	createActualTable() {
-		const { dataLength, dateDictData, staffData, avgDateData, actualOverallAverageWaitingTime } = this.state;
+		const { dataLength, dateDictData, staffData, avgDateData } = this.state;
 		let actualTable = [];
 		let newActualValue = 0;
 		for (let i = 0; i < dataLength; i++) {
@@ -101,7 +101,7 @@ class Table extends Component {
 		this.getData(this.props);
 	}
 	render() {
-		const { inputTable, actualTable, actualOverallAverageWaitingTime, inputOverallAverageWaitingTime } = this.state;
+		const { inputTable, actualTable, actualOverallAverageWaitingTime } = this.state;
 		return (
 			<div className="container-fluid mb-4 pb-3">
 				<div className="row ml-4 mr-4 mt-4 mb-2 d-flex justify-content-center">
@@ -109,7 +109,7 @@ class Table extends Component {
 						<div className="row">
 							<table className="text-center mr-3">
 								<tr className="table-border table-header-bg">
-									<th colspan="4" className="border-right pl-4 pr-4">
+									<th colSpan="4" className="border-right pl-4 pr-4">
 										Actual
 									</th>
 								</tr>
@@ -132,7 +132,7 @@ class Table extends Component {
 						<div className="row">
 							<table className="text-center">
 								<tr className="table-border table-header-bg">
-									<th colspan="2" className="border-right pl-4 pr-4">
+									<th colSpan="2" className="border-right pl-4 pr-4">
 										User's Trial
 									</th>
 								</tr>

@@ -96,7 +96,7 @@ class Dashboard extends Component {
 		const { analyzeData } = this.state;
 		return (
 			<Container>
-				<Spinner class="d-flex justify-content-center align-items-center">
+				<Spinner className="d-flex justify-content-center align-items-center">
 					<div id="spinner1" className="spinner-grow text-dark" role="status" />
 					<div id="spinner2" className="spinner-grow text-dark" role="status" />
 					<div id="spinner3" className="spinner-grow text-dark" role="status" />

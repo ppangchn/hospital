@@ -12,7 +12,7 @@ import {
 import React, { PureComponent } from 'react';
 class CustomizedAxisTick extends PureComponent {
 	render() {
-		const { x, y, stroke, payload } = this.props;
+		const { x, y, payload } = this.props;
 		return (
 			<g transform={`translate(${x},${y})`}>
 				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform={`rotate(${this.props.isItalic ? "-60" : "0"})`}>
@@ -37,8 +37,8 @@ export function BarChart(props) {
 				</YAxis>
 				<Tooltip />
 				<Legend verticalAlign="top" />
-				{color.map(e => {
-					return <Bar dataKey={e.dataKey} fill={e.fill} />;
+				{color.map((e,index) => {
+					return <Bar key={index} dataKey={e.dataKey} fill={e.fill} />;
 				})}
 			</Chart>
 		</ResponsiveContainer>

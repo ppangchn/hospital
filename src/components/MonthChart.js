@@ -3,7 +3,6 @@ import {
 	XAxis,
 	YAxis,
 	Tooltip,
-	Legend,
 	Bar,
 	CartesianGrid,
 	ResponsiveContainer,
@@ -13,7 +12,7 @@ import {
 import React, { PureComponent } from 'react';
 class CustomizedAxisTick extends PureComponent {
 	render() {
-		const { x, y, stroke, payload } = this.props;
+		const { x, y, payload } = this.props;
 		return (
 			<g transform={`translate(${x},${y})`}>
 				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform={`rotate(${this.props.isItalic ? "-60" : "0"})`}>
@@ -38,7 +37,7 @@ export function MonthChart(props) {
 				</YAxis>
 				<Tooltip />
 				{color.map(e => {
-					return <Bar dataKey={e.dataKey} >
+					return <Bar key={e} dataKey={e.dataKey} >
 						{data.map((entry,index) => (
 							<Cell key={`cell-${index}`} fill={weekend[index] === "sat" || weekend[index] === "sun" ? "rgb(243,123,52)" : e.fill}/>
 						))}

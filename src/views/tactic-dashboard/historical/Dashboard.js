@@ -49,10 +49,10 @@ class Dashboard extends Component {
 			<Container className="d-flex">
 				<Sidebar />
 				<Spinner class="d-flex justify-content-center align-items-center">
-					<div id="spinner1" className="spinner-grow text-dark" role="status" />
-					<div id="spinner2" className="spinner-grow text-dark" role="status" />
-					<div id="spinner3" className="spinner-grow text-dark" role="status" />
-					<div id="loading" className="text-center">
+					<div id="spinner1" class="spinner-grow text-dark" role="status" />
+					<div id="spinner2" class="spinner-grow text-dark" role="status" />
+					<div id="spinner3" class="spinner-grow text-dark" role="status" />
+					<div id="loading" class="text-center">
 						Loading...
 					</div>
 				</Spinner>

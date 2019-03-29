@@ -33,10 +33,10 @@ class Graph extends Component {
 				],
 			},
 			icon: [
-				<i class="fas fa-file-medical d-flex align-items-center" />,
-				<i class="fas fa-exclamation-circle d-flex align-items-center" />,
-				<i class="fas fa-users d-flex align-items-center" />,
-				<i class="fas fa-clock d-flex align-items-center" />,
+				<i className="fas fa-file-medical d-flex align-items-center" />,
+				<i className="fas fa-exclamation-circle d-flex align-items-center" />,
+				<i className="fas fa-users d-flex align-items-center" />,
+				<i className="fas fa-clock d-flex align-items-center" />,
 			],
 			analyze: [],
 			overallData: {
@@ -100,11 +100,11 @@ class Graph extends Component {
 		for (let i = 1; i <= getTot; i++) {
 			//looping through days in month
 			let newDate = new Date(month, year, i);
-			if (newDate.getDay() == 0) {
+			if (newDate.getDay() === 0) {
 				//if Sunday
 				weekend.push('sun');
 			}
-			else if (newDate.getDay() == 6) {
+			else if (newDate.getDay() === 6) {
 				//if Saturday
 				weekend.push('sat');
 			}
@@ -358,13 +358,13 @@ class Graph extends Component {
 					<div className="row mt-3 mb-3">
 						{analyze.map((element, index) => {
 							return (
-								<div className="col-6 mb-2">
+								<div key={index} className="col-6 mb-2">
 									<div className="font-weight-bold d-flex justify-content-center mb-1">
 										{icon[index]}&nbsp;{element}
 										{element.includes('exceeded limit time') ? (
-											<div class="ml-2 dropdown">
+											<div className="ml-2 dropdown">
 												<button
-													class="btn btn-dropdown dropdown-toggle btn-sm"
+													className="btn btn-dropdown dropdown-toggle btn-sm"
 													type="button"
 													id="dropdownMenuButton"
 													data-toggle="dropdown"
@@ -374,11 +374,11 @@ class Graph extends Component {
 													Select limit
 												</button>
 												<div
-													class="dropdown-menu text-center"
+													className="dropdown-menu text-center"
 													aria-labelledby="dropdownMenuButton"
 												>
 													<div
-														class="btn dropdown-item"
+														className="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(50);
 														}}
@@ -386,7 +386,7 @@ class Graph extends Component {
 														50 Min
 													</div>
 													<div
-														class="btn dropdown-item"
+														className="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(100);
 														}}
@@ -394,7 +394,7 @@ class Graph extends Component {
 														100 Min
 													</div>
 													<div
-														class="btn dropdown-item"
+														className="btn dropdown-item"
 														onClick={() => {
 															this.handleLimit(150);
 														}}

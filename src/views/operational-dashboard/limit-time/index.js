@@ -13,12 +13,12 @@ const BackButton = styled.div`
 	background: black;
 	border: 1px solid #000000;
 	color: white;
-  display: inline;
-  &:hover {
-    background-color: #303030;
-    text-decoration: none;
-    color: white;
-  }
+	display: inline;
+	&:hover {
+		background-color: #303030;
+		text-decoration: none;
+		color: white;
+	}
 `;
 class LimitDashboard extends Component {
 	constructor(props) {
@@ -39,6 +39,8 @@ class LimitDashboard extends Component {
 			type: 'question',
 			showCancelButton: true,
 			confirmButtonText: 'submit',
+			confirmButtonColor: '#DC3545',
+			cancelButtonColor: 'black',
 			showLoaderOnConfirm: true,
 			reverseButtons: true,
 			preConfirm: async () => {
@@ -55,7 +57,12 @@ class LimitDashboard extends Component {
 			// console.log(result);
 			// this.getData()
 			if (result.value)
-				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
+				MySwal.fire({
+					title: 'Successful',
+					type: 'success',
+					text: 'Your data has been set.',
+					confirmButtonColor: '#DC3545',
+				}).then(() => this.props.history.push('/'));
 		});
 	}
 	componentDidMount() {
@@ -131,20 +138,20 @@ class LimitDashboard extends Component {
 						<div className=" d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.pick ? (
 								<div className="d-flex">
-									<div class="d-flex">
-										<div class="font-weight-bold">min:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.pick.min.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">max:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">max:&nbsp;</div>
 										{this.state.pick.max.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">avg:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">avg:&nbsp;</div>
 										{this.state.pick.avg.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">p80:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.pick.per80.toFixed(2)}&nbsp;
 									</div>
 								</div>
@@ -169,20 +176,20 @@ class LimitDashboard extends Component {
 						<div className="d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.decoct ? (
 								<div className="d-flex">
-									<div class="d-flex">
-										<div class="font-weight-bold">min:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.decoct.min.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">max:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">max:&nbsp;</div>
 										{this.state.decoct.max.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">avg:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">avg:&nbsp;</div>
 										{this.state.decoct.avg.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">p80:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.decoct.per80.toFixed(2)}&nbsp;
 									</div>
 								</div>
@@ -206,20 +213,20 @@ class LimitDashboard extends Component {
 						<div className="d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.dispense ? (
 								<div className="d-flex">
-									<div class="d-flex">
-										<div class="font-weight-bold">min:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.dispense.min.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">max:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">max:&nbsp;</div>
 										{this.state.dispense.max.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">avg:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">avg:&nbsp;</div>
 										{this.state.dispense.avg.toFixed(2)}&nbsp;
 									</div>
-									<div class="d-flex">
-										<div class="font-weight-bold">p80:&nbsp;</div>
+									<div className="d-flex">
+										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.dispense.per80.toFixed(2)}&nbsp;
 									</div>
 								</div>

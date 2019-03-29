@@ -29,10 +29,6 @@ class Dashboard extends Component {
 			sound_status: Sound.status.STOPPED,
 		};
 	}
-	async getData() {
-		const res = await Axios.get('http://localhost:5000/realtime');
-		// console.log(res);
-	}
 	intervalID = 0;
 	componentWillUnmount() {
 		clearInterval(this.intervalID);
@@ -123,8 +119,8 @@ class Dashboard extends Component {
 				<Boiling decoct_q={this.state.decoct_q} decoct={this.state.decoct} />
 				<Paying dispense_q={this.state.dispense_q} dispense={this.state.dispense} />
 				<div className="pt-2 pr-2 mb-1 d-flex justify-content-end">
-					<i class="fas fa-cog pr-2" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
-					<i class="fas fa-user-friends" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/staff')}/>
+					<i className="fas fa-cog pr-2" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
+					<i className="fas fa-user-friends" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/staff')}/>
 				</div>
 			</Container>
 		);
