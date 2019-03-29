@@ -56,7 +56,7 @@ class StaffDashboard extends Component {
 		// // console.log(res.data);
 		const { data } = res;
 
-		data.length === 1 ? this.setState(data[0]) : // console.log('not recieve');
+		data.length === 1 ? this.setState(data[0]) : console.log('not recieve');
 	}
 	handleChangeFP(e) {
 		this.setState({ full_pick: e.target.value });
@@ -150,7 +150,7 @@ class StaffDashboard extends Component {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }
