@@ -36,7 +36,7 @@ class BoilingInProgress extends Component {
     let partTime =0;
     let other = 0;
     this.props.decoct.forEach(pre => {
-      // console.log(pre);
+      // // console.log(pre);
       if(pre.o_type === 2){
         if(pre.parttime === 2) partTime ++;
         else if(pre.parttime === 1){
@@ -52,7 +52,7 @@ class BoilingInProgress extends Component {
     const {data} = res;
     const staff = data[0]
     this.setState({staff})
-    console.log('staff',this.state);
+    // console.log('staff',this.state);
   }
 
   render(props) {

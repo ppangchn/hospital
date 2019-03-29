@@ -39,7 +39,6 @@ class Table extends Component {
 	createInputTable() {
 		const { dataLength, inputValue } = this.state;
 		let inputTable = [];
-		console.log(dataLength);
 		for (let i = 0; i < dataLength; i++) {
 			inputTable.push(
 				<tr className="table-border cell-input-bg height-input-cell">
@@ -50,7 +49,7 @@ class Table extends Component {
 				</tr>
 			);
 		}
-		console.log('input -->', inputTable, dataLength);
+		// console.log('input -->', inputTable, dataLength);
 		this.setState({ inputTable });
 	}
 
@@ -58,14 +57,14 @@ class Table extends Component {
 		const { inputValue } = this.state;
 		inputValue[index] = +value;
 		this.setState({ inputValue });
-		console.log(inputValue);
+		// console.log(inputValue);
 	}
 	setSevenDaysUniform() {
 		const { inputValue, dataLength } = this.state;
 		for (let i = 7; i < dataLength; i++) {
 			inputValue[i] = inputValue[i % 7];
 		}
-		console.log(inputValue);
+		// console.log(inputValue);
 		this.setState({ inputValue }, () => this.createInputTable());
 	}
 	async getData(props) {
@@ -84,7 +83,7 @@ class Table extends Component {
 		for (let i = 0; i < dataLength; i++) {
 			inputValue[i] = 0;
 		}
-		console.log('input ->', inputValue);
+		// console.log('input ->', inputValue);
 		this.setState({ inputValue }, () => this.createInputTable());
 	}
 	initialInputValue() {
@@ -92,7 +91,7 @@ class Table extends Component {
 		for (let i = 0; i < dataLength; i++) {
 			if (!inputValue[i]) inputValue[i] = 0;
 		}
-		console.log('input ->', inputValue);
+		// console.log('input ->', inputValue);
 		this.setState({ inputValue });
 	}
 	componentWillReceiveProps(props) {

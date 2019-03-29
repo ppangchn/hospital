@@ -19,7 +19,7 @@ class Graph extends Component {
 	}
 	render() {
 		const { analyzeData, color } = this.state;
-		console.log('ana',analyzeData)
+		// console.log('ana',analyzeData)
 		return (
 			<div className="container-fluid scenario-bg">
 				<div className="row d-flex justify-content-center font-weight-bold mb-3">

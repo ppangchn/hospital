@@ -7,7 +7,7 @@ import PrepareQueueing from './PrepareQueueing';
 import PrepareInProgress from './PrepareInProgress';
 import BoilingInProgress from './BoilingInProgress';
 import PayingInProgress from './PayingInProgress';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Axios from 'axios';
 import Sound from 'react-sound';
 
@@ -31,7 +31,7 @@ class Dashboard extends Component {
 	}
 	async getData() {
 		const res = await Axios.get('http://localhost:5000/realtime');
-		console.log(res);
+		// console.log(res);
 	}
 	intervalID = 0;
 	componentWillUnmount() {
@@ -57,7 +57,8 @@ class Dashboard extends Component {
 				this.props.setLoading(true);
 				const res = await Axios.get('http://localhost:5000/realtime');
 				const { data } = res;
-				const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
+        const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
+        this.checkReachLimit(data)
 				this.setState({
 					pick_q,
 					pick,
@@ -67,19 +68,47 @@ class Dashboard extends Component {
 					dispense,
 					finish,
 				});
-				console.log(data);
+				// console.log(data);
 				this.props.setLoading(false);
 			}, 3000);
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 		}
-	}
-
+  }
+  checkReachLimit(data) {
+    const {  pick_q,  decoct_q,  dispense_q } = data;
+    let isOverTime = false
+    const limit = localStorage.getItem('limit').split(',')
+    if (limit) {
+      const pick_limit = (+limit[0])*60 + (+limit[1])
+      const decoct_limit = (+limit[2])*60 + (+limit[3])
+      const dispense_limit = (+limit[4])*60 + (+limit[5])
+      // console.log('limit',pick_limit,decoct_limit,dispense_limit);
+      pick_q.forEach(pre => {
+		  // console.log('earth',pre);
+        if(pre.time/60 > pick_limit) isOverTime = true
+      })
+      decoct_q.forEach(pre => {
+        if(pre.time/60 > decoct_limit) isOverTime = true
+      })
+      dispense_q.forEach(pre => {
+        if(pre.time/60 > dispense_limit) isOverTime = true
+      })
+    }
+    if(isOverTime){
+      // console.log('play');
+      this.setState({sound_status:Sound.status.PLAYING})
+    }
+    else {
+      // console.log('stop');
+      this.setState({sound_status:Sound.status.STOPPED})
+    }
+  }
 	render() {
 		return (
 			<Container className="d-flex flex-column">
 				<Sound url="/alert.mp3" playStatus={this.state.sound_status} autoLoad={true} />
-				<button
+				{/* <button
 					onClick={() => {
 						this.setState({ sound_status: Sound.status.PLAYING });
 					}}
@@ -88,21 +117,13 @@ class Dashboard extends Component {
 					onClick={() => {
 						this.setState({ sound_status: Sound.status.STOPPED });
 					}}
-				/>
+				/> */}
 				<Preparing pick_q={this.state.pick_q} pick={this.state.pick} />
 				<Boiling decoct_q={this.state.decoct_q} decoct={this.state.decoct} />
 				<Paying dispense_q={this.state.dispense_q} dispense={this.state.dispense} />
-				<div className="pt-4 pr-2 mb-1 d-flex justify-content-end">
-					<i
-						class="fas fa-cog pr-2"
-						style={{ fontSize: '2em', cursor: 'pointer' }}
-						onClick={() => this.props.history.push('/limit')}
-					/>
-					<i
-						class="fas fa-user-friends"
-						style={{ fontSize: '2em', cursor: 'pointer' }}
-						onClick={() => this.props.history.push('/staff')}
-					/>
+				<div className="pt-2 pr-2 mb-1 d-flex justify-content-end">
+					<i class="fas fa-cog pr-2" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
+					<i class="fas fa-user-friends" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/staff')}/>
 				</div>
 			</Container>
 		);
@@ -110,17 +131,17 @@ class Dashboard extends Component {
 }
 
 const Preparing = props => {
-	// console.log(props);
+	// // console.log(props);
 	return (
-		<div className="d-flex bd-highlight table-row mb-2">
-			<div className="p-2 bd-highlight cell " style={{ width: '100px' }}>
+		<div className="d-flex bd-highlight table-row">
+			<div className="pt-2 pb-2 pl-1 bd-highlight cell " style={{ width: '93px' }}>
 				<div className="flex-fill header-container cell d-flex align-items-center justify-content-center pre-title-cell flex-column">
 					<h4>จัดยา</h4>
 					<i className="fas fa-file-prescription" style={{ fontSize: '50px' }} />
 				</div>
 			</div>
 
-			<div className="p-2 flex-grow-1 bd-highlight row">
+			<div className="pr-2 pt-2 pb-2 flex-grow-1 bd-highlight d-flex">
 				<PrepareQueueing pick_q={props.pick_q} />
 				<PrepareInProgress pick={props.pick} />
 			</div>
@@ -130,15 +151,15 @@ const Preparing = props => {
 
 const Boiling = props => {
 	return (
-		<div className="d-flex bd-highlight table-row mb-2">
-			<div className="p-2 bd-highlight cell " style={{ width: '100px' }}>
+		<div className="d-flex bd-highlight table-row">
+			<div className="pt-2 pb-2 pl-1 bd-highlight cell " style={{ width: '93px' }}>
 				<div className="flex-fill header-container cell d-flex align-items-center justify-content-center boil-title-cell flex-column">
 					<h4>ต้มยา</h4>
 					<i className="fas fa-mug-hot" style={{ fontSize: '50px' }} />
 				</div>
 			</div>
 
-			<div className="p-2 flex-grow-1 bd-highlight row">
+			<div className="pr-2 pt-2 pb-2 flex-grow-1 bd-highlight d-flex">
 				<BoilingQueueing decoct_q={props.decoct_q} />
 				<BoilingInProgress decoct={props.decoct} />
 			</div>
@@ -148,15 +169,15 @@ const Boiling = props => {
 
 const Paying = props => {
 	return (
-		<div className="d-flex bd-highlight table-row mb-2">
-			<div className="p-2 bd-highlight cell " style={{ width: '100px' }}>
+		<div className="d-flex bd-highlight table-row">
+			<div className="pt-2 pb-2 pl-1 bd-highlight cell " style={{ width: '93px' }}>
 				<div className="flex-fill header-container cell d-flex align-items-center justify-content-center pay-title-cell flex-column">
 					<h4>จ่ายยา</h4>
 					<i className="fas fa-handshake" style={{ fontSize: '50px' }} />
 				</div>
 			</div>
 
-			<div className="p-2 flex-grow-1 bd-highlight row">
+			<div className="pr-2 pt-2 pb-2 flex-grow-1 bd-highlight d-flex">
 				<PayingQueueing dispense_q={props.dispense_q} />
 				<PayingInProgress dispense={props.dispense} />
 			</div>

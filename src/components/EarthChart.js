@@ -1,4 +1,4 @@
-import { BarChart as  Chart,XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell,Legend } from 'recharts';
+import { BarChart as  Chart,XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell,Legend,Tooltip } from 'recharts';
 import React, { PureComponent } from 'react';
 
 class CustomizedAxisTick extends PureComponent {
@@ -19,7 +19,7 @@ class CustomizedAxisTick extends PureComponent {
 export function BarChart(props) {
 	//props = {data,color}
   const {data} = props;
-  // console.log(data);
+  // // console.log(data);
 	return (
 		<ResponsiveContainer width="100%" height="90%" >
 			<ComposedChart data={data}>
@@ -31,7 +31,7 @@ export function BarChart(props) {
         <Label angle={-90} value='Minutes' position='insideLeft' style={{textAnchor: 'middle'}} />
         </YAxis>
         <Legend verticalAlign="top" />
-
+        <Tooltip />
         <Bar dataKey="value" fill="#1114d8" barSize={10}>
           {
             data.map((entry, index) => (
