@@ -78,11 +78,12 @@ class Dashboard extends Component {
   checkReachLimit(data) {
     const {  pick_q,  decoct_q,  dispense_q } = data;
     let isOverTime = false
-    const limit = localStorage.getItem('limit').split(',')
+    const limit = localStorage.getItem('limit')
     if (limit) {
-      const pick_limit = (+limit[0])*60 + (+limit[1])
-      const decoct_limit = (+limit[2])*60 + (+limit[3])
-      const dispense_limit = (+limit[4])*60 + (+limit[5])
+	  const limitTime = limit.split(',');
+      const pick_limit = (+limitTime[0])*60 + (+limitTime[1])
+      const decoct_limit = (+limitTime[2])*60 + (+limitTime[3])
+      const dispense_limit = (+limitTime[4])*60 + (+limitTime[5])
       // console.log('limit',pick_limit,decoct_limit,dispense_limit);
       pick_q.forEach(pre => {
 		  // console.log('earth',pre);

@@ -40,6 +40,7 @@ class LimitDashboard extends Component {
 			showCancelButton: true,
 			confirmButtonText: 'submit',
 			showLoaderOnConfirm: true,
+			reverseButtons: true,
 			preConfirm: async () => {
 				// return await Axios.post("http://localhost:5001/setStaff", this.state);
 				localStorage.setItem(
@@ -55,7 +56,6 @@ class LimitDashboard extends Component {
 			// this.getData()
 			if (result.value)
 				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
-			else MySwal.fire('Cancel', 'That thing is still around?', 'question');
 		});
 	}
 	componentDidMount() {

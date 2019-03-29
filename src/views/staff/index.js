@@ -37,6 +37,7 @@ class StaffDashboard extends Component {
 			showCancelButton: true,
 			confirmButtonText: 'submit',
 			showLoaderOnConfirm: true,
+			reverseButtons: true,
 			preConfirm: async () => {
 				return await Axios.post('http://localhost:5001/setStaff', this.state);
 			},
@@ -44,8 +45,8 @@ class StaffDashboard extends Component {
 		}).then(result => {
 			// console.log(result);
 			// this.getData()
-			if (result.value) MySwal.fire('OK', 'That thing is still around?', 'question');
-			else MySwal.fire('Cancel', 'That thing is still around?', 'question');
+			if (result.value)
+				MySwal.fire('Successful', 'Your data has been set', 'success').then(() => this.props.history.push('/'));
 		});
 	}
 	componentDidMount() {
@@ -56,7 +57,7 @@ class StaffDashboard extends Component {
 		// // console.log(res.data);
 		const { data } = res;
 
-		data.length === 1 ? this.setState(data[0]) : // console.log('not recieve');
+		data.length === 1 ? this.setState(data[0]) : console.log('not recieve');
 	}
 	handleChangeFP(e) {
 		this.setState({ full_pick: e.target.value });
