@@ -80,7 +80,7 @@ class StaffDashboard extends Component {
           <div className="col d-flex justify-content-center align-items-center "><div className="staff-cell time d-flex justify-content-center align-items-center"> Part-Time </div></div>
         </div>
         <div className="row mt-4">
-          <div className="col  d-flex justify-content-center align-items-center"><div className="staff-cell pick d-flex justify-content-center align-items-center"> Picking </div></div>
+          <div className="col  d-flex justify-content-center align-items-center"><div className="staff-cell pick d-flex justify-content-center align-items-center"> Picker </div></div>
           <div className="col d-flex justify-content-center align-items-center">
             <input
               type="number"
@@ -98,7 +98,7 @@ class StaffDashboard extends Component {
           </div>
         </div>
         <div className="row mt-4">
-          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell decoct d-flex justify-content-center align-items-center"> Decocting </div></div>
+          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell decoct d-flex justify-content-center align-items-center"> Decocting operator</div></div>
           <div className="col center">
             <input
               type="number"
@@ -115,7 +115,7 @@ class StaffDashboard extends Component {
           </div>
         </div>
         <div className="row mt-4">
-          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell dis d-flex justify-content-center align-items-center"> Dispensing </div></div>
+          <div className="col d-flex justify-content-center align-items-center"><div className="staff-cell dis d-flex justify-content-center align-items-center"> Dispensing operator</div></div>
           <div className="col center">
             <input
               type="number"
