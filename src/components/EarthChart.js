@@ -1,4 +1,4 @@
-import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell ,Tooltip} from 'recharts';
+import { BarChart as  Chart,XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell,Legend,Tooltip } from 'recharts';
 import React, { PureComponent } from 'react';
 
 class CustomizedAxisTick extends PureComponent {
@@ -6,6 +6,7 @@ class CustomizedAxisTick extends PureComponent {
     const {
       x, y, stroke, payload,
     } = this.props;
+    console.log('eartadsfadsf',this.props);
     return (
       <g transform={`translate(${x},${y})`}>
         <text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">{payload.value}</text>
@@ -20,16 +21,18 @@ export function BarChart(props) {
   const {data} = props;
   // // console.log(data);
 	return (
-		<ResponsiveContainer width="100%" height="80%" >
+		<ResponsiveContainer width="100%" height="90%" >
 			<ComposedChart data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick />}/>
+				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick isItalic={true}/>}>
+					<Label value={""} position="insideBottom"  style={{ textAnchor: 'middle' }} />
+				</XAxis>
 				<YAxis domain={[0,100]} >
         <Label angle={-90} value='Minutes' position='insideLeft' style={{textAnchor: 'middle'}} />
         </YAxis>
+        <Legend verticalAlign="top" />
         <Tooltip />
-
-        <Bar dataKey="value" fill="#8884d8" barSize={10}>
+        <Bar dataKey="value" fill="#1114d8" barSize={10}>
           {
             data.map((entry, index) => (
 
