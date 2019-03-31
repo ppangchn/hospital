@@ -1,4 +1,4 @@
-import { BarChart as  XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell,Legend,Tooltip } from 'recharts';
+import {   XAxis, YAxis, Bar, CartesianGrid, ResponsiveContainer,Label, Line, ComposedChart,Cell,Legend,Tooltip } from 'recharts';
 import React, { PureComponent } from 'react';
 
 class CustomizedAxisTick extends PureComponent {
