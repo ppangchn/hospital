@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const MySwal = withReactContent(Swal);
 const Container = styled.div`
 	background-color: rgb(223, 221, 221);
-	height: 100vh;
+	height: 105vh;
 `;
 const BackButton = styled.div`
 	background: black;
@@ -19,6 +19,20 @@ const BackButton = styled.div`
 		text-decoration: none;
 		color: white;
 	}
+`;
+const Title = styled.div`
+	color: black;
+	font-size: 3em;
+`;
+const SubTitle = styled.div`
+	color: black;
+	font-size: 1.5em;
+`;
+const Header = styled.div`
+	font-size: 1.2em;
+`;
+const Detail = styled.div`
+	font-size: 1.25em;
 `;
 class LimitDashboard extends Component {
 	constructor(props) {
@@ -35,7 +49,7 @@ class LimitDashboard extends Component {
 	}
 	async staffSubmit() {
 		MySwal.fire({
-			title: 'Submit your staff number',
+			title: 'Submit limit time?',
 			type: 'question',
 			showCancelButton: true,
 			confirmButtonText: 'submit',
@@ -108,36 +122,38 @@ class LimitDashboard extends Component {
 	render() {
 		const { theDate } = this.state;
 		return (
-			<Container className="pt-5">
+			<Container className="col pt-4">
 				<div className="row">
-					<div className="col center">
-						<h1>Limit Time Setting</h1>
-					</div>
+					<Title className="col center">
+						<div>Limit Time Setting</div>
+					</Title>
 				</div>
-				<div className="row mt-5">
+				<SubTitle className="row mt-4 mb-4">
 					<div className="col center">{theDate ? new Date(theDate).toDateString() : ''}</div>
-				</div>
+				</SubTitle>
 
-				<div className="row mt-5">
-					<div className="col center" />
-					<div className="col d-flex justify-content-center align-items-center ">
+				<Header className="row mt-3">
+					<div className="col-6 center" />
+					<div className="col-2 d-flex justify-content-center align-items-center ">
 						<div className="staff-cell time d-flex justify-content-center align-items-center"> Hours </div>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center ">
+					<div className="col-2 d-flex justify-content-center align-items-center ">
 						<div className="staff-cell time d-flex justify-content-center align-items-center">
 							{' '}
 							Minutes{' '}
 						</div>
+						<div className="col-2" />
 					</div>
-				</div>
-				<div className="row mt-5">
-					<div className="col  d-flex justify-content-center align-items-center flex-column">
-						<div className="staff-cell pick d-flex justify-content-center align-items-center">
+				</Header>
+				<div className="row mt-3">
+					<div className="col-2" />
+					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
+						<Header className="staff-cell pick d-flex justify-content-center align-items-center">
 							Waiting time for Picking{' '}
-						</div>
+						</Header>
 						<div className=" d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.pick ? (
-								<div className="d-flex">
+								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.pick.min.toFixed(2)}&nbsp;
@@ -154,28 +170,35 @@ class LimitDashboard extends Component {
 										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.pick.per80.toFixed(2)}&nbsp;
 									</div>
-								</div>
+								</Detail>
 							) : (
-								`min: - max: - avg: - per80: -`
+								<Detail>
+									<div className="font-weight-bold">min: -</div>
+									<div className="font-weight-bold">max: -</div>
+									<div className="font-weight-bold">avg: -</div>
+									<div className="font-weight-bold">per80: -</div>
+								</Detail>
 							)}
 						</div>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.hour_pick} onChange={this.handleChangeHP.bind(this)} />
-					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					</Detail>
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						{' '}
 						<input type="number" value={this.state.min_pick} onChange={this.handleChangeMP.bind(this)} />
-					</div>
+					</Detail>
+					<div className="col-2" />
 				</div>
-				<div className="row mt-5">
-					<div className="col d-flex justify-content-center align-items-center flex-column">
-						<div className="staff-cell decoct d-flex justify-content-center align-items-center">
+				<div className="row mt-3">
+				<div className="col-2" />
+					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
+						<Header className="staff-cell decoct d-flex justify-content-center align-items-center">
 							Waiting time for Decocting{' '}
-						</div>
+						</Header>
 						<div className="d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.decoct ? (
-								<div className="d-flex">
+								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.decoct.min.toFixed(2)}&nbsp;
@@ -192,27 +215,34 @@ class LimitDashboard extends Component {
 										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.decoct.per80.toFixed(2)}&nbsp;
 									</div>
-								</div>
+								</Detail>
 							) : (
-								`min: - max: - avg: - p80: -`
+								<Detail>
+									<div className="font-weight-bold">min: -</div>
+									<div className="font-weight-bold">max: -</div>
+									<div className="font-weight-bold">avg: -</div>
+									<div className="font-weight-bold">per80: -</div>
+								</Detail>
 							)}
 						</div>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.hour_decoct} onChange={this.handleChangeHD.bind(this)} />
-					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					</Detail>
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.min_decoct} onChange={this.handleChangeMD.bind(this)} />
-					</div>
+					</Detail>
+					<div className="col-2" />
 				</div>
-				<div className="row mt-5">
-					<div className="col d-flex justify-content-center align-items-center flex-column">
-						<div className="staff-cell dis d-flex justify-content-center align-items-center">
+				<div className="row mt-3">
+				<div className="col-2" />
+					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
+						<Header className="staff-cell dis d-flex justify-content-center align-items-center">
 							Waiting time for Dispensing{' '}
-						</div>
+						</Header>
 						<div className="d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.dispense ? (
-								<div className="d-flex">
+								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
 										{this.state.dispense.min.toFixed(2)}&nbsp;
@@ -229,20 +259,26 @@ class LimitDashboard extends Component {
 										<div className="font-weight-bold">p80:&nbsp;</div>
 										{this.state.dispense.per80.toFixed(2)}&nbsp;
 									</div>
-								</div>
+								</Detail>
 							) : (
-								`min: - max: - avg: - per80: -`
+								<Detail>
+									<div className="font-weight-bold">min: -</div>
+									<div className="font-weight-bold">max: -</div>
+									<div className="font-weight-bold">avg: -</div>
+									<div className="font-weight-bold">per80: -</div>
+								</Detail>
 							)}
 						</div>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.hour_dis} onChange={this.handleChangeHDI.bind(this)} />
-					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					</Detail>
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.min_dis} onChange={this.handleChangeMDI.bind(this)} />
-					</div>
+					</Detail>
+					<div className="col-2" />
 				</div>
-				<div className="row mt-5">
+				<div className="row mt-3">
 					<div className="col d-flex justify-content-center align-items-center">
 						<BackButton
 							className="btn mr-3"

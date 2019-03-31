@@ -19,6 +19,20 @@ const BackButton = styled.div`
 		color: white;
 	}
 `;
+const Title = styled.div`
+	color: black;
+	font-size: 3em;
+`;
+const SubTitle = styled.div`
+	color: black;
+	font-size: 1.5em;
+`;
+const Header = styled.div`
+	font-size: 1.2em;
+`;
+const Detail = styled.div`
+	font-size: 1.25em;
+`;
 class StaffDashboard extends Component {
 	constructor(props) {
 		super(props);
@@ -54,7 +68,7 @@ class StaffDashboard extends Component {
 					type: 'success',
 					text: 'Your data has been set.',
 					confirmButtonColor: '#DC3545',
-				}).then(() => this.props.history.push('/'));
+				});
 		});
 	}
 	componentDidMount() {
@@ -86,68 +100,75 @@ class StaffDashboard extends Component {
 	render() {
 		const { theDate } = this.state;
 		return (
-			<Container className="">
-				<div className="row pt-5">
-					<div className="col center">
-						<h1>Number of Assigned Staffs</h1>
-					</div>
+			<Container className="col">
+				<div className="row pt-4">
+					<Title className="col center">
+						<div>Number of Assigned Staffs</div>
+					</Title>
 				</div>
-				<div className="row mt-5">
+				<SubTitle className="row mt-4 mb-4">
 					<div className="col center">{theDate ? new Date(theDate).toDateString() : ''}</div>
-				</div>
+				</SubTitle>
 
-				<div className="row mt-4">
-					<div className="col center" />
-					<div className="col d-flex justify-content-center align-items-center ">
+				<Header className="row mt-4">
+					<div className="col-6 center" />
+					<div className="col-2 d-flex justify-content-center align-items-center ">
 						<div className="staff-cell time d-flex justify-content-center align-items-center">
 							{' '}
 							Full-Time{' '}
 						</div>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center ">
+					<div className="col-2 d-flex justify-content-center align-items-center ">
 						<div className="staff-cell time d-flex justify-content-center align-items-center">
 							{' '}
 							Part-Time{' '}
 						</div>
 					</div>
-				</div>
+					<div className="col-2" />
+				</Header>
 				<div className="row mt-4">
-					<div className="col  d-flex justify-content-center align-items-center">
-						<div className="staff-cell pick d-flex justify-content-center align-items-center"> Picker </div>
+					<div className="col-2" />
+					<div className="col-4  d-flex justify-content-center align-items-center">
+						<Header className="staff-cell pick d-flex justify-content-center align-items-center">
+							{' '}
+							Picker{' '}
+						</Header>
 					</div>
-					<div className="col d-flex justify-content-center align-items-center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.full_pick} onChange={this.handleChangeFP.bind(this)} />
-					</div>
-					<div className="col center">
+					</Detail>
+					<Detail className="col-2 center">
 						{' '}
 						<input type="number" value={this.state.part_pick} onChange={this.handleChangePP.bind(this)} />
-					</div>
+					</Detail>
 				</div>
 				<div className="row mt-4">
-					<div className="col d-flex justify-content-center align-items-center">
-						<div className="staff-cell decoct d-flex justify-content-center align-items-center">
+				<div className="col-2" />
+					<div className="col-4 d-flex justify-content-center align-items-center">
+						<Header className="staff-cell decoct d-flex justify-content-center align-items-center">
 							{' '}
 							Decocting operator
-						</div>
+						</Header>
 					</div>
-					<div className="col center">
+					<Detail className="col-2 center">
 						<input type="number" value={this.state.full_decoct} onChange={this.handleChangeFD.bind(this)} />
-					</div>
-					<div className="col center">
+					</Detail>
+					<Detail className="col-2 center">
 						<input type="number" value={this.state.part_decoct} onChange={this.handleChangePD.bind(this)} />
-					</div>
+					</Detail>
 				</div>
 				<div className="row mt-4">
-					<div className="col d-flex justify-content-center align-items-center">
-						<div className="staff-cell dis d-flex justify-content-center align-items-center">
+				<div className="col-2" />
+					<div className="col-4 d-flex justify-content-center align-items-center">
+						<Header className="staff-cell dis d-flex justify-content-center align-items-center">
 							{' '}
 							Dispensing operator
-						</div>
+						</Header>
 					</div>
-					<div className="col center">
+					<Detail className="col-2 center">
 						<input type="number" value={this.state.full_dis} onChange={this.handleChangeFDI.bind(this)} />
-					</div>
-					<div className="col center" />
+					</Detail>
+					<div className="col-2 center" />
 				</div>
 				<div className="row mt-4">
 					<div className="col d-flex justify-content-center align-items-center">
