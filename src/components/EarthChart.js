@@ -25,10 +25,10 @@ export function BarChart(props) {
 			<ComposedChart data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick isItalic={true}/>}>
-					<Label value={""} position="insideBottom"  style={{ textAnchor: 'middle' }} />
+					<Label value={"ID ใบยา"} position="insideBottom"  style={{ textAnchor: 'middle' }} />
 				</XAxis>
 				<YAxis domain={[0,100]} >
-        <Label angle={-90} value='Minutes' position='insideLeft' style={{textAnchor: 'middle'}} />
+        <Label angle={-90} value='เวลารอ(นาที)' position='insideLeft' style={{textAnchor: 'middle'}} />
         </YAxis>
         <Legend verticalAlign="top" />
         <Tooltip />

@@ -137,7 +137,7 @@ class StaffDashboard extends Component {
 					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.full_pick} onChange={this.handleChangeFP.bind(this)} />
 					</Detail>
-					<Detail className="col-2 center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						{' '}
 						<input type="number" value={this.state.part_pick} onChange={this.handleChangePP.bind(this)} />
 					</Detail>
@@ -150,10 +150,10 @@ class StaffDashboard extends Component {
 							Decocting operator
 						</Header>
 					</div>
-					<Detail className="col-2 center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.full_decoct} onChange={this.handleChangeFD.bind(this)} />
 					</Detail>
-					<Detail className="col-2 center">
+					<Detail className="col-2 d-flex justify-content-center align-items-center">
 						<input type="number" value={this.state.part_decoct} onChange={this.handleChangePD.bind(this)} />
 					</Detail>
 				</div>
