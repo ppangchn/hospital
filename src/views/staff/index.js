@@ -24,8 +24,9 @@ const Title = styled.div`
 	font-size: 3em;
 `;
 const SubTitle = styled.div`
+background: white;
 	color: black;
-	font-size: 1.5em;
+	font-size: 3.5em;
 `;
 const Header = styled.div`
 	font-size: 1.2em;
@@ -172,16 +173,16 @@ class StaffDashboard extends Component {
 				</div>
 				<div className="row mt-4">
 					<div className="col d-flex justify-content-center align-items-center">
-						<BackButton
-							className="btn mr-3"
+						<button
+							className="btn btn-danger mr-3"
 							onClick={() => {
 								this.props.history.push('/');
 							}}
 						>
 							Back
-						</BackButton>
+						</button>
 						<button
-							className="btn btn-danger"
+							className="btn btn-success"
 							onClick={() => {
 								this.staffSubmit();
 							}}

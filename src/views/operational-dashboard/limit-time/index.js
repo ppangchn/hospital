@@ -10,7 +10,7 @@ const Container = styled.div`
 	height: 105vh;
 `;
 const BackButton = styled.div`
-	background: black;
+	background: red;
 	border: 1px solid #000000;
 	color: white;
 	display: inline;
@@ -25,8 +25,9 @@ const Title = styled.div`
 	font-size: 3em;
 `;
 const SubTitle = styled.div`
+background: white;
 	color: black;
-	font-size: 1.5em;
+	font-size: 3.5em;
 `;
 const Header = styled.div`
 	font-size: 1.2em;
@@ -156,19 +157,19 @@ class LimitDashboard extends Component {
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{this.state.pick.min.toFixed(2)}&nbsp;
+										{parseInt(this.state.pick.min/60)}&nbsp; Hr {parseInt(this.state.pick.min%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{this.state.pick.max.toFixed(2)}&nbsp;
+										{parseInt(this.state.pick.max/60)}&nbsp; Hr {parseInt(this.state.pick.max%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{this.state.pick.avg.toFixed(2)}&nbsp;
+										{parseInt(this.state.pick.avg/60)}&nbsp; Hr {parseInt(this.state.pick.avg%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{this.state.pick.per80.toFixed(2)}&nbsp;
+										{parseInt(this.state.pick.per80/60)}&nbsp; Hr {parseInt(this.state.pick.per80%60)} Min
 									</div>
 								</Detail>
 							) : (
@@ -201,19 +202,19 @@ class LimitDashboard extends Component {
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{this.state.decoct.min.toFixed(2)}&nbsp;
+										{parseInt(this.state.decoct.min/60)}&nbsp; Hr {parseInt(this.state.decoct.min%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{this.state.decoct.max.toFixed(2)}&nbsp;
+										{parseInt(this.state.decoct.max/60)}&nbsp; Hr {parseInt(this.state.decoct.max%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{this.state.decoct.avg.toFixed(2)}&nbsp;
+										{parseInt(this.state.decoct.avg/60)}&nbsp; Hr {parseInt(this.state.decoct.avg%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{this.state.decoct.per80.toFixed(2)}&nbsp;
+										{parseInt(this.state.decoct.per80/60)}&nbsp; Hr {parseInt(this.state.decoct.per80%60)} Min
 									</div>
 								</Detail>
 							) : (
@@ -245,19 +246,19 @@ class LimitDashboard extends Component {
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{this.state.dispense.min.toFixed(2)}&nbsp;
+										{parseInt(this.state.dispense.min/60)}&nbsp; Hr {parseInt(this.state.dispense.min%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{this.state.dispense.max.toFixed(2)}&nbsp;
+										{parseInt(this.state.dispense.max/60)}&nbsp; Hr {parseInt(this.state.dispense.max%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{this.state.dispense.avg.toFixed(2)}&nbsp;
+										{parseInt(this.state.dispense.avg/60)}&nbsp; Hr {parseInt(this.state.dispense.avg%60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{this.state.dispense.per80.toFixed(2)}&nbsp;
+										{parseInt(this.state.dispense.per80/60)}&nbsp; Hr {parseInt(this.state.dispense.per80%60)} Min
 									</div>
 								</Detail>
 							) : (
@@ -280,16 +281,16 @@ class LimitDashboard extends Component {
 				</div>
 				<div className="row mt-3">
 					<div className="col d-flex justify-content-center align-items-center">
-						<BackButton
-							className="btn mr-3"
+						<button
+							className="btn btn-danger mr-3"
 							onClick={() => {
 								this.props.history.push('/');
 							}}
 						>
 							Back
-						</BackButton>
+						</button>
 						<button
-							className="btn btn-danger"
+							className="btn btn-success"
 							onClick={() => {
 								this.staffSubmit();
 							}}

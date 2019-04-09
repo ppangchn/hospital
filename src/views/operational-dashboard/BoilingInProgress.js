@@ -86,7 +86,7 @@ class BoilingInProgress extends Component {
               </div>
               <div className="col-5">
                 {" "}
-                <span style={{ fontSize: "12px" }}>ทั้งหมด</span>{" "}
+                <span style={{ fontSize: "12px" }}>อัตรากำลังวันนี้</span>{" "}
               </div>
             </div>
             <div className="row ">
