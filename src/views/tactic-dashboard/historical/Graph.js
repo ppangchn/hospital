@@ -214,6 +214,7 @@ class Graph extends Component {
 			}
 		}
 		this.props.finishFetchingData();
+		console.log(res.data)
 		this.setState({ overallData: { data: dateDictData, color, XAxisLabel, YAxisLabel }, isItalic: false });
 	}
 

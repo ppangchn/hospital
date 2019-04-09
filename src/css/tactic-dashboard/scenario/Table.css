@@ -20,8 +20,12 @@
 .cell-actual-bg {
     background-color: rgb(219,227,246)
 }
-.cell-input-bg {
+.cell-input-7-bg {
     background-color: rgb(255,230,153)
+}
+.cell-input-bg {
+    background-color: rgb(250,235,196)
+    
 }
 .button {
     background-color: rgb(227,227,227);

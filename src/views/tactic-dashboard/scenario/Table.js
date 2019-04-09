@@ -41,8 +41,9 @@ class Table extends Component {
 		const { dataLength, inputValue } = this.state;
 		let inputTable = [];
 		for (let i = 0; i < dataLength; i++) {
+			console.log(`cell-input${i < 7 ? "-7" : null}-bg`)
 			inputTable.push(
-				<tr className={`table-border cell-input-bg height-input-cell`}>
+				<tr className={`table-border cell-input${i < 7 ? "-7" : ""}-bg height-input-cell`}>
 					<td className="border-right">
 						<Input addInputValue={(i, e) => this.addInputValue(i, e)} index={i} value={inputValue[i]} />
 					</td>
