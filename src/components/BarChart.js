@@ -15,7 +15,7 @@ class CustomizedAxisTick extends PureComponent {
 		const { x, y, payload } = this.props;
 		return (
 			<g transform={`translate(${x},${y})`}>
-				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform={`rotate(${this.props.isItalic ? "-60" : "0"})`}>
+				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform={`rotate(${this.props.isItalic ? "-50" : "0"})`}>
 					{payload.value}
 				</text>
 			</g>
@@ -35,7 +35,7 @@ export function BarChart(props) {
 				<YAxis>
 					<Label angle={-90} value={YAxisLabel} position="insideLeft" style={{ textAnchor: 'middle' }} />
 				</YAxis>
-				<Tooltip />
+				<Tooltip itemSorter={() => 1} />
 				<Legend verticalAlign="top" />
 				{color.map((e,index) => {
 					return <Bar key={index} dataKey={e.dataKey} fill={e.fill} />;

@@ -31,27 +31,35 @@ class BoilingInProgress extends Component {
     super(props);
     this.state = {};
   }
-  getStaff(){
+  getStaff() {
     let fullTime = 0;
-    let partTime =0;
+    let partTime = 0;
     let other = 0;
+    let f = new Set()
+    let p = new Set()
     this.props.decoct.forEach(pre => {
       // // console.log(pre);
-      if(pre.o_type === 2){
-        if(pre.parttime === 2) partTime ++;
-        else if(pre.parttime === 1){
-          if(pre.o_id === 99) other++;
-          else fullTime ++;
+      if (pre.o_type === 2) {
+        if (pre.parttime === 2) partTime++;
+        else if (pre.parttime === 1) {
+          if (pre.o_id === 99) other++;
+          else {
+            if(!(f.has(pre.o_id)) ){
+              fullTime++;
+              f.add(pre.o_id)
+
+            }
+          }
         }
       }
     })
-    return [fullTime,partTime,other]
+    return [fullTime, partTime, other]
   }
-  async componentDidMount(){
+  async componentDidMount() {
     const res = await Axios.get('http://localhost:5001/getStaff')
-    const {data} = res;
+    const { data } = res;
     const staff = data[0]
-    this.setState({staff})
+    this.setState({ staff })
     // console.log('staff',this.state);
   }
 
@@ -88,7 +96,7 @@ class BoilingInProgress extends Component {
                     {this.getStaff()[0]}
                   </Queue1>
                   <Queue1 className="d-flex justify-content-center align-items-center mr-1">
-                  {this.getStaff()[1]}
+                    {this.getStaff()[1]}
                   </Queue1>
 
                 </div>
@@ -99,7 +107,7 @@ class BoilingInProgress extends Component {
                     {this.state.staff ? this.state.staff.full_decoct : 0}
                   </Queue1>
                   <Queue1 className="d-flex justify-content-center align-items-center mr-1">
-                  {this.state.staff ? this.state.staff.part_decoct : 0}
+                    {this.state.staff ? this.state.staff.part_decoct : 0}
                   </Queue1>
                 </div>
               </div>

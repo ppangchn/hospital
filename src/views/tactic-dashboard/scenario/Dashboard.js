@@ -96,15 +96,15 @@ class Dashboard extends Component {
 		const { analyzeData } = this.state;
 		return (
 			<Container>
-				<Spinner className="d-flex justify-content-center align-items-center">
-					<div id="spinner1" className="spinner-grow text-dark" role="status" />
-					<div id="spinner2" className="spinner-grow text-dark" role="status" />
-					<div id="spinner3" className="spinner-grow text-dark" role="status" />
-					<div id="loading" className="text-center">
+				<Spinner class="d-flex justify-content-center align-items-center">
+					<div id="spinner1" class="spinner-grow text-dark" role="status" />
+					<div id="spinner2" class="spinner-grow text-dark" role="status" />
+					<div id="spinner3" class="spinner-grow text-dark" role="status" />
+					<div id="loading" class="text-center">
 						Loading...
 					</div>
 				</Spinner>
-				<div id="graph" className="w-100">
+				<div id="graph" class="w-100">
 					<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
 					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData}/>
 				</div>

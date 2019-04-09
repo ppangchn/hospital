@@ -37,15 +37,23 @@ class PrepareInProgress extends Component {
     let fullTime = 0;
     let partTime =0;
     let other = 0;
+    let f = new Set()
     this.props.pick.forEach(pre => {
       if(pre.o_type === 1){
         if(pre.parttime === 2) partTime ++;
         else if(pre.parttime === 1){
           if(pre.o_id === 99) other++;
-          else fullTime ++;
+          else {
+            if(!(f.has(pre.o_id)) ){
+              fullTime++;
+              f.add(pre.o_id)
+
+            }
+          }
         }
       }
     })
+    console.log('prestaff',f);
     return [fullTime,partTime,other]
   }
 

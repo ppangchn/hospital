@@ -1,0 +1,12 @@
+.recharts-legend-item-text {
+    font-size: 1.2em;
+    position: relative;
+    top: 2px;
+}
+.recharts-default-legend {
+    bottom: 8px;
+    position: relative;
+}
+.recharts-label {
+    font-size: 1.2em;
+}
