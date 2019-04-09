@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import "../../css/operational-dashboard/OperationalDashboard.css";
 import { BarChart } from "../../components/EarthChart";
+import Axios from "axios";
 
 
 const Queue = styled.div`
@@ -32,11 +33,16 @@ class BoilingQueueing extends Component {
     super(props);
     this.state = {};
   }
-  getChartData(){
+  async getChartData(){
     let time = 0
     if(localStorage.getItem('limit')){
       const data = localStorage.getItem('limit').split(',')
       time = (+data[2])*60+(+data[3])
+    }
+    else{
+      const res = await Axios.get('http://localhost:5000/limit');
+      time = res.data
+      console.log('limirjsss',time);
     }
     // console.log(time);
     const data = this.props.decoct_q.map(pre => {
