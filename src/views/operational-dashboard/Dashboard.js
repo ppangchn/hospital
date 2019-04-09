@@ -33,8 +33,23 @@ class Dashboard extends Component {
 	componentWillUnmount() {
 		clearInterval(this.intervalID);
 	}
+	async setLimit(){
+		try {
+			if(!localStorage.getItem('limit')){
+				const res = await Axios.get('http://localhost:5000/limit');
+				console.log('get per80',res.data);
+				const {pick,decoct,dispense} = res.data;
+
+				const limit = `${parseInt(pick.per80/60)},${parseInt(pick.per80%60)},${parseInt(decoct.per80/60)},${parseInt(decoct.per80%60)},${parseInt(dispense.per80/60)},${parseInt(dispense.per80%60)}`
+				localStorage.setItem('limit',limit)
+			}
+		} catch (error) {
+			
+		}
+	}
 	async componentDidMount() {
 		try {
+			this.setLimit();
 			this.props.setLoading(true);
 			const res = await Axios.get('http://localhost:5000/realtime');
 			const { data } = res;

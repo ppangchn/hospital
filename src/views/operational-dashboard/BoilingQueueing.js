@@ -33,17 +33,13 @@ class BoilingQueueing extends Component {
     super(props);
     this.state = {};
   }
-  async getChartData(){
+  getChartData(){
     let time = 0
     if(localStorage.getItem('limit')){
       const data = localStorage.getItem('limit').split(',')
       time = (+data[2])*60+(+data[3])
     }
-    else{
-      const res = await Axios.get('http://localhost:5000/limit');
-      time = res.data
-      console.log('limirjsss',time);
-    }
+
     // console.log(time);
     const data = this.props.decoct_q.map(pre => {
       return {
