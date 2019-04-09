@@ -35,7 +35,7 @@ export function MonthChart(props) {
 				<YAxis>
 					<Label angle={-90} value={YAxisLabel} position="insideLeft" style={{ textAnchor: 'middle' }} />
 				</YAxis>
-				<Tooltip />
+				<Tooltip itemSorter={() => 1}/>
 				{color.map(e => {
 					return <Bar key={e} dataKey={e.dataKey} >
 						{data.map((entry,index) => (

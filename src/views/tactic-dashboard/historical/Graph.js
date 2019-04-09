@@ -7,6 +7,12 @@ import axios from 'axios';
 import '../../../css/tactic-dashboard/historical/Graph.css';
 import '../../../css/Layout.css';
 import { MonthChart } from '../../../components/MonthChart';
+import styled from 'styled-components';
+import '../../../css/tactic-dashboard/BarChart.css';
+
+const Title = styled.div`
+	font-size: 2em;
+`;
 class Graph extends Component {
 	constructor() {
 		super();
@@ -47,7 +53,7 @@ class Graph extends Component {
 					{ dataKey: 'Dispensing', fill: 'rgb(116,146,61)' },
 				],
 				XAxisLabel: 'Working Period',
-				YAxisLabel: 'Waiting Time',
+				YAxisLabel: 'Average Waiting Time',
 			},
 			analyzeData: [{ data: [], color: [] }],
 			XAxisLabel: [],
@@ -99,17 +105,15 @@ class Graph extends Component {
 		let weekend = [];
 		for (let i = 1; i <= getTot; i++) {
 			//looping through days in month
-			let newDate = new Date(month, year, i);
+			let newDate = new Date(year, month - 1, i);
 			if (newDate.getDay() === 0) {
 				//if Sunday
 				weekend.push('sun');
-			}
-			else if (newDate.getDay() === 6) {
+			} else if (newDate.getDay() === 6) {
 				//if Saturday
 				weekend.push('sat');
-			}
-			else {
-				weekend.push(0)
+			} else {
+				weekend.push(0);
 			}
 		}
 		this.setState({ weekend });
@@ -133,7 +137,13 @@ class Graph extends Component {
 		let analyze = [];
 		const query = _.get(props.location.state, 'title', '');
 		if (query.includes('Day')) {
-			analyze = title.analyzeByDay;
+			if (query.includes('dispensing'))
+				analyze = [
+					'Number of prescriptions',
+					'Number of prescriptions exceeded limit time',
+					'Average waiting time',
+				];
+			else analyze = title.analyzeByDay;
 			this.setAnalyzeDataByDay(query, props);
 		} else if (query.includes('ThreeMonths')) {
 			analyze = title.analyzeByThreeMonths;
@@ -150,7 +160,28 @@ class Graph extends Component {
 		}
 		this.setState({ query, analyze });
 	}
-	formatToGraphData(data1, data2, data3) {
+	formatToGraphDataDay(data1, data2, data3) {
+		const formatData1 = [];
+		const formatData2 = [];
+		const formatData3 = [];
+		for (let k in data1) {
+			if (k >= 5 && k <= 19) {
+				formatData1.push({ name: `${k}-${+k + 1}`, Prescription: data1[k] });
+			}
+		}
+		for (let k in data2) {
+			if (k >= 5 && k <= 19) {
+				formatData2.push({ name: `${k}-${+k + 1}`, Prescription: data2[k] });
+			}
+		}
+		for (let k in data3) {
+			if (k >= 5 && k <= 19) {
+				formatData3.push({ name: `${k}-${+k + 1}`, Time: (data3[k].totalTime / data3[k].num || 0).toFixed(2) });
+			}
+		}
+		return [formatData1, formatData2, formatData3];
+	}
+	formatToGraphDataMonth(data1, data2, data3) {
 		const formatData1 = [];
 		const formatData2 = [];
 		const formatData3 = [];
@@ -173,12 +204,14 @@ class Graph extends Component {
 		const { dateDict } = res.data;
 		const dateDictData = [];
 		for (let k in dateDict) {
-			dateDictData.push({
-				name: k,
-				Picking: (dateDict[k].pick.totalTime / dateDict[k].pick.num || 0).toFixed(2),
-				Decocting: (dateDict[k].decoct.totalTime / dateDict[k].decoct.num || 0).toFixed(2),
-				Dispensing: (dateDict[k].dispense.totalTime / dateDict[k].dispense.num || 0).toFixed(2),
-			});
+			if (k >= 5 && k <= 19) {
+				dateDictData.push({
+					name: `${k}-${+k + 1}`,
+					Picking: (dateDict[k].pick.totalTime / dateDict[k].pick.num || 0).toFixed(2),
+					Decocting: (dateDict[k].decoct.totalTime / dateDict[k].decoct.num || 0).toFixed(2),
+					Dispensing: (dateDict[k].dispense.totalTime / dateDict[k].dispense.num || 0).toFixed(2),
+				});
+			}
 		}
 		this.props.finishFetchingData();
 		this.setState({ overallData: { data: dateDictData, color, XAxisLabel, YAxisLabel }, isItalic: false });
@@ -193,20 +226,35 @@ class Graph extends Component {
 		// console.log(res.data);
 		this.props.finishFetchingData();
 		const { timeDict, breakLimit, staffDict, avgTime } = res.data;
-		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphData(timeDict, breakLimit, avgTime);
+		const [timeDictData, breakLimitData, avgTimeData] = this.formatToGraphDataDay(timeDict, breakLimit, avgTime);
+
 		const staffData = [];
 		for (let k in staffDict) {
-			staffData.push({ name: k, Staff: staffDict[k] });
+			if (k >= 5 && k <= 19) {
+				staffData.push({ name: `${k}-${+k+1}`, Staff: staffDict[k] });
+			}
 		}
-		const analyzeData = [
-			{ data: timeDictData, color: analyzeByDayColor },
-			{ data: breakLimitData, color: analyzeByDayColor },
-			{ data: staffData, color: [{ dataKey: 'Staff', fill: 'rgb(67,113,202)' }] },
-			{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
-		];
-		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
-		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
-		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
+		if (query.includes('dispensing')) {
+			const analyzeData = [
+				{ data: timeDictData, color: analyzeByDayColor },
+				{ data: breakLimitData, color: analyzeByDayColor },
+				{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
+			];
+			const YAxisLabel = ['# Prescription', '# Prescription', 'Average Waiting Time (minute)'];
+			const XAxisLabel = ['Time', 'Time', 'Time'];
+			this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
+		} else {
+			const analyzeData = [
+				{ data: timeDictData, color: analyzeByDayColor },
+				{ data: breakLimitData, color: analyzeByDayColor },
+				{ data: staffData, color: [{ dataKey: 'Staff', fill: 'rgb(67,113,202)' }] },
+				{ data: avgTimeData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
+			];
+			const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
+			const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+			console.log(analyzeData)
+			this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
+		}
 	}
 	async setAnalyzeDataByMonth(query, props) {
 		// console.log(this.state.limitTime);
@@ -222,10 +270,10 @@ class Graph extends Component {
 		const modeStaff = query.includes('pick')
 			? query.substring(0, 4)
 			: query.includes('decoct')
-			? query.substring(0, 6)
-			: 'dis';
+				? query.substring(0, 6)
+				: 'dis';
 		const staffData = [];
-		const [dateDictData, breakLimitData, avgDateData] = this.formatToGraphData(dateDict, breakLimit, avgDate);
+		const [dateDictData, breakLimitData, avgDateData] = this.formatToGraphDataMonth(dateDict, breakLimit, avgDate);
 		for (let k in staff) {
 			staffData.push({ name: k, Staff: staff[k][`full_${modeStaff}`] + staff[k][`part_${modeStaff}`] });
 		}
@@ -236,7 +284,7 @@ class Graph extends Component {
 			{ data: avgDateData, color: [{ dataKey: 'Time', fill: 'rgb(67,113,202)' }] },
 		];
 		const YAxisLabel = ['# Prescription', '# Prescription', '# Staff', 'Average Waiting Time (minute)'];
-		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+		const XAxisLabel = ['Date', 'Date', 'Date', 'Date'];
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: true });
 	}
 	async setAnalyzeDataByThreeMonths(query, props) {
@@ -256,12 +304,13 @@ class Graph extends Component {
 		const modeStaff = query.includes('pick')
 			? query.substring(0, 4)
 			: query.includes('decoct')
-			? query.substring(0, 6)
-			: 'dis';
+				? query.substring(0, 6)
+				: 'dis';
 		const staffData = [];
 		for (let k in staff) {
+			let date = _.split(k, '_');
 			staffData.push({
-				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
+				name: `${months[date[0]]}-${date[1]}`,
 				Mon: staff[k][1][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
 				Tue: staff[k][2][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
 				Wed: staff[k][3][`full_${modeStaff}`] + staff[k][1][`part_${modeStaff}`] || 0,
@@ -272,8 +321,9 @@ class Graph extends Component {
 			});
 		}
 		for (let k in weekDict) {
+			let date = _.split(k, '_');
 			weekDictData.push({
-				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
+				name: `${months[date[0]]}-${date[1]}`,
 				Mon: weekDict[k][1],
 				Tue: weekDict[k][2],
 				Wed: weekDict[k][3],
@@ -284,8 +334,9 @@ class Graph extends Component {
 			});
 		}
 		for (let k in breakLimit) {
+			let date = _.split(k, '_');
 			breakLimitData.push({
-				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
+				name: `${months[date[0]]}-${date[1]}`,
 				Mon: breakLimit[k][1],
 				Tue: breakLimit[k][2],
 				Wed: breakLimit[k][3],
@@ -296,8 +347,9 @@ class Graph extends Component {
 			});
 		}
 		for (let k in avgThreeMonth) {
+			let date = _.split(k, '_');
 			avgThreeMonthData.push({
-				name: `${months[k[0]]}-${new Date(props.selectedDate).getUTCFullYear()}`,
+				name: `${months[date[0]]}-${date[1]}`,
 				Mon: (avgThreeMonth[k][1].totalTime / avgThreeMonth[k][1].num || 0).toFixed(2),
 				Tue: (avgThreeMonth[k][2].totalTime / avgThreeMonth[k][2].num || 0).toFixed(2),
 				Wed: (avgThreeMonth[k][3].totalTime / avgThreeMonth[k][3].num || 0).toFixed(2),
@@ -319,7 +371,7 @@ class Graph extends Component {
 			'Average # Staff',
 			'Average Waiting Time (minute)',
 		];
-		const XAxisLabel = ['Time', 'Time', 'Time', 'Time'];
+		const XAxisLabel = ['Month', 'Month', 'Month', 'Month'];
 		this.setState({ analyzeData, XAxisLabel, YAxisLabel, isItalic: false });
 	}
 	componentWillReceiveProps(props) {
@@ -333,10 +385,9 @@ class Graph extends Component {
 		const { data, color, XAxisLabel, YAxisLabel } = this.state.overallData;
 		const { isItalic } = this.state;
 		// console.log(_.get(this.props.location.state, 'title', ''));
-		// console.log('data', data, 'color', color);
 		return (
 			<div className="d-flex flex-column justify-content-center text-center w-100 m-3 background">
-				<div className="mt-5 mb-2 font-weight-bold">Average waiting time of processes (1 month)</div>
+				<Title className="mt-5 mb-2 font-weight-bold">Average waiting time of processes (1 month)</Title>
 				<div className="d-flex justify-content-center align-items-center graph-background w-80 vh-70 mb-5 ml-5 mr-5">
 					<BarChart
 						data={data}
@@ -350,7 +401,7 @@ class Graph extends Component {
 		);
 	}
 	analyze() {
-		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic, weekend } = this.state;
+		const { analyze, icon, analyzeData, XAxisLabel, YAxisLabel, isItalic, weekend,limitTime } = this.state;
 		// console.log(this.state.analyzeData);
 		return (
 			<div className="d-flex flex-column background text-center w-100 m-3">
@@ -359,7 +410,10 @@ class Graph extends Component {
 						{analyze.map((element, index) => {
 							return (
 								<div key={index} className="col-6 mb-2">
-									<div className="font-weight-bold d-flex justify-content-center mb-1">
+									<div
+										className="font-weight-bold d-flex justify-content-center mb-1"
+										style={{ fontSize: '1.2em' }}
+									>
 										{icon[index]}&nbsp;{element}
 										{element.includes('exceeded limit time') ? (
 											<div className="ml-2 dropdown">
@@ -371,8 +425,9 @@ class Graph extends Component {
 													aria-haspopup="true"
 													aria-expanded="false"
 												>
-													Select limit
+													{limitTime}&nbsp;Min
 												</button>
+
 												<div
 													className="dropdown-menu text-center"
 													aria-labelledby="dropdownMenuButton"
@@ -380,10 +435,74 @@ class Graph extends Component {
 													<div
 														className="btn dropdown-item"
 														onClick={() => {
+															this.handleLimit(10);
+														}}
+													>
+														10 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(20);
+														}}
+													>
+														20 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(30);
+														}}
+													>
+														30 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(40);
+														}}
+													>
+														40 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
 															this.handleLimit(50);
 														}}
 													>
 														50 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(60);
+														}}
+													>
+														60 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(70);
+														}}
+													>
+														70 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(80);
+														}}
+													>
+														80 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(90);
+														}}
+													>
+														90 Min
 													</div>
 													<div
 														className="btn dropdown-item"
@@ -396,10 +515,18 @@ class Graph extends Component {
 													<div
 														className="btn dropdown-item"
 														onClick={() => {
-															this.handleLimit(150);
+															this.handleLimit(110);
 														}}
 													>
-														150 Min
+														110 Min
+													</div>
+													<div
+														className="btn dropdown-item"
+														onClick={() => {
+															this.handleLimit(120);
+														}}
+													>
+														120 Min
 													</div>
 												</div>
 											</div>
@@ -407,24 +534,24 @@ class Graph extends Component {
 									</div>
 									<div className="d-flex justify-content-center align-items-center graph-background w-100 analyze-height">
 										{_.get(this.props.location.state, 'title', '').includes('Month') &&
-										!_.get(this.props.location.state, 'title', '').includes('ThreeMonths') ? (
-											<MonthChart
-												data={_.get(analyzeData[index], 'data', [])}
-												color={_.get(analyzeData[index], 'color', [])}
-												XAxisLabel={XAxisLabel[index]}
-												YAxisLabel={YAxisLabel[index]}
-												isItalic={isItalic}
-												weekend={weekend}
-											/>
-										) : (
-											<BarChart
-												data={_.get(analyzeData[index], 'data', [])}
-												color={_.get(analyzeData[index], 'color', [])}
-												XAxisLabel={XAxisLabel[index]}
-												YAxisLabel={YAxisLabel[index]}
-												isItalic={isItalic}
-											/>
-										)}
+											!_.get(this.props.location.state, 'title', '').includes('ThreeMonths') ? (
+												<MonthChart
+													data={_.get(analyzeData[index], 'data', [])}
+													color={_.get(analyzeData[index], 'color', [])}
+													XAxisLabel={XAxisLabel[index]}
+													YAxisLabel={YAxisLabel[index]}
+													isItalic={isItalic}
+													weekend={weekend}
+												/>
+											) : (
+												<BarChart
+													data={_.get(analyzeData[index], 'data', [])}
+													color={_.get(analyzeData[index], 'color', [])}
+													XAxisLabel={XAxisLabel[index]}
+													YAxisLabel={YAxisLabel[index]}
+													isItalic={isItalic}
+												/>
+											)}
 									</div>
 								</div>
 							);

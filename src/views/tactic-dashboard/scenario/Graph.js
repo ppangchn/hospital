@@ -8,6 +8,7 @@ class Graph extends Component {
 		this.state = {
 			analyzeData: [],
 			color: [{ dataKey: 'Actual', fill: 'rgb(86,140,215)' }, { dataKey: 'InputPolicy', fill: 'rgb(230,108,6)' }],
+			
 		};
 	}
 	componentWillReceiveProps(props) {
@@ -23,13 +24,13 @@ class Graph extends Component {
 		return (
 			<div className="container-fluid scenario-bg">
 				<div className="row d-flex justify-content-center font-weight-bold mb-3">
-					Average Waiting Time (Actual v.s. Trial)
+					Average Waiting Time (Actual VS Trial)
 				</div>
 				<div className="row d-flex justify-content-center align-items-center bg-white">
 					<BarChart
 						data={analyzeData.actualData}
 						color={color}
-						XAxisLabel="Day of Month"
+						XAxisLabel="Date"
 						YAxisLabel="Waiting time (minute)"
 					/>
 				</div>

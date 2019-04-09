@@ -7,6 +7,7 @@ class Table extends Component {
 		super();
 		this.state = {
 			day: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			inputValue: {},
 			dataLength: 0,
 			dateDictData: [],
@@ -41,7 +42,7 @@ class Table extends Component {
 		let inputTable = [];
 		for (let i = 0; i < dataLength; i++) {
 			inputTable.push(
-				<tr className="table-border cell-input-bg height-input-cell">
+				<tr className={`table-border cell-input-bg height-input-cell`}>
 					<td className="border-right">
 						<Input addInputValue={(i, e) => this.addInputValue(i, e)} index={i} value={inputValue[i]} />
 					</td>
@@ -101,7 +102,8 @@ class Table extends Component {
 		this.getData(this.props);
 	}
 	render() {
-		const { inputTable, actualTable, actualOverallAverageWaitingTime } = this.state;
+		const { inputTable, actualTable, actualOverallAverageWaitingTime,months} = this.state;
+		const {selectedDate} = this.props
 		return (
 			<div className="container-fluid mb-4 pb-3">
 				<div className="row ml-4 mr-4 mt-4 mb-2 d-flex justify-content-center">
@@ -110,7 +112,7 @@ class Table extends Component {
 							<table className="text-center mr-3">
 								<tr className="table-border table-header-bg">
 									<th colSpan="4" className="border-right pl-4 pr-4">
-										Actual
+										Actual Data of {months[selectedDate.getMonth()]} {selectedDate.getUTCFullYear()}
 									</th>
 								</tr>
 								<tr className="table-border cell-actual-header-bg">
