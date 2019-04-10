@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     font-size: 1.3em;
+    right: 3em;
+    position: relative;
 `
 class Instruction extends Component {
     render() {
