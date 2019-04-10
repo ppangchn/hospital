@@ -106,7 +106,7 @@ class Dashboard extends Component {
 					</div>
 				</Spinner>
 				<div id="graph" class="w-100">
-					<div>
+					<div className="d-flex">
 						<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
 						<Instruction />
 					</div>
