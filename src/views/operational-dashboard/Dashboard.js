@@ -36,7 +36,7 @@ class Dashboard extends Component {
 	async setLimit(){
 		try {
 			if(!localStorage.getItem('limit')){
-				const res = await Axios.get('http://localhost:5000/limit');
+				const res = await Axios.get('http://3.19.31.22:5000/limit');
 				console.log('get per80',res.data);
 				const {pick,decoct,dispense} = res.data;
 
@@ -51,7 +51,7 @@ class Dashboard extends Component {
 		try {
 			this.setLimit();
 			this.props.setLoading(true);
-			const res = await Axios.get('http://localhost:5000/realtime');
+			const res = await Axios.get('http://3.19.31.22:5000/realtime');
 			const { data } = res;
 			const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
 			this.setState({
@@ -66,7 +66,7 @@ class Dashboard extends Component {
 			this.props.setLoading(false);
 			this.intervalID = setInterval(async () => {
 				this.props.setLoading(true);
-				const res = await Axios.get('http://localhost:5000/realtime');
+				const res = await Axios.get('http://3.19.31.22:5000/realtime');
 				const { data } = res;
         const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
         this.checkReachLimit(data)
@@ -134,7 +134,7 @@ class Dashboard extends Component {
 				<Boiling decoct_q={this.state.decoct_q} decoct={this.state.decoct} />
 				<Paying dispense_q={this.state.dispense_q} dispense={this.state.dispense} />
 				<div className="pt-2 pr-2 mb-1 d-flex justify-content-end">
-					<i className="fas fa-cog pr-2" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
+					<i className="fas fa-chart-line pr-2" style={{fontSize:'2.5em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
 					<i className="fas fa-user-friends" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/staff')}/>
 				</div>
 			</Container>

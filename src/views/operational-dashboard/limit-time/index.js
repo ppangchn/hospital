@@ -59,7 +59,7 @@ class LimitDashboard extends Component {
 			showLoaderOnConfirm: true,
 			reverseButtons: true,
 			preConfirm: async () => {
-				// return await Axios.post("http://localhost:5001/setStaff", this.state);
+				// return await Axios.post("http://3.19.31.22:5001/setStaff", this.state);
 				localStorage.setItem(
 					'limit',
 					`${this.state.hour_pick},${this.state.min_pick},${this.state.hour_decoct},${
@@ -95,7 +95,7 @@ class LimitDashboard extends Component {
 		}
 	}
 	async getData() {
-		const res = await Axios.get('http://localhost:5000/limit');
+		const res = await Axios.get('http://3.19.31.22:5000/limit');
 		// console.log(res.data);
 		this.setState(res.data);
 		// const { data } = res;
@@ -125,8 +125,8 @@ class LimitDashboard extends Component {
 		return (
 			<Container className="col pt-4">
 				<div className="row">
-					<Title className="col center">
-						<div>Limit Time Setting</div>
+					<Title className="col center d-flex justify-content-center align-items-center  flex-row">
+					<i className="fas fa-chart-line mr-2" style={{ fontSize: '75px' }} /><div>Limit Time Setting</div>
 					</Title>
 				</div>
 				<SubTitle className="row mt-4 mb-4">
@@ -147,10 +147,13 @@ class LimitDashboard extends Component {
 					</div>
 				</Header>
 				<div className="row mt-3">
-					<div className="col-2" />
+					<div className="col-2 d-flex justify-content-center align-items-center flex-column" >
+					<i className="fas fa-file-prescription" style={{ fontSize: '100px' }} />
+					</div>
+
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
-						<Header className="staff-cell pick d-flex justify-content-center align-items-center">
-							Waiting time for Picking{' '}
+						<Header className="staff-cell  pick d-flex justify-content-center align-items-center">
+						<span>Waiting time for Picking{' '}</span>
 						</Header>
 						<div className=" d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.pick ? (
@@ -189,10 +192,14 @@ class LimitDashboard extends Component {
 						{' '}
 						<input type="number" value={this.state.min_pick} onChange={this.handleChangeMP.bind(this)} />
 					</Detail>
-					<div className="col-2" />
+					<div className="col-2" >
+					
+					</div>
 				</div>
 				<div className="row mt-3">
-				<div className="col-2" />
+				<div className="col-2 d-flex justify-content-center align-items-center" >
+				<i className="fas fa-mug-hot" style={{ fontSize: '100px' }} />
+				</div>
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
 						<Header className="staff-cell decoct d-flex justify-content-center align-items-center">
 							Waiting time for Decocting{' '}
@@ -236,7 +243,9 @@ class LimitDashboard extends Component {
 					<div className="col-2" />
 				</div>
 				<div className="row mt-3">
-				<div className="col-2" />
+				<div className="col-2 d-flex justify-content-center align-items-center" >
+				<i className="fas fa-handshake" style={{ fontSize: '100px' }} />
+				</div>
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
 						<Header className="staff-cell dis d-flex justify-content-center align-items-center">
 							Waiting time for Dispensing{' '}

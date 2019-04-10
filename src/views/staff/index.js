@@ -57,7 +57,7 @@ class StaffDashboard extends Component {
 			cancelButtonColor: 'black',
 			reverseButtons: true,
 			preConfirm: async () => {
-				return await Axios.post('http://localhost:5001/setStaff', this.state);
+				return await Axios.post('http://3.19.31.22:5001/setStaff', this.state);
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(result => {
@@ -76,7 +76,7 @@ class StaffDashboard extends Component {
 		this.getData();
 	}
 	async getData() {
-		const res = await Axios.get('http://localhost:5001/getStaff');
+		const res = await Axios.get('http://3.19.31.22:5001/getStaff');
 		// // console.log(res.data);
 		const { data } = res;
 
@@ -103,8 +103,8 @@ class StaffDashboard extends Component {
 		return (
 			<Container className="col">
 				<div className="row pt-4">
-					<Title className="col center">
-						<div>Number of Assigned Staffs</div>
+					<Title className="col center d-flex justify-content-center align-items-center flex-row">
+					<i className="fas fa-users mr-2" style={{ fontSize: '75px' }} /><div>{' '}Number of Assigned Staffs</div>
 					</Title>
 				</div>
 				<SubTitle className="row mt-4 mb-4">
@@ -128,7 +128,7 @@ class StaffDashboard extends Component {
 					<div className="col-2" />
 				</Header>
 				<div className="row mt-4">
-					<div className="col-2" />
+					<div className="col-2 d-flex justify-content-center align-items-center " ><i className="fas fa-file-medical" style={{ fontSize: '100px' }} /></div>
 					<div className="col-4  d-flex justify-content-center align-items-center">
 						<Header className="staff-cell pick d-flex justify-content-center align-items-center">
 							{' '}
@@ -144,7 +144,7 @@ class StaffDashboard extends Component {
 					</Detail>
 				</div>
 				<div className="row mt-4">
-				<div className="col-2" />
+				<div className="col-2 d-flex justify-content-center align-items-center " ><i className="fas fa-mug-hot" style={{ fontSize: '100px' }} /></div>
 					<div className="col-4 d-flex justify-content-center align-items-center">
 						<Header className="staff-cell decoct d-flex justify-content-center align-items-center">
 							{' '}
@@ -159,7 +159,7 @@ class StaffDashboard extends Component {
 					</Detail>
 				</div>
 				<div className="row mt-4">
-				<div className="col-2" />
+				<div className="col-2 d-flex justify-content-center align-items-center " ><i className="fas fa-handshake" style={{ fontSize: '100px' }} /></div>
 					<div className="col-4 d-flex justify-content-center align-items-center">
 						<Header className="staff-cell dis d-flex justify-content-center align-items-center">
 							{' '}
