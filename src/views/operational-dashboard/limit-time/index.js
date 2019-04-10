@@ -59,7 +59,7 @@ class LimitDashboard extends Component {
 			showLoaderOnConfirm: true,
 			reverseButtons: true,
 			preConfirm: async () => {
-				// return await Axios.post("http://3.19.31.22:5001/setStaff", this.state);
+				// return await Axios.post("https://us-central1-hospital-app-e6e5e.cloudfunctions.net/staff/setStaff", this.state);
 				localStorage.setItem(
 					'limit',
 					`${this.state.hour_pick},${this.state.min_pick},${this.state.hour_decoct},${
@@ -95,7 +95,7 @@ class LimitDashboard extends Component {
 		}
 	}
 	async getData() {
-		const res = await Axios.get('http://3.19.31.22:5000/limit');
+		const res = await Axios.get('https://us-central1-hospital-app-e6e5e.cloudfunctions.net/dashboard/limit');
 		// console.log(res.data);
 		this.setState(res.data);
 		// const { data } = res;

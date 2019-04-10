@@ -57,7 +57,7 @@ class StaffDashboard extends Component {
 			cancelButtonColor: 'black',
 			reverseButtons: true,
 			preConfirm: async () => {
-				return await Axios.post('http://3.19.31.22:5001/setStaff', this.state);
+				return await Axios.post('https://us-central1-hospital-app-e6e5e.cloudfunctions.net/staff/setStaff', this.state);
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(result => {
@@ -76,7 +76,7 @@ class StaffDashboard extends Component {
 		this.getData();
 	}
 	async getData() {
-		const res = await Axios.get('http://3.19.31.22:5001/getStaff');
+		const res = await Axios.get('https://us-central1-hospital-app-e6e5e.cloudfunctions.net/staff/getStaff');
 		// // console.log(res.data);
 		const { data } = res;
 
