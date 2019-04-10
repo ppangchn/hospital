@@ -36,23 +36,25 @@ export function BarChart(props) {
 		<ResponsiveContainer width="100%" height="90%">
 			<ComposedChart data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick isItalic={true}/>}>
-					<Label value={"ID ใบยา"} position="insideBottom"  style={{ textAnchor: 'middle' }} />
+				<XAxis dataKey="name" interval={0} tick={<CustomizedAxisTick isItalic={true} />}>
+					<Label value={''} position="insideBottom" style={{ textAnchor: 'middle' }} />
 				</XAxis>
-				<YAxis domain={[0,100]} >
-        <Label angle={-90} value='เวลารอ(นาที)' position='insideLeft' style={{textAnchor: 'middle'}} />
-        </YAxis>
-        <Legend verticalAlign="top" />
-        <Tooltip />
-        <Bar dataKey="value" fill="#1114d8" barSize={10}>
-          {
-            data.map((entry, index) => (
-
-              <Cell key={`cell-${index}`} fill={data[index].value > data[index].limit ? 'red' : '#1114d8'} />
-            ))
-          }
-        </Bar>
-        <Line dataKey="limit" dot={false} stroke="red"/>
+				<YAxis  tick={{fontSize:'1.2em'}}  domain={[0, 100]}>
+					<Label
+						angle={-90}
+						value="Minutes"
+						position="insideLeft"
+						style={{ textAnchor: 'middle' }}
+					/>
+				</YAxis>
+				<Legend verticalAlign="top" />
+				<Tooltip />
+				<Bar dataKey="value" fill="#1114d8" barSize={10}>
+					{data.map((entry, index) => (
+						<Cell key={`cell-${index}`} fill={data[index].value > data[index].limit ? 'red' : '#1114d8'} />
+					))}
+				</Bar>
+				<Line dataKey="limit" dot={false} stroke="red" />
 			</ComposedChart>
 		</ResponsiveContainer>
 	);
