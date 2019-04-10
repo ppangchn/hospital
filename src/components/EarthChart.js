@@ -31,7 +31,7 @@ class CustomizedAxisTick extends PureComponent {
 export function BarChart(props) {
 	//props = {data,color}
 	const { data } = props;
-	console.log('data',props);
+	console.log('dsafsdf',data);
 	return (
 		<ResponsiveContainer width="100%" height="90%">
 			<ComposedChart data={data}>
