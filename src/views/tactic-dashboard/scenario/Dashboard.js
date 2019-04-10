@@ -6,6 +6,7 @@ import axios from 'axios';
 import { config } from '../../../config';
 import '../../../css/tactic-dashboard/scenario/Scenario.css';
 import { withRouter } from 'react-router-dom';
+import Instruction from './Instruction';
 
 const Container = styled.div`
 	background-color: rgb(226, 226, 226);
@@ -105,8 +106,12 @@ class Dashboard extends Component {
 					</div>
 				</Spinner>
 				<div id="graph" class="w-100">
-					<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
-					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData}/>
+					<div>
+						<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
+						<Instruction />
+					</div>
+
+					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
 				</div>
 			</Container>
 		);

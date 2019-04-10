@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Input from '../../../components/Input';
+import styled from 'styled-components';
 import '../../../css/tactic-dashboard/scenario/Table.css';
+
+const ButtonBox = styled.div`
+	padding-bottom: 2em;
+`
+const Button = styled.button`
+	width: 8em;
+`
 class Table extends Component {
 	constructor() {
 		super();
@@ -154,23 +162,21 @@ class Table extends Component {
 							<div className="font-weight-bold">Overall average waiting time: 23.14</div>
 						</div>
 					</div>
-					<div className="col-2 text-center d-flex">
-						<div className="row">
-							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
+					<ButtonBox className="col-2 text-center d-flex flex-column">
+							<div className="mb-auto">
+								<Button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
 									7 Days Uniform
-								</button>
+								</Button>
 							</div>
-							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold" onClick={() => this.clearInput()}>
+							<div className="mb-3">
+								<Button className="button font-weight-bold" onClick={() => this.clearInput()}>
 									Clear input
-								</button>
+								</Button>
 							</div>
-							<div className="col-12 align-item-end">
-								<button className="button font-weight-bold">Calculate</button>
+							<div className="">
+								<Button className="button font-weight-bold">Calculate</Button>
 							</div>
-						</div>
-					</div>
+					</ButtonBox>
 				</div>
 				<div className="row ml-4">
 					<button
