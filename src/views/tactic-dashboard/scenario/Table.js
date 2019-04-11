@@ -32,6 +32,9 @@ const Three = styled.div`
 	font-weight: bold;
 	display: inline-block;
 `;
+const ButtonBox = styled.div`
+	padding-top: 265px;
+`
 class Table extends Component {
 	constructor() {
 		super();
@@ -188,7 +191,7 @@ class Table extends Component {
 						<Two>2</Two>
 						<Three>3</Three>
 					</div>
-					<div className="col-2 text-center d-flex flex-column">
+					<ButtonBox className="col-2 text-center d-flex flex-column">
 						<div className="mb-auto">
 							<Button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
 								7 Days Uniform
@@ -202,7 +205,7 @@ class Table extends Component {
 						<div className="">
 							<Button className="button font-weight-bold">Calculate</Button>
 						</div>
-					</div>
+					</ButtonBox>
 				</div>
 				<div className="row ml-4 mt-4">
 					<button
