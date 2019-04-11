@@ -20,7 +20,7 @@ class CustomizedAxisTick extends PureComponent {
 		console.log('eartadsfadsf', this.props);
 		return (
 			<g transform={`translate(${x},${y})`}>
-				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">
+				<text x={0} y={-10} dy={16} textAnchor="end" fill="#666" transform="rotate(-6)">
 					{payload.value}
 				</text>
 			</g>

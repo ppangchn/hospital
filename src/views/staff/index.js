@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const MySwal = withReactContent(Swal);
 const Container = styled.div`
 	background-color: rgb(223, 221, 221);
-	height: 100vh;
+	height: 115vh;
 `;
 const BackButton = styled.div`
 	background: black;

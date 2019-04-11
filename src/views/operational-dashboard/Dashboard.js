@@ -7,7 +7,7 @@ import PrepareQueueing from './PrepareQueueing';
 import PrepareInProgress from './PrepareInProgress';
 import BoilingInProgress from './BoilingInProgress';
 import PayingInProgress from './PayingInProgress';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import Sound from 'react-sound';
 
@@ -33,18 +33,18 @@ class Dashboard extends Component {
 	componentWillUnmount() {
 		clearInterval(this.intervalID);
 	}
-	async setLimit(){
+	async setLimit() {
 		try {
-			if(!localStorage.getItem('limit')){
+			if (!localStorage.getItem('limit')) {
 				const res = await Axios.get('https://us-central1-hospital-app-e6e5e.cloudfunctions.net/dashboard/limit');
-				console.log('get per80',res.data);
-				const {pick,decoct,dispense} = res.data;
+				console.log('get per80', res.data);
+				const { pick, decoct, dispense } = res.data;
 
-				const limit = `${parseInt(pick.per80/60)},${parseInt(pick.per80%60)},${parseInt(decoct.per80/60)},${parseInt(decoct.per80%60)},${parseInt(dispense.per80/60)},${parseInt(dispense.per80%60)}`
-				localStorage.setItem('limit',limit)
+				const limit = `${parseInt(pick.per80 / 60)},${parseInt(pick.per80 % 60)},${parseInt(decoct.per80 / 60)},${parseInt(decoct.per80 % 60)},${parseInt(dispense.per80 / 60)},${parseInt(dispense.per80 % 60)}`
+				localStorage.setItem('limit', limit)
 			}
 		} catch (error) {
-			
+
 		}
 	}
 	async componentDidMount() {
@@ -68,8 +68,8 @@ class Dashboard extends Component {
 				this.props.setLoading(true);
 				const res = await Axios.get('https://us-central1-hospital-app-e6e5e.cloudfunctions.net/dashboard/realtime');
 				const { data } = res;
-        const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
-        this.checkReachLimit(data)
+				const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
+				this.checkReachLimit(data)
 				this.setState({
 					pick_q,
 					pick,
@@ -85,37 +85,40 @@ class Dashboard extends Component {
 		} catch (e) {
 			// console.log(e);
 		}
-  }
-  checkReachLimit(data) {
-    const {  pick_q,  decoct_q,  dispense_q } = data;
-    let isOverTime = false
-    const limit = localStorage.getItem('limit')
-    if (limit) {
-	  const limitTime = limit.split(',');
-      const pick_limit = (+limitTime[0])*60 + (+limitTime[1])
-      const decoct_limit = (+limitTime[2])*60 + (+limitTime[3])
-      const dispense_limit = (+limitTime[4])*60 + (+limitTime[5])
-      // console.log('limit',pick_limit,decoct_limit,dispense_limit);
-      pick_q.forEach(pre => {
-		  // console.log('earth',pre);
-        if(pre.time/60 > pick_limit) isOverTime = true
-      })
-      decoct_q.forEach(pre => {
-        if(pre.time/60 > decoct_limit) isOverTime = true
-      })
-      dispense_q.forEach(pre => {
-        if(pre.time/60 > dispense_limit) isOverTime = true
-      })
-    }
-    if(isOverTime){
-      // console.log('play');
-      this.setState({sound_status:Sound.status.PLAYING})
-    }
-    else {
-      // console.log('stop');
-      this.setState({sound_status:Sound.status.STOPPED})
-    }
-  }
+	}
+	checkReachLimit(data) {
+		const { pick_q, decoct_q, dispense_q } = data;
+		let isOverTime = false
+		const limit = localStorage.getItem('limit')
+		if (limit) {
+			const limitTime = limit.split(',');
+			const pick_limit = (+limitTime[0]) * 60 + (+limitTime[1])
+			const decoct_limit = (+limitTime[2]) * 60 + (+limitTime[3])
+			const dispense_limit = (+limitTime[4]) * 60 + (+limitTime[5])
+			// console.log('limit',pick_limit,decoct_limit,dispense_limit);
+			if (pick_q && decoct_q && dispense_q) {
+
+				pick_q.forEach(pre => {
+					// console.log('earth',pre);
+					if (pre.time / 60 > pick_limit) isOverTime = true
+				})
+				decoct_q.forEach(pre => {
+					if (pre.time / 60 > decoct_limit) isOverTime = true
+				})
+				dispense_q.forEach(pre => {
+					if (pre.time / 60 > dispense_limit) isOverTime = true
+				})
+			}
+		}
+		if (isOverTime) {
+			// console.log('play');
+			this.setState({ sound_status: Sound.status.PLAYING })
+		}
+		else {
+			// console.log('stop');
+			this.setState({ sound_status: Sound.status.STOPPED })
+		}
+	}
 	render() {
 		return (
 			<Container className="d-flex flex-column">
@@ -134,8 +137,8 @@ class Dashboard extends Component {
 				<Boiling decoct_q={this.state.decoct_q} decoct={this.state.decoct} />
 				<Paying dispense_q={this.state.dispense_q} dispense={this.state.dispense} />
 				<div className="pt-2 pr-2 mb-1 d-flex justify-content-end">
-					<i className="fas fa-chart-line pr-2" style={{fontSize:'2.5em',cursor:'pointer'}} onClick={() => this.props.history.push('/limit')}/>
-					<i className="fas fa-user-friends" style={{fontSize:'2em',cursor:'pointer'}} onClick={() => this.props.history.push('/staff')}/>
+					<i className="fas fa-chart-line pr-2" style={{ fontSize: '2.5em', cursor: 'pointer' }} onClick={() => this.props.history.push('/limit')} />
+					<i className="fas fa-user-friends" style={{ fontSize: '2em', cursor: 'pointer' }} onClick={() => this.props.history.push('/staff')} />
 				</div>
 			</Container>
 		);
