@@ -85,40 +85,38 @@ class Dashboard extends Component {
 		} catch (e) {
 			// console.log(e);
 		}
-	}
-	checkReachLimit(data) {
-		const { pick_q, decoct_q, dispense_q } = data;
-		let isOverTime = false
-		const limit = localStorage.getItem('limit')
-		if (limit) {
-			const limitTime = limit.split(',');
-			const pick_limit = (+limitTime[0]) * 60 + (+limitTime[1])
-			const decoct_limit = (+limitTime[2]) * 60 + (+limitTime[3])
-			const dispense_limit = (+limitTime[4]) * 60 + (+limitTime[5])
-			// console.log('limit',pick_limit,decoct_limit,dispense_limit);
-			if (pick_q && decoct_q && dispense_q) {
-
-				pick_q.forEach(pre => {
-					// console.log('earth',pre);
-					if (pre.time / 60 > pick_limit) isOverTime = true
-				})
-				decoct_q.forEach(pre => {
-					if (pre.time / 60 > decoct_limit) isOverTime = true
-				})
-				dispense_q.forEach(pre => {
-					if (pre.time / 60 > dispense_limit) isOverTime = true
-				})
-			}
-		}
-		if (isOverTime) {
-			// console.log('play');
-			this.setState({ sound_status: Sound.status.PLAYING })
-		}
-		else {
-			// console.log('stop');
-			this.setState({ sound_status: Sound.status.STOPPED })
-		}
-	}
+  }
+  checkReachLimit(data) {
+		if(!data) return
+    const {  pick_q,  decoct_q,  dispense_q } = data;
+    let isOverTime = false
+    const limit = localStorage.getItem('limit')
+    if (limit) {
+	  const limitTime = limit.split(',');
+      const pick_limit = (+limitTime[0])*60 + (+limitTime[1])
+      const decoct_limit = (+limitTime[2])*60 + (+limitTime[3])
+      const dispense_limit = (+limitTime[4])*60 + (+limitTime[5])
+      // console.log('limit',pick_limit,decoct_limit,dispense_limit);
+      pick_q.forEach(pre => {
+		  // console.log('earth',pre);
+        if(pre.time/60 > pick_limit) isOverTime = true
+      })
+      decoct_q.forEach(pre => {
+        if(pre.time/60 > decoct_limit) isOverTime = true
+      })
+      dispense_q.forEach(pre => {
+        if(pre.time/60 > dispense_limit) isOverTime = true
+      })
+    }
+    if(isOverTime){
+      // console.log('play');
+      this.setState({sound_status:Sound.status.PLAYING})
+    }
+    else {
+      // console.log('stop');
+      this.setState({sound_status:Sound.status.STOPPED})
+    }
+  }
 	render() {
 		return (
 			<Container className="d-flex flex-column">
