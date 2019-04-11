@@ -25,9 +25,8 @@ const Two = styled.div`
 `;
 const Three = styled.div`
 	position: absolute;
-	height: 22px;
 	top: 60px;
-    left: 190	px;
+    left: 190px;
 	text-align: center;
 	width: 25px;
 	background-color: black;
@@ -75,7 +74,6 @@ class Table extends Component {
 		const { dataLength, inputValue } = this.state;
 		let inputTable = [];
 		for (let i = 0; i < dataLength; i++) {
-			console.log(`cell-input${i < 7 ? "-7" : null}-bg`)
 			inputTable.push(
 				<tr className={`table-border cell-input${i < 7 ? "-7" : ""}-bg height-input-cell`}>
 					<td className="border-right">

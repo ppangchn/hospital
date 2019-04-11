@@ -20,6 +20,7 @@ class Graph extends Component {
 	}
 	render() {
 		const { analyzeData, color } = this.state;
+		console.log(analyzeData,this.props.selectedDate)
 		// console.log('ana',analyzeData)
 		return (
 			<div className="container-fluid scenario-bg">

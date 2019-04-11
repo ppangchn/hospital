@@ -53,8 +53,8 @@ class Dashboard extends Component {
 		}
 		return [formatData1, formatData2, formatData3, formatData4];
 	}
-	async setAnalyzeDataByMonth() {
-		const { selectedDate } = this.props;
+	async setAnalyzeDataByMonth(props) {
+		const { selectedDate } = props;
 		const res = await axios.post(config.url + '/monthlyPicking', { date: selectedDate });
 		const resStaff = await axios.post(config.staffUrl + '/getStaffByMonth', { date: selectedDate });
 		this.finishFetchingData();
@@ -98,13 +98,13 @@ class Dashboard extends Component {
 		loading.hidden = false;
 		graph.hidden = true;
 	}
-	componentWillReceiveProps() {
+	componentWillReceiveProps(props) {
 		this.unFinishFetchingData();
-		this.setAnalyzeDataByMonth();
+		this.setAnalyzeDataByMonth(props);
 	}
 	componentDidMount() {
 		this.unFinishFetchingData();
-		this.setAnalyzeDataByMonth();
+		this.setAnalyzeDataByMonth(this.props);
 	}
 	render() {
 		const { analyzeData } = this.state;
