@@ -29,32 +29,6 @@ const One = styled.div`
 	font-weight: bold;
 	display: inline-block;
 `;
-const Two = styled.div`
-	position: absolute;
-	height: 22px;
-	top: 364px;
-	left: 707px;
-	text-align: center;
-	width: 25px;
-	background-color: black;
-	color: white;
-	border-radius: 50%;
-	font-weight: bold;
-	display: inline-block;
-`;
-const Three = styled.div`
-	position: absolute;
-	height: 22px;
-	top: 364px;
-	left: 905px;
-	text-align: center;
-	width: 25px;
-	background-color: black;
-	color: white;
-	border-radius: 50%;
-	font-weight: bold;
-	display: inline-block;
-`;
 class Dashboard extends Component {
 	constructor() {
 		super();
@@ -152,8 +126,6 @@ class Dashboard extends Component {
 
 					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData} />
 					<One>1</One>
-					<Two>2</Two>
-					<Three>3</Three>
 				</div>
 			</Container>
 		);

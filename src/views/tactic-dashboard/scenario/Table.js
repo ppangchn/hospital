@@ -10,6 +10,32 @@ const ButtonBox = styled.div`
 const Button = styled.button`
 	width: 8em;
 `
+const Two = styled.div`
+	position: absolute;
+	height: 22px;
+	top: 60px;
+    left: -12px;
+	text-align: center;
+	width: 25px;
+	background-color: black;
+	color: white;
+	border-radius: 50%;
+	font-weight: bold;
+	display: inline-block;
+`;
+const Three = styled.div`
+	position: absolute;
+	height: 22px;
+	top: 60px;
+    left: 190	px;
+	text-align: center;
+	width: 25px;
+	background-color: black;
+	color: white;
+	border-radius: 50%;
+	font-weight: bold;
+	display: inline-block;
+`;
 class Table extends Component {
 	constructor() {
 		super();
@@ -111,8 +137,8 @@ class Table extends Component {
 		this.getData(this.props);
 	}
 	render() {
-		const { inputTable, actualTable, actualOverallAverageWaitingTime,months} = this.state;
-		const {selectedDate} = this.props
+		const { inputTable, actualTable, actualOverallAverageWaitingTime, months } = this.state;
+		const { selectedDate } = this.props
 		return (
 			<div className="container-fluid mb-4 pb-3">
 				<div className="row ml-4 mr-4 mt-4 mb-2 d-flex justify-content-center">
@@ -161,21 +187,23 @@ class Table extends Component {
 						<div className="row d-flex justify-content-end mr-2 mt-2">
 							<div className="font-weight-bold">Overall average waiting time: 23.14</div>
 						</div>
+						<Two>2</Two>
+						<Three>3</Three>
 					</div>
 					<ButtonBox className="col-2 text-center d-flex flex-column">
-							<div className="mb-auto">
-								<Button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
-									7 Days Uniform
+						<div className="mb-auto">
+							<Button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
+								7 Days Uniform
 								</Button>
-							</div>
-							<div className="mb-3">
-								<Button className="button font-weight-bold" onClick={() => this.clearInput()}>
-									Clear input
+						</div>
+						<div className="mb-3">
+							<Button className="button font-weight-bold" onClick={() => this.clearInput()}>
+								Clear input
 								</Button>
-							</div>
-							<div className="">
-								<Button className="button font-weight-bold">Calculate</Button>
-							</div>
+						</div>
+						<div className="">
+							<Button className="button font-weight-bold">Calculate</Button>
+						</div>
 					</ButtonBox>
 				</div>
 				<div className="row ml-4">
@@ -187,6 +215,7 @@ class Table extends Component {
 						Historical
 					</button>
 				</div>
+
 			</div>
 		);
 	}
