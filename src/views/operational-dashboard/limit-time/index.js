@@ -63,7 +63,7 @@ class LimitDashboard extends Component {
 				localStorage.setItem(
 					'limit',
 					`${this.state.hour_pick},${this.state.min_pick},${this.state.hour_decoct},${
-						this.state.min_decoct
+					this.state.min_decoct
 					},${this.state.hour_dis},${this.state.min_dis}`
 				);
 			},
@@ -126,7 +126,7 @@ class LimitDashboard extends Component {
 			<Container className="col pt-4">
 				<div className="row">
 					<Title className="col center d-flex justify-content-center align-items-center  flex-row">
-					<i className="fas fa-chart-line mr-2" style={{ fontSize: '75px' }} /><div>Limit Time Setting</div>
+						<i className="fas fa-chart-line mr-2" style={{ fontSize: '75px' }} /><div>Limit Time Setting</div>
 					</Title>
 				</div>
 				<SubTitle className="row mt-4 mb-4">
@@ -147,42 +147,43 @@ class LimitDashboard extends Component {
 					</div>
 				</Header>
 				<div className="row mt-3">
-					<div className="col-2 d-flex justify-content-center align-items-center flex-column" >
-					<i className="fas fa-file-prescription" style={{ fontSize: '100px' }} />
+					<div className="col-1"></div>
+					<div className="col-1 d-flex justify-content-center align-items-center flex-column" >
+						<i className="fas fa-file-prescription" style={{ fontSize: '100px', color: 'rgb(58,124,130)' }} />
 					</div>
 
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
 						<Header className="staff-cell  pick d-flex justify-content-center align-items-center">
-						<span>Waiting time for Picking{' '}</span>
+							<span>Waiting time for Picking{' '}</span>
 						</Header>
 						<div className=" d-flex justify-content-center align-items-center" style={{ fontSize: '12px' }}>
 							{this.state.pick ? (
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{parseInt(this.state.pick.min/60)}&nbsp; Hr {parseInt(this.state.pick.min%60)} Min
+										{parseInt(this.state.pick.min / 60)}&nbsp; Hr {parseInt(this.state.pick.min % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{parseInt(this.state.pick.max/60)}&nbsp; Hr {parseInt(this.state.pick.max%60)} Min
+										{parseInt(this.state.pick.max / 60)}&nbsp; Hr {parseInt(this.state.pick.max % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{parseInt(this.state.pick.avg/60)}&nbsp; Hr {parseInt(this.state.pick.avg%60)} Min
+										{parseInt(this.state.pick.avg / 60)}&nbsp; Hr {parseInt(this.state.pick.avg % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{parseInt(this.state.pick.per80/60)}&nbsp; Hr {parseInt(this.state.pick.per80%60)} Min
+										{parseInt(this.state.pick.per80 / 60)}&nbsp; Hr {parseInt(this.state.pick.per80 % 60)} Min
 									</div>
 								</Detail>
 							) : (
-								<Detail>
-									<div className="font-weight-bold">min: -</div>
-									<div className="font-weight-bold">max: -</div>
-									<div className="font-weight-bold">avg: -</div>
-									<div className="font-weight-bold">per80: -</div>
-								</Detail>
-							)}
+									<Detail>
+										<div className="font-weight-bold">min: -</div>
+										<div className="font-weight-bold">max: -</div>
+										<div className="font-weight-bold">avg: -</div>
+										<div className="font-weight-bold">per80: -</div>
+									</Detail>
+								)}
 						</div>
 					</div>
 					<Detail className="col-2 d-flex justify-content-center align-items-center">
@@ -193,13 +194,14 @@ class LimitDashboard extends Component {
 						<input type="number" value={this.state.min_pick} onChange={this.handleChangeMP.bind(this)} />
 					</Detail>
 					<div className="col-2" >
-					
+
 					</div>
 				</div>
 				<div className="row mt-3">
-				<div className="col-2 d-flex justify-content-center align-items-center" >
-				<i className="fas fa-mug-hot" style={{ fontSize: '100px' }} />
-				</div>
+					<div className="col-1"></div>
+					<div className="col-1 d-flex justify-content-center align-items-center" >
+						<i className="fas fa-mug-hot" style={{ fontSize: '100px', color: 'rgb(79,129,69)' }} />
+					</div>
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
 						<Header className="staff-cell decoct d-flex justify-content-center align-items-center">
 							Waiting time for Decocting{' '}
@@ -209,29 +211,29 @@ class LimitDashboard extends Component {
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{parseInt(this.state.decoct.min/60)}&nbsp; Hr {parseInt(this.state.decoct.min%60)} Min
+										{parseInt(this.state.decoct.min / 60)}&nbsp; Hr {parseInt(this.state.decoct.min % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{parseInt(this.state.decoct.max/60)}&nbsp; Hr {parseInt(this.state.decoct.max%60)} Min
+										{parseInt(this.state.decoct.max / 60)}&nbsp; Hr {parseInt(this.state.decoct.max % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{parseInt(this.state.decoct.avg/60)}&nbsp; Hr {parseInt(this.state.decoct.avg%60)} Min
+										{parseInt(this.state.decoct.avg / 60)}&nbsp; Hr {parseInt(this.state.decoct.avg % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{parseInt(this.state.decoct.per80/60)}&nbsp; Hr {parseInt(this.state.decoct.per80%60)} Min
+										{parseInt(this.state.decoct.per80 / 60)}&nbsp; Hr {parseInt(this.state.decoct.per80 % 60)} Min
 									</div>
 								</Detail>
 							) : (
-								<Detail>
-									<div className="font-weight-bold">min: -</div>
-									<div className="font-weight-bold">max: -</div>
-									<div className="font-weight-bold">avg: -</div>
-									<div className="font-weight-bold">per80: -</div>
-								</Detail>
-							)}
+									<Detail>
+										<div className="font-weight-bold">min: -</div>
+										<div className="font-weight-bold">max: -</div>
+										<div className="font-weight-bold">avg: -</div>
+										<div className="font-weight-bold">per80: -</div>
+									</Detail>
+								)}
 						</div>
 					</div>
 					<Detail className="col-2 d-flex justify-content-center align-items-center">
@@ -243,9 +245,10 @@ class LimitDashboard extends Component {
 					<div className="col-2" />
 				</div>
 				<div className="row mt-3">
-				<div className="col-2 d-flex justify-content-center align-items-center" >
-				<i className="fas fa-handshake" style={{ fontSize: '100px' }} />
-				</div>
+					<div className="col-1"></div>
+					<div className="col-1 d-flex justify-content-center align-items-center" >
+						<i className="fas fa-handshake" style={{ fontSize: '100px', color: 'rgb(84,66,118)' }} />
+					</div>
 					<div className="col-4 d-flex justify-content-center align-items-center flex-column">
 						<Header className="staff-cell dis d-flex justify-content-center align-items-center">
 							Waiting time for Dispensing{' '}
@@ -255,29 +258,29 @@ class LimitDashboard extends Component {
 								<Detail className="d-flex flex-column">
 									<div className="d-flex">
 										<div className="font-weight-bold">min:&nbsp;</div>
-										{parseInt(this.state.dispense.min/60)}&nbsp; Hr {parseInt(this.state.dispense.min%60)} Min
+										{parseInt(this.state.dispense.min / 60)}&nbsp; Hr {parseInt(this.state.dispense.min % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">max:&nbsp;</div>
-										{parseInt(this.state.dispense.max/60)}&nbsp; Hr {parseInt(this.state.dispense.max%60)} Min
+										{parseInt(this.state.dispense.max / 60)}&nbsp; Hr {parseInt(this.state.dispense.max % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">avg:&nbsp;</div>
-										{parseInt(this.state.dispense.avg/60)}&nbsp; Hr {parseInt(this.state.dispense.avg%60)} Min
+										{parseInt(this.state.dispense.avg / 60)}&nbsp; Hr {parseInt(this.state.dispense.avg % 60)} Min
 									</div>
 									<div className="d-flex">
 										<div className="font-weight-bold">p80:&nbsp;</div>
-										{parseInt(this.state.dispense.per80/60)}&nbsp; Hr {parseInt(this.state.dispense.per80%60)} Min
+										{parseInt(this.state.dispense.per80 / 60)}&nbsp; Hr {parseInt(this.state.dispense.per80 % 60)} Min
 									</div>
 								</Detail>
 							) : (
-								<Detail>
-									<div className="font-weight-bold">min: -</div>
-									<div className="font-weight-bold">max: -</div>
-									<div className="font-weight-bold">avg: -</div>
-									<div className="font-weight-bold">per80: -</div>
-								</Detail>
-							)}
+									<Detail>
+										<div className="font-weight-bold">min: -</div>
+										<div className="font-weight-bold">max: -</div>
+										<div className="font-weight-bold">avg: -</div>
+										<div className="font-weight-bold">per80: -</div>
+									</Detail>
+								)}
 						</div>
 					</div>
 					<Detail className="col-2 d-flex justify-content-center align-items-center">
