@@ -48,6 +48,7 @@ class Table extends Component {
 			avgDateData: [],
 			actualTable: [],
 			inputTable: [],
+			outputValue: {},
 			actualOverallAverageWaitingTime: 0,
 			inputOverallAverageWaitingTime: 0,
 		};
@@ -71,7 +72,7 @@ class Table extends Component {
 		this.setState({ actualTable, actualOverallAverageWaitingTime: newActualValue.toFixed(2) });
 	}
 	createInputTable() {
-		const { dataLength, inputValue } = this.state;
+		const { dataLength, inputValue, outputValue } = this.state;
 		let inputTable = [];
 		for (let i = 0; i < dataLength; i++) {
 			inputTable.push(
@@ -79,7 +80,7 @@ class Table extends Component {
 					<td className="border-right">
 						<Input addInputValue={(i, e) => this.addInputValue(i, e)} index={i} value={inputValue[i]} />
 					</td>
-					<td className="border-right">Berglunds snabbköp</td>
+					<td className="border-right">{outputValue[i]}</td>
 				</tr>
 			);
 		}
@@ -102,14 +103,14 @@ class Table extends Component {
 		this.setState({ inputValue }, () => this.createInputTable());
 	}
 	calculateData() {
-		const {inputValue} = this.state;
+		const { inputValue, dateDictData, outputValue } = this.state;
 		console.log(inputValue)
-		for (let i =0; i< inputValue.length; i++) {
-			// inputValue[i] = 27.49+(0.1423*inputValue[i])-3.009
-			inputValue[i] = 1;
-			console.log(inputValue[i])
-		} 
-		console.log(inputValue)
+		for (let k in inputValue) {
+			console.log(dateDictData[k].Prescription)
+			outputValue[k] = (27.49 + (0.1423 * dateDictData[k].Prescription) - 3.009 * (inputValue[k])).toFixed(2)
+		}
+		this.setState({ inputValue, outputValue }, () => this.createInputTable())
+		this.props.setUserTrialOutput(outputValue)
 	}
 	async getData(props) {
 		const { dateDictData, staffData, avgDateData } = props.analyzeData;
@@ -123,17 +124,20 @@ class Table extends Component {
 		);
 	}
 	clearInput() {
-		const { inputValue, dataLength } = this.state;
+		const { inputValue, dataLength ,outputValue} = this.state;
 		for (let i = 0; i < dataLength; i++) {
 			inputValue[i] = 0;
+			outputValue[i] = 0;
 		}
 		// console.log('input ->', inputValue);
-		this.setState({ inputValue }, () => this.createInputTable());
+		this.setState({ inputValue,outputValue }, () => this.createInputTable());
+		this.props.setUserTrialOutput(outputValue)
 	}
 	initialInputValue() {
-		const { inputValue, dataLength } = this.state;
+		const { inputValue, dataLength, outputValue } = this.state;
 		for (let i = 0; i < dataLength; i++) {
 			if (!inputValue[i]) inputValue[i] = 0;
+			if (!outputValue[i]) outputValue[i] = 0;
 		}
 		// console.log('input ->', inputValue);
 		this.setState({ inputValue });
