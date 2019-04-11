@@ -97,7 +97,7 @@ class Graph extends Component {
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			weekend: [],
 			isItalic: false,
-			limitTime: 0,
+			limitTime: 60,
 		};
 	}
 	getWeekend(month, year) {

@@ -4,16 +4,13 @@ import Input from '../../../components/Input';
 import styled from 'styled-components';
 import '../../../css/tactic-dashboard/scenario/Table.css';
 
-const ButtonBox = styled.div`
-	padding-bottom: 2em;
-`
 const Button = styled.button`
 	width: 8em;
 `
 const Two = styled.div`
 	position: absolute;
 	height: 22px;
-	top: 60px;
+	top: 70px;
     left: -12px;
 	text-align: center;
 	width: 25px;
@@ -25,8 +22,8 @@ const Two = styled.div`
 `;
 const Three = styled.div`
 	position: absolute;
-	top: 60px;
-    left: 190px;
+	top: 70px;
+    left:190px;
 	text-align: center;
 	width: 25px;
 	background-color: black;
@@ -149,22 +146,22 @@ class Table extends Component {
 									</th>
 								</tr>
 								<tr className="table-border cell-actual-header-bg">
-									<th className="border-right pl-4 pr-4">Day</th>
-									<th className="border-right pl-4 pr-4">Average prescription per day</th>
-									<th className="border-right pl-4 pr-4">Average number of staff</th>
-									<th className="border-right pl-4 pr-4">Average waiting time [minute]</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Day</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Average prescription per day</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Average number of staff</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Average waiting time [minute]</th>
 								</tr>
 								{actualTable}
+								<tr className="table-border cell-actual-bg">
+									<td colspan="4" className="pr-2 text-right border-right height-actual-cell font-weight-bold">
+										Overall average waiting time: {actualOverallAverageWaitingTime}
+									</td>
+								</tr>
 							</table>
-						</div>
-						<div className="row d-flex justify-content-end mr-1 mt-2">
-							<div className="font-weight-bold">
-								Overall average waiting time: {actualOverallAverageWaitingTime}
-							</div>
 						</div>
 					</div>
 					<div className="col-4">
-						<div className="row">
+						<div className="row ">
 							<table className="text-center">
 								<tr className="table-border table-header-bg">
 									<th colSpan="2" className="border-right pl-4 pr-4">
@@ -172,23 +169,26 @@ class Table extends Component {
 									</th>
 								</tr>
 								<tr className="table-border cell-input-header-bg">
-									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">
+									<th className="border-right pl-4 pr-4 height-input-header">
 										Number of staff input
 									</th>
-									<th className="border-right pl-4 pr-4 pt-input-header pb-input-header">
+									<th className="border-right pl-4 pr-4 height-input-header">
 										Estimated waiting time [minute]
 									</th>
 								</tr>
 								{inputTable}
+								<tr className={`table-border cell-input-bg height-input-cell`}>
+									<td colspan="4" className="pr-2 text-right border-right font-weight-bold">
+										Overall average waiting time: 23.14
+									</td>
+								</tr>
 							</table>
 						</div>
-						<div className="row d-flex justify-content-end mr-2 mt-2">
-							<div className="font-weight-bold">Overall average waiting time: 23.14</div>
-						</div>
+
 						<Two>2</Two>
 						<Three>3</Three>
 					</div>
-					<ButtonBox className="col-2 text-center d-flex flex-column">
+					<div className="col-2 text-center d-flex flex-column">
 						<div className="mb-auto">
 							<Button className="button font-weight-bold" onClick={() => this.setSevenDaysUniform()}>
 								7 Days Uniform
@@ -202,9 +202,9 @@ class Table extends Component {
 						<div className="">
 							<Button className="button font-weight-bold">Calculate</Button>
 						</div>
-					</ButtonBox>
+					</div>
 				</div>
-				<div className="row ml-4">
+				<div className="row ml-4 mt-4">
 					<button
 						type="button"
 						className="btn btn-secondary btn-sm w-10 ml-1 mb-4"
@@ -213,7 +213,6 @@ class Table extends Component {
 						Historical
 					</button>
 				</div>
-
 			</div>
 		);
 	}
