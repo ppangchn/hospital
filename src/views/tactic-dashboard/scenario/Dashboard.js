@@ -29,10 +29,17 @@ const One = styled.div`
 	font-weight: bold;
 	display: inline-block;
 `;
+const Calculate = styled.div`
+position: absolute;
+top: 220px;
+left: 550px;
+font-weight: bold;
+font-size: 20px;
+`
 class Dashboard extends Component {
 	constructor() {
 		super();
-		this.state = { analyzeData: [],userTrialOutput:{} };
+		this.state = { analyzeData: [], userTrialOutput: {} };
 	}
 	formatToGraphData(data1, data2, data3, data4) {
 		let formatData1 = [];
@@ -55,10 +62,11 @@ class Dashboard extends Component {
 	}
 	async setAnalyzeDataByMonth(props) {
 		const { selectedDate } = props;
-		const {userTrialOutput} = this.state;
+		const { userTrialOutput } = this.state;
 		const res = await axios.post(config.url + '/monthlyPicking', { date: selectedDate });
 		const resStaff = await axios.post(config.staffUrl + '/getStaffByMonth', { date: selectedDate });
 		this.finishFetchingData();
+		// this.finishCalculate();
 		const { dateDict, breakLimit, avgDate } = res.data;
 		const staff = resStaff.data;
 		const modeStaff = 'pick';
@@ -73,7 +81,7 @@ class Dashboard extends Component {
 			staffData.push({ name: k, Staff: staff[k][`full_${modeStaff}`] + staff[k][`part_${modeStaff}`] });
 		}
 		const analyzeData = { dateDictData, breakLimitData, avgDateData, actualData, staffData };
-		console.log('ana',analyzeData)
+		console.log('ana', analyzeData)
 		this.setState({ analyzeData });
 	}
 	finishFetchingData() {
@@ -100,9 +108,17 @@ class Dashboard extends Component {
 		loading.hidden = false;
 		graph.hidden = true;
 	}
+	finishCalculate() {
+		const calculate = document.getElementById('calculate')
+		calculate.hidden = true;
+	}
+	unFinishCalculate() {
+		const calculate = document.getElementById('calculate')
+		calculate.hidden = false;
+	}
 	setUserTrialOutput(userTrialOutput) {
-		this.setState({userTrialOutput},() => this.setAnalyzeDataByMonth(this.props))
-
+		this.setState({ userTrialOutput }, () => this.setAnalyzeDataByMonth(this.props))
+		this.unFinishCalculate()
 	}
 	componentWillReceiveProps(props) {
 		this.unFinishFetchingData();
@@ -110,10 +126,11 @@ class Dashboard extends Component {
 	}
 	componentDidMount() {
 		this.unFinishFetchingData();
+		this.finishCalculate();
 		this.setAnalyzeDataByMonth(this.props);
 	}
 	render() {
-		const { analyzeData ,userTrialOutput} = this.state;
+		const { analyzeData, userTrialOutput } = this.state;
 		return (
 			<Container>
 				<Spinner class="d-flex justify-content-center align-items-center">
@@ -126,11 +143,12 @@ class Dashboard extends Component {
 				</Spinner>
 				<div id="graph" class="w-100">
 					<div className="d-flex">
-						<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} userTrialOutput={userTrialOutput}/>
+						<Graph selectedDate={this.props.selectedDate} analyzeData={analyzeData} userTrialOutput={userTrialOutput} />
 						<Instruction />
+						<Calculate id="calculate" className="calculate">Calculating<span>.</span><span>.</span><span>.</span></Calculate>
 					</div>
 
-					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData} setUserTrialOutput={(e) => this.setUserTrialOutput(e)}/>
+					<Table selectedDate={this.props.selectedDate} analyzeData={analyzeData} setUserTrialOutput={(e) => this.setUserTrialOutput(e)} />
 					<One>1</One>
 				</div>
 			</Container>
