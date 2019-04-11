@@ -66,7 +66,7 @@ class Dashboard extends Component {
 		const res = await axios.post(config.url + '/monthlyPicking', { date: selectedDate });
 		const resStaff = await axios.post(config.staffUrl + '/getStaffByMonth', { date: selectedDate });
 		this.finishFetchingData();
-		// this.finishCalculate();
+		this.finishCalculate();
 		const { dateDict, breakLimit, avgDate } = res.data;
 		const staff = resStaff.data;
 		const modeStaff = 'pick';
@@ -122,6 +122,7 @@ class Dashboard extends Component {
 	}
 	componentWillReceiveProps(props) {
 		this.unFinishFetchingData();
+		this.finishCalculate();
 		this.setAnalyzeDataByMonth(props);
 	}
 	componentDidMount() {
