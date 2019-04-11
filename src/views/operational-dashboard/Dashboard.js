@@ -87,6 +87,7 @@ class Dashboard extends Component {
 		}
   }
   checkReachLimit(data) {
+		if(!data) return
     const {  pick_q,  decoct_q,  dispense_q } = data;
     let isOverTime = false
     const limit = localStorage.getItem('limit')
