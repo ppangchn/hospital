@@ -101,6 +101,16 @@ class Table extends Component {
 		// console.log(inputValue);
 		this.setState({ inputValue }, () => this.createInputTable());
 	}
+	calculateData() {
+		const {inputValue} = this.state;
+		console.log(inputValue)
+		for (let i =0; i< inputValue.length; i++) {
+			// inputValue[i] = 27.49+(0.1423*inputValue[i])-3.009
+			inputValue[i] = 1;
+			console.log(inputValue[i])
+		} 
+		console.log(inputValue)
+	}
 	async getData(props) {
 		const { dateDictData, staffData, avgDateData } = props.analyzeData;
 		this.setState(
@@ -150,8 +160,8 @@ class Table extends Component {
 								</tr>
 								<tr className="table-border cell-actual-header-bg">
 									<th className="border-right pl-4 pr-4 height-input-header">Day</th>
-									<th className="border-right pl-4 pr-4 height-input-header">Average prescription per day</th>
-									<th className="border-right pl-4 pr-4 height-input-header">Average number of staff</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Count of prescriptions per day</th>
+									<th className="border-right pl-4 pr-4 height-input-header">Number of staffs per day</th>
 									<th className="border-right pl-4 pr-4 height-input-header">Average waiting time [minute]</th>
 								</tr>
 								{actualTable}
@@ -203,7 +213,7 @@ class Table extends Component {
 								</Button>
 						</div>
 						<div className="">
-							<Button className="button font-weight-bold">Calculate</Button>
+							<Button className="button font-weight-bold" onClick={() => this.calculateData()}>Calculate</Button>
 						</div>
 					</ButtonBox>
 				</div>
