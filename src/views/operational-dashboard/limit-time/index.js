@@ -178,10 +178,10 @@ class LimitDashboard extends Component {
 								</Detail>
 							) : (
 									<Detail>
-										<div className="font-weight-bold">min: -</div>
-										<div className="font-weight-bold">max: -</div>
-										<div className="font-weight-bold">avg: -</div>
-										<div className="font-weight-bold">per80: -</div>
+										<div className="font-weight-bold">min: Loading . . .</div>
+										<div className="font-weight-bold">max: Loading . . .</div>
+										<div className="font-weight-bold">avg: Loading . . .</div>
+										<div className="font-weight-bold">per80: Loading . . .</div>
 									</Detail>
 								)}
 						</div>
@@ -228,10 +228,10 @@ class LimitDashboard extends Component {
 								</Detail>
 							) : (
 									<Detail>
-										<div className="font-weight-bold">min: -</div>
-										<div className="font-weight-bold">max: -</div>
-										<div className="font-weight-bold">avg: -</div>
-										<div className="font-weight-bold">per80: -</div>
+										<div className="font-weight-bold">min: Loading . . .</div>
+										<div className="font-weight-bold">max: Loading . . .</div>
+										<div className="font-weight-bold">avg: Loading . . .</div>
+										<div className="font-weight-bold">per80: Loading . . .</div>
 									</Detail>
 								)}
 						</div>
@@ -275,10 +275,10 @@ class LimitDashboard extends Component {
 								</Detail>
 							) : (
 									<Detail>
-										<div className="font-weight-bold">min: -</div>
-										<div className="font-weight-bold">max: -</div>
-										<div className="font-weight-bold">avg: -</div>
-										<div className="font-weight-bold">per80: -</div>
+										<div className="font-weight-bold">min: Loading . . .</div>
+										<div className="font-weight-bold">max: Loading . . .</div>
+										<div className="font-weight-bold">avg: Loading . . .</div>
+										<div className="font-weight-bold">per80: Loading . . .</div>
 									</Detail>
 								)}
 						</div>
