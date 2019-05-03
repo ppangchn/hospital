@@ -1,4 +1,4 @@
 export const config = {
-    url: 'https://us-central1-hospital-app-e6e5e.cloudfunctions.net/dashboard',
-    staffUrl: 'https://us-central1-hospital-app-e6e5e.cloudfunctions.net/staff'
+    url: 'https://us-central1-dashboard-backend-4e571.cloudfunctions.net/dashboard',
+    staffUrl: 'https://us-central1-dashboard-backend-4e571.cloudfunctions.net/staff'
 }
