@@ -185,7 +185,7 @@ const Paying = props => {
 		<div className="d-flex bd-highlight table-row">
 			<div className="pt-2 pb-2 pl-1 bd-highlight cell " style={{ width: '93px' }}>
 				<div className="flex-fill header-container cell d-flex align-items-center justify-content-center pay-title-cell flex-column">
-					<h4>จ่ายยา</h4>
+					<h4>จ่ายยา จ้าาาา</h4>
 					<i className="fas fa-handshake" style={{ fontSize: '50px' }} />
 				</div>
 			</div>
