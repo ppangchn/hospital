@@ -66,7 +66,7 @@ class BoilingInProgress extends Component {
 
 	render(props) {
 		return (
-			<InQueue className="col header-container cell ml-1">
+			<InQueue className="col header-container cell ml-1 pr-0">
 				<div className="row">
 					<div className="col-2 cell" style={{ bottom: '13px' }}>
 						<div className="d-flex justify-content-center align-items-center cell flex-column">

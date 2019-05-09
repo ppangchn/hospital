@@ -29,7 +29,7 @@ class Header extends Component {
 					<div className="header-container" style={{ width: '100%' }}>
 						รอคิว
 					</div>
-					<div className="header-container ml-1 pl-0" style={{ width: '100%' }}>
+					<div className="header-container ml-1 pl-0" style={{ width: '97%' }}>
 						กำลังทำงาน
 					</div>
 				</div>
