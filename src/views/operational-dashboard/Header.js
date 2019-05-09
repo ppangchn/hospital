@@ -25,11 +25,11 @@ class Header extends Component {
 						)}
 					</div>
 				</div>
-				<div className="pr-2 pt-2 pb-2 d-flex flex-grow-1 bd-highlight">
-					<div className="header-container" style={{ width: '31.7em' }}>
+				<div className="col pl-0 pr-2 pt-2 pb-2 d-flex flex-grow-1 bd-highlight">
+					<div className="header-container" style={{ width: '100%' }}>
 						รอคิว
 					</div>
-					<div className="header-container ml-1 pl-0" style={{ width: '31.7em' }}>
+					<div className="header-container ml-1 pl-0" style={{ width: '100%' }}>
 						กำลังทำงาน
 					</div>
 				</div>
