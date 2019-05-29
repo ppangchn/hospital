@@ -57,7 +57,7 @@ class PrepareInProgress extends Component {
 
 	async componentDidMount() {
 		const res = await Axios.get(
-			'https://us-central1-dashboard-backend-4e571.cloudfunctions.net/staffdash/getStaff'
+			'http://huachiewtcm.dyndns.org:1079/getStaff'
 		);
 		const { data } = res;
 		const staff = data[0];
