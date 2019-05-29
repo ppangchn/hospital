@@ -59,7 +59,7 @@ class LimitDashboard extends Component {
 			showLoaderOnConfirm: true,
 			reverseButtons: true,
 			preConfirm: async () => {
-				// return await Axios.post("https://huachiewtcm.dyndns.org:79/setStaff", this.state);
+				// return await Axios.post("http://huachiewtcm.dyndns.org:1079/setStaff", this.state);
 				localStorage.setItem(
 					'limit',
 					`${this.state.hour_pick},${this.state.min_pick},${this.state.hour_decoct},${
@@ -95,7 +95,7 @@ class LimitDashboard extends Component {
 		}
 	}
 	async getData() {
-		const res = await Axios.get('https://huachiewtcm.dyndns.org:78/limit');
+		const res = await Axios.get('http://huachiewtcm.dyndns.org:1078/limit');
 		// console.log(res.data);
 		this.setState(res.data);
 		// const { data } = res;

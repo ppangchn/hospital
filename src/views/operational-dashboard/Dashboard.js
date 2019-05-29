@@ -36,7 +36,7 @@ class Dashboard extends Component {
 	async setLimit() {
 		try {
 			if (!localStorage.getItem('limit')) {
-				const res = await Axios.get('https://huachiewtcm.dyndns.org:78/limit');
+				const res = await Axios.get('http://huachiewtcm.dyndns.org:1078/limit');
 				console.log('get per80', res.data);
 				const { pick, decoct, dispense } = res.data;
 
@@ -51,7 +51,7 @@ class Dashboard extends Component {
 		try {
 			this.setLimit();
 			this.props.setLoading(true);
-			const res = await Axios.get('https://huachiewtcm.dyndns.org:78/realtime');
+			const res = await Axios.get('http://huachiewtcm.dyndns.org:1078/realtime');
 			const { data } = res;
 			const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
 			this.setState({
@@ -66,7 +66,7 @@ class Dashboard extends Component {
 			this.props.setLoading(false);
 			this.intervalID = setInterval(async () => {
 				this.props.setLoading(true);
-				const res = await Axios.get('https://huachiewtcm.dyndns.org:78/realtime');
+				const res = await Axios.get('http://huachiewtcm.dyndns.org:1078/realtime');
 				const { data } = res;
 				const { pick_q, pick, decoct_q, decoct, dispense_q, dispense, finish } = data;
 				this.checkReachLimit(data)

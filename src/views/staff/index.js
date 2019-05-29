@@ -57,7 +57,7 @@ class StaffDashboard extends Component {
 			cancelButtonColor: 'black',
 			reverseButtons: true,
 			preConfirm: async () => {
-				return await Axios.post('https://huachiewtcm.dyndns.org:79/setStaff', this.state);
+				return await Axios.post('http://huachiewtcm.dyndns.org:1079/setStaff', this.state);
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(result => {
@@ -76,7 +76,7 @@ class StaffDashboard extends Component {
 		this.getData();
 	}
 	async getData() {
-		const res = await Axios.get('https://huachiewtcm.dyndns.org:79/getStaff');
+		const res = await Axios.get('http://huachiewtcm.dyndns.org:1079/getStaff');
 		// // console.log(res.data);
 		const { data } = res;
 
