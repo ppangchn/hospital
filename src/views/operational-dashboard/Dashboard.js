@@ -81,7 +81,7 @@ class Dashboard extends Component {
 				});
 				// console.log(data);
 				this.props.setLoading(false);
-			}, 350000);
+			}, 9000);
 		} catch (e) {
 			// console.log(e);
 		}
